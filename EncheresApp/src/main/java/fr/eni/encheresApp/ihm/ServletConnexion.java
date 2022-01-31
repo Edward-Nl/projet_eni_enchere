@@ -28,10 +28,8 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String pseudo;
-		String motDePasse;
-		pseudo = request.getParameter("pseudo");
-		motDePasse = request.getParameter("motDePasse");
+		String pseudo = request.getParameter("pseudo");
+		String motDePasse = request.getParameter("motDePasse");
 		System.out.println(pseudo + motDePasse);
 			
 
