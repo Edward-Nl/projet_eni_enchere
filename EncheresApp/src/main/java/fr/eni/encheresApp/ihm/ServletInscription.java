@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
+import fr.eni.encheresApp.dal.CryptagePassword;
 
 /**
  * Servlet implementation class ServletInscription
@@ -46,16 +47,18 @@ public class ServletInscription extends HttpServlet {
 
 		String mdp = request.getParameter("mdp");
 		String mdpC = request.getParameter("mdpC");
-		// TODO: Controlle des id unique
+
 		boolean mdpValid = valideMdp(mdp, mdpC);
 		boolean alreadyExist = manager.selectByMailOrPseudo(email, pseudo);
-		System.out.println(alreadyExist);
+
 		if (mdpValid && !alreadyExist) {
-			// TODO: Crypter mot de passe changer le system crédit & amdin
+			// TODO: changer le system crédit & amdin
 			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville,
-					mdpC, 500, false);
-			System.out.println(utilisateur.toString());
-			System.out.println(manager.ajouterUtilisateur(utilisateur));
+					CryptagePassword.crypteString(mdp), 500, false);
+			manager.ajouterUtilisateur(utilisateur);
+
+			// TODO: SESSION utilisateur
+			// TODO redirection vers page acceuil
 		}
 
 		request.setAttribute("pseudo", pseudo);
