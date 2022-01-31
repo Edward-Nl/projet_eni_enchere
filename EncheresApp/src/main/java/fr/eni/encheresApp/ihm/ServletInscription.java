@@ -29,6 +29,35 @@ public class ServletInscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String pseudo = request.getParameter("pseudo");
+		String prenom = request.getParameter("prenom");
+		String nom = request.getParameter("nom");
+		String email = request.getParameter("email");
+		String telephone = request.getParameter("telephone");
+		String rue = request.getParameter("rue");
+		String codePostale = request.getParameter("codePostale");
+		String ville = request.getParameter("ville");
+
+		String mdp = request.getParameter("mdp");
+		String mdpC = request.getParameter("mdpC");
+		//TODO: Controlle des id unique
+		
+		if (mdp.trim().equals(mdpC.trim())) {
+			System.out.println("mdp bon");
+		} else {
+			request.setAttribute("pseudo", pseudo);
+			request.setAttribute("prenom", prenom);
+			request.setAttribute("nom", nom);
+			request.setAttribute("email", email);
+			request.setAttribute("telephone", telephone);
+			request.setAttribute("rue", rue);
+			request.setAttribute("codePostale", codePostale);
+			request.setAttribute("ville", ville);
+			
+		}
+		System.out.println(pseudo+" "+ prenom+" "+ nom+" "+ email+" "+telephone+" "+rue+" "+ codePostale
+				+" "+ ville+" "+mdp+" "+mdpC);
+
 		doGet(request, response);
 	}
 
