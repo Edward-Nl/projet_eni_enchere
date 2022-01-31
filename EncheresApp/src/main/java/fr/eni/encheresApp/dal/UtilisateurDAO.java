@@ -8,8 +8,6 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectByPseudoOrMailAndPsw(String pseudoOrMail, String password);
 
-	public boolean selectByMail(String mail);
-
-	public boolean selectByPseudo(String pseudo);
+	public boolean selectByMailAndPseudp(String mail, String pseudo);
 
 }

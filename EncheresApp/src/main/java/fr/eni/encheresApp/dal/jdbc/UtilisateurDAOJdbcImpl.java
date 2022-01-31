@@ -11,9 +11,8 @@ import fr.eni.encheresApp.dal.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	// TODO: gestion admin & crédits
-	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postale,ville,mot_de_passe,credit,adminitrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
-	private static final String SELECTBYMAIL = "SELECT * FROM UTILISATEURS WHERE email LIKE ? ";
-	private static final String SELECTBYPSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo LIKE ? ";
+	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
+	private static final String SELECTBYMAILPSEUDO = "SELECT * FROM UTILISATEURS WHERE email LIKE ? OR pseudo LIKE ?";
 
 	@Override
 	public void insert(Utilisateur u) {
@@ -55,36 +54,15 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public boolean selectByMail(String mail) {
+	public boolean selectByMailAndPseudp(String mail, String pseudo) {
 		boolean toReturn = false;
 		if (mail.trim().isEmpty()) {
 			// TODO: Messages erreur
 		}
 		try (Connection cnx = ConnectionProvider.getConnection()) {
-			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYMAIL)) {
+			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYMAILPSEUDO)) {
 				pstmt.setString(1, mail);
-				try (ResultSet rs = pstmt.executeQuery()) {
-					if (rs.next()) {
-						toReturn = true;
-					}
-				}
-			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
-			e.printStackTrace();
-		}
-		return toReturn;
-	}
-
-	@Override
-	public boolean selectByPseudo(String pseudo) {
-		boolean toReturn = false;
-		if (pseudo.trim().isEmpty()) {
-			// TODO: Messages erreur
-		}
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYPSEUDO)) {
-				pstmt.setString(1, pseudo);
+				pstmt.setString(2, pseudo);
 				try (ResultSet rs = pstmt.executeQuery()) {
 					if (rs.next()) {
 						toReturn = true;

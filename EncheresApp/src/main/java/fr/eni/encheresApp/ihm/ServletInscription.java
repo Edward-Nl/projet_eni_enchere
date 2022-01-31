@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.eni.encheresApp.bll.UtilisateurManager;
+import fr.eni.encheresApp.bo.Utilisateur;
+
 /**
  * Servlet implementation class ServletInscription
  */
@@ -29,6 +32,9 @@ public class ServletInscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		request.setCharacterEncoding("UTF-8");
+		UtilisateurManager manager = new UtilisateurManager();
+
 		String pseudo = request.getParameter("pseudo");
 		String prenom = request.getParameter("prenom");
 		String nom = request.getParameter("nom");
@@ -40,26 +46,36 @@ public class ServletInscription extends HttpServlet {
 
 		String mdp = request.getParameter("mdp");
 		String mdpC = request.getParameter("mdpC");
-		//TODO: Controlle des id unique
-		
-		if (mdp.trim().equals(mdpC.trim())) {
-			System.out.println("mdp bon");
-		} else {
-			request.setAttribute("pseudo", pseudo);
-			request.setAttribute("prenom", prenom);
-			request.setAttribute("nom", nom);
-			request.setAttribute("email", email);
-			request.setAttribute("telephone", telephone);
-			request.setAttribute("rue", rue);
-			request.setAttribute("codePostale", codePostale);
-			request.setAttribute("ville", ville);
-			
-			doGet(request, response);
+		// TODO: Controlle des id unique
+		boolean mdpValid = valideMdp(mdp, mdpC);
+		boolean alreadyExist = manager.selectByMailOrPseudo(email, pseudo);
+		System.out.println(alreadyExist);
+		if (mdpValid && !alreadyExist) {
+			// TODO: Crypter mot de passe changer le system crédit & amdin
+			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville,
+					mdpC, 500, false);
+			System.out.println(utilisateur.toString());
+			System.out.println(manager.ajouterUtilisateur(utilisateur));
 		}
-		System.out.println(pseudo+" "+ prenom+" "+ nom+" "+ email+" "+telephone+" "+rue+" "+ codePostale
-				+" "+ ville+" "+mdp+" "+mdpC);
 
-		
+		request.setAttribute("pseudo", pseudo);
+		request.setAttribute("prenom", prenom);
+		request.setAttribute("nom", nom);
+		request.setAttribute("email", email);
+		request.setAttribute("telephone", telephone);
+		request.setAttribute("rue", rue);
+		request.setAttribute("codePostale", codePostale);
+		request.setAttribute("ville", ville);
+
+		doGet(request, response);
+
+	}
+
+	private boolean valideMdp(String mdp, String mdpC) {
+		if (mdp.trim().equals(mdpC)) {
+			return true;
+		}
+		return false;
 	}
 
 }
