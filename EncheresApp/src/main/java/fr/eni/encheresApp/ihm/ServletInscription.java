@@ -54,11 +54,12 @@ public class ServletInscription extends HttpServlet {
 			request.setAttribute("codePostale", codePostale);
 			request.setAttribute("ville", ville);
 			
+			doGet(request, response);
 		}
 		System.out.println(pseudo+" "+ prenom+" "+ nom+" "+ email+" "+telephone+" "+rue+" "+ codePostale
 				+" "+ ville+" "+mdp+" "+mdpC);
 
-		doGet(request, response);
+		
 	}
 
 }
