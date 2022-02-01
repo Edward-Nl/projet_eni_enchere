@@ -14,7 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
 	private static final String SELECT_BY_MAIL_PSEUDO = "SELECT * FROM UTILISATEURS WHERE email = ? OR pseudo = ?";
 	private static final String SELECT_BY_PSEUDO_AND_PASSW = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
-	private static final String SELECT_BY_ID = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String SELECT_BY_ID = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String SELECT_BY_ID_AND_PSW = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ? AND mot_de_passe = ?";
 	private static final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 
@@ -157,7 +157,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setString(7, utilisateur.getCodePostal());
 				pstmt.setString(8, utilisateur.getVille());
 				pstmt.setString(9, utilisateur.getMotDePasse());
-				pstmt.setInt(9, utilisateur.getNoUtilisateur());
+				pstmt.setInt(10, utilisateur.getNoUtilisateur());
 				if (pstmt.executeUpdate() == 1) {
 					toReturn = true;
 				}
@@ -180,8 +180,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		utilisateur.setRue(rs.getString(7));
 		utilisateur.setCodePostal(rs.getString(8));
 		utilisateur.setVille(rs.getString(9));
-		utilisateur.setCredit(rs.getInt(10));
-		utilisateur.setAdministrateur(rs.getBoolean(11));
+		utilisateur.setMotDePasse(rs.getString(10));
+		utilisateur.setCredit(rs.getInt(11));
+		utilisateur.setAdministrateur(rs.getBoolean(12));
 
 	}
 

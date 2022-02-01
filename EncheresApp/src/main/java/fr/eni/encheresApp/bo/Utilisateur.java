@@ -196,4 +196,44 @@ public class Utilisateur implements Serializable {
 				+ ", administrateur=" + administrateur + "]";
 	}
 
+	public boolean equals(Utilisateur utilisateur) {
+		if (this.noUtilisateur != utilisateur.getNoUtilisateur()) {
+			return false;
+		}
+		if (!this.pseudo.equals(utilisateur.getPseudo())) {
+			return false;
+		}
+		if (!this.nom.equals(utilisateur.getNom())) {
+			return false;
+		}
+		if (!this.prenom.equals(utilisateur.getPrenom())) {
+			return false;
+		}
+		if (!this.email.equals(utilisateur.getEmail())) {
+			return false;
+		}
+		if (!this.telephone.equals(utilisateur.getTelephone())) {
+			return false;
+		}
+		if (!this.rue.equals(utilisateur.getRue())) {
+			return false;
+		}
+		if (!this.codePostal.equals(utilisateur.getCodePostal())) {
+			return false;
+		}
+		if (!this.ville.equals(utilisateur.getVille())) {
+			return false;
+		}
+		if (!this.motDePasse.equals(utilisateur.getMotDePasse())) {
+			return false;
+		}
+		if (this.credit != utilisateur.getCredit()) {
+			return false;
+		}
+		if (this.administrateur != utilisateur.isAdministrateur()) {
+			return false;
+		}
+		return true;
+	}
+
 }

@@ -25,6 +25,11 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		UtilisateurManager manager = new UtilisateurManager();
+		Utilisateur utilisateur = manager.selectAvecId(1);
+		HttpSession session = request.getSession();
+		session.setAttribute("utilisateur", utilisateur);
+
 		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 	}
 
@@ -48,16 +53,23 @@ public class ServletModifierProfil extends HttpServlet {
 		String mdp = request.getParameter("mdp").trim();
 		String mdpC = request.getParameter("mdpC").trim();
 		String mdpO = request.getParameter("mdpO").trim();
-		boolean formulaireValide = true;
+
 		if (manager.selectByIdAndPassword(utilisateur.getNoUtilisateur(), CryptagePassword.crypteString(mdpO))) {
 			String motDePasse = CryptagePassword.crypteString(mdpO);
 			if (!mdp.isEmpty() || !mdpC.isEmpty()) {
-				if(mdp.equals(mdpC)) {
-					
+				if (mdp.equals(mdpC)) {
+					motDePasse = CryptagePassword.crypteString(mdp);
+				}
+			}
+			Utilisateur tmpUtilisateur = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email,
+					telephone, rue, code_postal, ville, motDePasse, utilisateur.getCredit(),
+					utilisateur.isAdministrateur());
+			if (!utilisateur.equals(tmpUtilisateur)) {
+				if (manager.updateUtilisateur(tmpUtilisateur)) {
+					session.setAttribute("utilisateur", tmpUtilisateur);
 				}
 			}
 		}
-		System.out.println(utilisateur + "  " + mdpO);
 
 		doGet(request, response);
 	}
