@@ -8,8 +8,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import fr.eni.encheresApp.bll.UtilisateurManager;
+import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
 
 /**
@@ -48,6 +50,10 @@ public class ServletConnexion extends HttpServlet {
 				response.addCookie(souvenirPseudo);
 				response.addCookie(souvenirMdp);
 			}
+			Utilisateur utilisateurCourrant = manager.selectByPseudo(pseudo);
+			HttpSession sessionCourrante = request.getSession();
+			sessionCourrante.setAttribute("utilisateurCourant", utilisateurCourrant);
+			System.out.println(sessionCourrante);
 			request.getRequestDispatcher("/ServletAccueil").forward(request, response);
 			
 		} else {

@@ -28,6 +28,10 @@ public class UtilisateurManager {
 
 		return connect;
 	}
+	
+	public Utilisateur selectByPseudo(String pseudo) {
+		return this.utilisateurDAO.selectByPseudo(pseudo);
+	}
 
 	public boolean selectByIdAndPassword(int id, String password) {
 		return this.utilisateurDAO.selectByIdAndPsw(id, password);
