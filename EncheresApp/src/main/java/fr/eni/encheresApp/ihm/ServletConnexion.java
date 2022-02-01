@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,20 +32,26 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		Cookie[] cookies = request.getCookies();
 		UtilisateurManager manager = new UtilisateurManager();
 		String pseudo = request.getParameter("pseudo");
 		String motDePasse = request.getParameter("motDePasse");
 		boolean connect = manager.selectByPseudoOrMailAndPsw(pseudo, CryptagePassword.crypteString(motDePasse));
 		if (connect) {
-			request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
+			if(request.getParameter("souvenir")!=null) {
+				Cookie souvenirPseudo = new Cookie("pseudo", pseudo);
+				Cookie souvenirMdp = new Cookie("Mdp", motDePasse);
+				souvenirPseudo.setMaxAge(3600*24*30); // Durée de vie de 30 Jours
+				souvenirMdp.setMaxAge(3600*24*30); // Durée de vie de 30 Jours
+				response.addCookie(souvenirPseudo);
+				response.addCookie(souvenirMdp);
+			}
+			request.getRequestDispatcher("/ServletAccueil").forward(request, response);
+			
 		} else {
 			request.getRequestDispatcher("/WEB-INF/views/jspConnexion.jsp").forward(request, response);
 		}
-		System.out.println(pseudo + motDePasse); // a supprimer par la suite
-
 	}
-
 }

@@ -18,16 +18,33 @@
 </head>
 <body>
 	<div class="container">
+		<%
+			Cookie cookie=null;
+			String pseudo = "";
+			String mdp = "";
+			Cookie[] cookies = request.getCookies();
+			if(cookies != null){
+				for(int i=0;i<cookies.length;i++){
+					if(cookies[i].getName().equals("pseudo")){
+						pseudo = cookies[i].getValue();
+					}
+					if(cookies[i].getName().equals("Mdp")){
+						mdp = cookies[i].getValue();
+					}
+				}
+			}
+		%>
+		<p></p>
 
 		<h1><fmt:message key="h1" bundle="${r}"></fmt:message></h1>
 	
 		<div class="mx-auto d-flex flex-column align-items-center">
 			<form action="<%=request.getContextPath()%>/ServletConnexion" method="POST" class="col-6">
 				<label for="pseudo" class="col-3 my-3"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label>
-				<input type="text" name="pseudo" placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>" class="col-6"/>
+				<input type="text" name="pseudo" placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>" class="col-6" value="<%= pseudo%>"/>
 				<br>
 				<label for="motDePasse" class="col-3 my-3"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label>
-				<input type="password" name="motDePasse" placeholder="<fmt:message key="pl.deux" bundle="${r}"></fmt:message>" class="col-6" />
+				<input type="password" name="motDePasse" placeholder="<fmt:message key="pl.deux" bundle="${r}"></fmt:message>" class="col-6" value="<%= mdp %>"/>
 				<br>
 				<div class="d-flex flex-row-reverse justify-content-center my-3">
 					<div class="d-flex flex-column mx-1">
