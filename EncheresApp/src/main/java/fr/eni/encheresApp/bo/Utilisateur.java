@@ -1,7 +1,14 @@
 package fr.eni.encheresApp.bo;
 
-public class Utilisateur {
-	
+import java.io.Serializable;
+
+public class Utilisateur implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int noUtilisateur;
 	private String pseudo;
 	private String nom;
@@ -14,7 +21,7 @@ public class Utilisateur {
 	private String motDePasse;
 	private int credit;
 	private boolean administrateur;
-	
+
 	/**
 	 * Constructeur sans Parametre
 	 */
@@ -22,7 +29,8 @@ public class Utilisateur {
 	}
 
 	/**
-	 * Constructeur avec tout les parametre 
+	 * Constructeur avec tout les parametre
+	 * 
 	 * @param noUtilisateur
 	 * @param pseudo
 	 * @param nom
@@ -54,7 +62,8 @@ public class Utilisateur {
 	}
 
 	/**
-	 * Utilisateur sans le n° d'utilisateur (géneré en BDD) 
+	 * Utilisateur sans le n° d'utilisateur (géneré en BDD)
+	 * 
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
@@ -186,9 +195,5 @@ public class Utilisateur {
 				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
 				+ ", administrateur=" + administrateur + "]";
 	}
-	
-	
-	
-	
 
 }

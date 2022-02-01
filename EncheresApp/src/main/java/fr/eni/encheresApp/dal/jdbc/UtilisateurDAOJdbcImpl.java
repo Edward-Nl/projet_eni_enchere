@@ -14,6 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
 	private static final String SELECTBYMAILPSEUDO = "SELECT * FROM UTILISATEURS WHERE email LIKE ? OR pseudo LIKE ?";
 	private static final String SELECTBYPSEUDOANDPASSW = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
+	private static final String SELECTBYID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	@Override
 	public void insert(Utilisateur u) {
@@ -53,19 +54,19 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		boolean connect = false;
 		String pseudo = pseudoOrMail;
 		String pass = password;
-		try(Connection cnx = ConnectionProvider.getConnection()) {
+		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYPSEUDOANDPASSW)) {
 				pstmt.setString(1, pseudo);
 				try (ResultSet rs = pstmt.executeQuery()) {
 					if (!rs.next()) {
 						connect = false;
 					}
-					if(pass.equals(rs.getString("mot_de_passe"))) {
+					if (pass.equals(rs.getString("mot_de_passe"))) {
 						connect = true;
 					}
 				}
 			}
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -93,6 +94,40 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 			e.printStackTrace();
 		}
 		return toReturn;
+	}
+
+	@Override
+	public Utilisateur selectById(int id) {
+		Utilisateur utilisateur = new Utilisateur();
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYID)) {
+				pstmt.setInt(1, id);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (rs.next()) {
+						utilisateurParser(rs, utilisateur);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			// TODO gestion messages erreur
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+
+	private void utilisateurParser(ResultSet rs, Utilisateur utilisateur) throws SQLException {
+		utilisateur.setNoUtilisateur(rs.getInt(1));
+		utilisateur.setPseudo(rs.getString(2));
+		utilisateur.setNom(rs.getString(3));
+		utilisateur.setPrenom(rs.getString(4));
+		utilisateur.setEmail(rs.getString(5));
+		utilisateur.setTelephone(rs.getString(6));
+		utilisateur.setRue(rs.getString(7));
+		utilisateur.setCodePostal(rs.getString(8));
+		utilisateur.setVille(rs.getString(9));
+		utilisateur.setCredit(rs.getInt(10));
+		utilisateur.setAdministrateur(rs.getBoolean(11));
+
 	}
 
 }

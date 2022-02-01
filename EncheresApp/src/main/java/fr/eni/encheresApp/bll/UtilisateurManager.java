@@ -19,13 +19,13 @@ public class UtilisateurManager {
 			return false;
 		}
 	}
-	
+
 	public boolean selectByPseudoOrMailAndPsw(String pseudoOrMail, String password) {
 		boolean connect = false;
-		if(valideInput(pseudoOrMail)) {
+		if (valideInput(pseudoOrMail)) {
 			connect = this.utilisateurDAO.selectByPseudoOrMailAndPsw(pseudoOrMail, password);
 		}
-		
+
 		return connect;
 	}
 
@@ -37,6 +37,16 @@ public class UtilisateurManager {
 			return true;
 		}
 		return false;
+
+	}
+
+	public Utilisateur selectAvecId(int id) {
+		Utilisateur utilisateur = this.utilisateurDAO.selectById(id);
+		if (utilisateur.getPseudo().trim().isEmpty()) {
+			return null;
+		} else {
+			return utilisateur;
+		}
 
 	}
 
