@@ -51,7 +51,7 @@ public class ServletConnexion extends HttpServlet {
 			request.getRequestDispatcher("/ServletAccueil").forward(request, response);
 			
 		} else {
-			request.getRequestDispatcher("/WEB-INF/views/jspConnexion.jsp").forward(request, response);
+			request.getRequestDispatcher("/ServletConnexion").forward(request, response);
 		}
 	}
 }
