@@ -19,15 +19,78 @@
 				<a href=""><fmt:message key="aIns" bundle="${r}"></fmt:message></a>
 				<a href=""><fmt:message key="aConx" bundle="${r}"></fmt:message></a>
 			</div>
+			<!--  A integrer par la suite avec une conditions si l'utilisateur est un utilisateur connecté ou non  -->
+			<div>
+				<a href=""><fmt:message key="aEnch" bundle="${r}"></fmt:message></a>
+				<a href=""><fmt:message key="aVend" bundle="${r}"></fmt:message></a>
+				<a href=""><fmt:message key="aProf" bundle="${r}"></fmt:message></a>
+				<a href=""><fmt:message key="aDeco" bundle="${r}"></fmt:message></a>
+			</div>
 		</header>
 		<main>
 			<h2><fmt:message key="sousTitre" bundle="${r}"></fmt:message></h2>
 			
 			<form action="" method="" >
 				<label for="filtre"><fmt:message key="lbFil" bundle="${r}"></fmt:message></label><br>
-				<input type="text"> <br>
+				<input type="text" name="filtre"> <br>
 				<label for="catg"><fmt:message key="lbCat" bundle="${r}"></fmt:message></label>
+				<select name="catg">
+					<option>Informatique</option>
+					<option>Ameublement</option>
+					<option>Vêtement</option>
+					<option>Sport & Loisirs</option>
+				</select>
+				<button type="submit"><fmt:message key="btnRech" bundle="${r}"></fmt:message></button>
 			</form>
+			
+			
+			<!--  A integrer par la suite avec une conditions si l'utilisateur est un utilisateur connecté ou non  -->
+			<div class="d-flex">
+				<div class="d-flex flex-column">
+					<div>
+						<input type="radio" name="achat" value="Achats"/>
+						<label for="achat"><fmt:message key="radioAchat" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chEOuv" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chECou" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
+					</div>
+				</div>
+				<div class="d-flex flex-column">
+					<div>
+						<input type="radio" name="vente" value="Mes ventes"/>
+						<label for="vente"><fmt:message key="radioVente" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chVCou" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chVNon" bundle="${r}"></fmt:message></label>
+					</div>
+					<div>
+						<input type="checkbox" name=""/>
+						<label for=""><fmt:message key="chVterm" bundle="${r}"></fmt:message></label>
+					</div>
+				</div>
+			</div>
+			
+			<!-- Récuperation ici de la liste des articles depuis la BD -->
+			
+			
+			
+			
+			
+			
 		</main>
 	
 	</div>
