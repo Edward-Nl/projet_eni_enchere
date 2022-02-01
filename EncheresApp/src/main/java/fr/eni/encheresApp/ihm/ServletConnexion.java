@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheresApp.bll.UtilisateurManager;
+import fr.eni.encheresApp.dal.CryptagePassword;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -36,7 +37,7 @@ public class ServletConnexion extends HttpServlet {
 		UtilisateurManager manager = new UtilisateurManager();
 		String pseudo = request.getParameter("pseudo");
 		String motDePasse = request.getParameter("motDePasse");
-		boolean connect = manager.selectByPseudoOrMailAndPsw(pseudo, motDePasse);
+		boolean connect = manager.selectByPseudoOrMailAndPsw(pseudo, CryptagePassword.crypteString(motDePasse));
 		if(connect) {
 			request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 		} else {
