@@ -19,6 +19,15 @@ public class UtilisateurManager {
 			return false;
 		}
 	}
+	
+	public boolean selectByPseudoOrMailAndPsw(String pseudoOrMail, String password) {
+		boolean connect = false;
+		if(valideInput(pseudoOrMail)) {
+			connect = this.utilisateurDAO.selectByPseudoOrMailAndPsw(pseudoOrMail, password);
+		}
+		
+		return connect;
+	}
 
 	public boolean ajouterUtilisateur(Utilisateur u) {
 		if (u == null) {

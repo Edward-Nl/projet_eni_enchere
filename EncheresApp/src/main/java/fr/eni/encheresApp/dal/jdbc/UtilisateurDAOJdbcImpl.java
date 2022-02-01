@@ -10,9 +10,10 @@ import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.UtilisateurDAO;
 
 public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
-	// TODO: gestion admin & crédits
+	// TODO: gestion admin & crï¿½dits
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
 	private static final String SELECTBYMAILPSEUDO = "SELECT * FROM UTILISATEURS WHERE email LIKE ? OR pseudo LIKE ?";
+	private static final String SELECTBYPSEUDOANDPASSW = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
 
 	@Override
 	public void insert(Utilisateur u) {
@@ -35,7 +36,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					if (rs.next()) {
 						u.setNoUtilisateur(rs.getInt(1));
 					} else {
-						// TODO: message fail création utilisateur
+						// TODO: message fail crï¿½ation utilisateur
 					}
 				}
 
@@ -48,9 +49,27 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public Utilisateur selectByPseudoOrMailAndPsw(String pseudoOrMail, String password) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean selectByPseudoOrMailAndPsw(String pseudoOrMail, String password) {
+		boolean connect = false;
+		String pseudo = pseudoOrMail;
+		String pass = password;
+		try(Connection cnx = ConnectionProvider.getConnection()) {
+			try (PreparedStatement pstmt = cnx.prepareStatement(SELECTBYPSEUDOANDPASSW)) {
+				pstmt.setString(1, pseudo);
+				try (ResultSet rs = pstmt.executeQuery()) {
+					if (!rs.next()) {
+						connect = false;
+					}
+					if(pass.equals(rs.getString("mot_de_passe"))) {
+						connect = true;
+					}
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return connect;
 	}
 
 	@Override

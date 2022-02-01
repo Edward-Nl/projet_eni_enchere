@@ -6,7 +6,7 @@ public interface UtilisateurDAO {
 
 	public void insert(Utilisateur u);
 
-	public Utilisateur selectByPseudoOrMailAndPsw(String pseudoOrMail, String password);
+	public boolean selectByPseudoOrMailAndPsw(String pseudoOrMail, String password);
 
 	public boolean selectByMailAndPseudp(String mail, String pseudo);
 
