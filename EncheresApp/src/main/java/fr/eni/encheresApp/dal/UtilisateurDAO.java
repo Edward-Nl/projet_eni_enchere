@@ -12,4 +12,8 @@ public interface UtilisateurDAO {
 
 	public boolean selectByMailAndPseudp(String mail, String pseudo);
 
+	public boolean selectByIdAndPsw(int id, String psw);
+
+	public boolean updateUser(Utilisateur utilisateur);
+
 }

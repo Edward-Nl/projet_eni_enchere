@@ -29,11 +29,15 @@ public class UtilisateurManager {
 		return connect;
 	}
 
-	public boolean ajouterUtilisateur(Utilisateur u) {
-		if (u == null) {
+	public boolean selectByIdAndPassword(int id, String password) {
+		return this.utilisateurDAO.selectByIdAndPsw(id, password);
+	}
+
+	public boolean ajouterUtilisateur(Utilisateur utilisateur) {
+		if (utilisateur == null) {
 			// TODO: Message erreur
 		} else {
-			this.utilisateurDAO.insert(u);
+			this.utilisateurDAO.insert(utilisateur);
 			return true;
 		}
 		return false;
@@ -45,10 +49,66 @@ public class UtilisateurManager {
 
 	}
 
+	public boolean updateUtilisateur(Utilisateur utilisateur) {
+		// TODO: Control des champ Utilisateur
+		if (this.valideUtilisateur(utilisateur)) {
+			return this.utilisateurDAO.updateUser(utilisateur);
+		} else {
+			// TODO: messages d'erreur
+			return false;
+		}
+
+	}
+
 	private boolean valideInput(String input) {
 		if (!input.trim().isEmpty() && input != null) {
 			return true;
 		}
 		return false;
+	}
+
+	// controle de tous les champs de utilisateur
+	private boolean valideUtilisateur(Utilisateur utilisateur) {
+		if (utilisateur.getPseudo().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getNom().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getPrenom().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getEmail().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getTelephone().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getRue().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getCodePostal().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getVille().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getMotDePasse().trim().isEmpty()) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		if (utilisateur.getCredit() < 0) {
+			// TODO: Message d'erreur
+			return false;
+		}
+		return true;
 	}
 }

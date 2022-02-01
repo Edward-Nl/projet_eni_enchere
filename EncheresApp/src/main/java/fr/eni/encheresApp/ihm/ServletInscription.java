@@ -49,16 +49,17 @@ public class ServletInscription extends HttpServlet {
 		String mdpC = request.getParameter("mdpC");
 
 		boolean mdpValid = valideMdp(mdp, mdpC);
-		boolean alreadyExist = manager.selectByMailOrPseudo(email, pseudo);
 
-		if (mdpValid && !alreadyExist) {
-			// TODO: changer le system crédit & amdin
-			Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville,
-					CryptagePassword.crypteString(mdp), 500, false);
-			manager.ajouterUtilisateur(utilisateur);
+		if (mdpValid) {
+			if (!manager.selectByMailOrPseudo(email, pseudo)) {
+				// TODO: changer le system crédit & amdin
+				Utilisateur utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale,
+						ville, CryptagePassword.crypteString(mdp), 500, false);
+				manager.ajouterUtilisateur(utilisateur);
+				// TODO: SESSION utilisateur
+				// TODO redirection vers page acceuil
+			}
 
-			// TODO: SESSION utilisateur
-			// TODO redirection vers page acceuil
 		}
 
 		request.setAttribute("pseudo", pseudo);
