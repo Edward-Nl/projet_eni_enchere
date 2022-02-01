@@ -8,14 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
 
 /**
- * Servlet implementation class ServletProfils
+ * Servlet implementation class ServletModifierProfil
  */
-@WebServlet("/ServletProfils")
-public class ServletProfils extends HttpServlet {
+@WebServlet("/ServletModifierProfil")
+public class ServletModifierProfil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -24,25 +23,7 @@ public class ServletProfils extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		UtilisateurManager manager = new UtilisateurManager();
-
-		HttpSession session = request.getSession();
-
-		String userIdString = request.getParameter("userID");
-		if (userIdString != null) {
-			Utilisateur utilisateurShow = manager.selectAvecId(Integer.parseInt(userIdString));
-
-			// TEST
-
-			if (utilisateurShow != null) {
-				request.setAttribute("utilisateurShow", utilisateurShow);
-			}
-
-			// TEST
-
-			session.setAttribute("utilisateur", utilisateurShow);
-		}
-		request.getRequestDispatcher("/WEB-INF/views/jspProfil.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 	}
 
 	/**
@@ -51,6 +32,13 @@ public class ServletProfils extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Utilisateur utilisateur = (Utilisateur) session.getAttribute("utilisateur");
+		String mdpO = request.getParameter("mdpO");
+
+		System.out.println(utilisateur + "  " + mdpO);
+
+		doGet(request, response);
 	}
 
 }

@@ -25,54 +25,53 @@
 	</h1>
 
 	<c:choose>
-		<c:when test="${utilisateur == null}">
+		<c:when test="${utilisateurShow == null}">
 			<p>
 				<fmt:message key="inconnue" bundle="${r}"></fmt:message>
 			</p>
 		</c:when>
 		<c:otherwise>
 			<label for="pseudo"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.pseudo}</label>
+			<label>${utilisateurShow.pseudo}</label>
 			<br>
 			<label for="nom"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.nom}</label>
+			<label>${utilisateurShow.nom}</label>
 			<br>
 			<label for="prenom"><fmt:message key="champ.trois"
 					bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.prenom}</label>
+			<label>${utilisateurShow.prenom}</label>
 			<br>
 			<label for="email"><fmt:message key="champ.quatres"
 					bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.email}</label>
+			<label>${utilisateurShow.email}</label>
 			<br>
 			<label for="telephone"><fmt:message key="champ.cinq"
 					bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.telephone}</label>
+			<label>${utilisateurShow.telephone}</label>
 			<br>
 			<label for="rue"><fmt:message key="champ.six" bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.rue}</label>
+			<label>${utilisateurShow.rue}</label>
 			<br>
 			<label for="codePostal"><fmt:message key="champ.sept"
 					bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.codePostal}</label>
+			<label>${utilisateurShow.codePostal}</label>
 			<br>
 			<label for="ville"><fmt:message key="champ.huit"
 					bundle="${r}"></fmt:message></label>
-			<label>${utilisateur.ville}</label>
+			<label>${utilisateurShow.ville}</label>
 			<br>
-
-
-			<!-- TODO: Afficher que quand utilisateur log = utilisateur regarder -->
 			<c:if
-				test="${sessionScope.utilisateur.noUtilisateur == utilisateurShow.noUtilisateur}"></c:if>
-			<fmt:message key="champ.modifier" bundle="${r}" var="modifier" />
-			<form action="">
-				<input type="submit" value="${modifier}">
-			</form>
+				test="${sessionScope.utilisateur.noUtilisateur == utilisateurShow.noUtilisateur}">
+				<fmt:message key="champ.modifier" bundle="${r}" var="modifier" />
+				<form method="get"
+					action="<%=response.encodeURL(request.getContextPath() + "/ServletModifierProfil")%>">
+					<input type="submit" value="${modifier}">
+				</form>
+			</c:if>
+
 		</c:otherwise>
 
 	</c:choose>
-
 
 
 </body>

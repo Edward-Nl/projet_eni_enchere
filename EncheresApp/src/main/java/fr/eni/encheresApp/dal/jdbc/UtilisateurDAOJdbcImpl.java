@@ -14,7 +14,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
 	private static final String SELECTBYMAILPSEUDO = "SELECT * FROM UTILISATEURS WHERE email LIKE ? OR pseudo LIKE ?";
 	private static final String SELECTBYPSEUDOANDPASSW = "SELECT * FROM UTILISATEURS WHERE pseudo = ?";
-	private static final String SELECTBYID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ?";
+	private static final String SELECTBYID = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit,administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 
 	@Override
 	public void insert(Utilisateur u) {

@@ -41,12 +41,7 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur selectAvecId(int id) {
-		Utilisateur utilisateur = this.utilisateurDAO.selectById(id);
-		if (utilisateur.getPseudo().trim().isEmpty()) {
-			return null;
-		} else {
-			return utilisateur;
-		}
+		return this.utilisateurDAO.selectById(id);
 
 	}
 
