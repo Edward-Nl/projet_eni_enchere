@@ -55,20 +55,30 @@ public class ServletModifierProfil extends HttpServlet {
 		String mdpO = request.getParameter("mdpO").trim();
 
 		if (manager.selectByIdAndPassword(utilisateur.getNoUtilisateur(), CryptagePassword.crypteString(mdpO))) {
-			String motDePasse = CryptagePassword.crypteString(mdpO);
 			if (!mdp.isEmpty() || !mdpC.isEmpty()) {
 				if (mdp.equals(mdpC)) {
-					motDePasse = CryptagePassword.crypteString(mdp);
+					String motDePasse = CryptagePassword.crypteString(mdp);
+					Utilisateur tmpUtilisateur = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom,
+							email, telephone, rue, code_postal, ville, motDePasse, utilisateur.getCredit(),
+							utilisateur.isAdministrateur());
+					if (!utilisateur.equals(tmpUtilisateur)) {
+						if (manager.updateUtilisateur(tmpUtilisateur)) {
+							session.setAttribute("utilisateur", tmpUtilisateur);
+						}
+					}
+				}
+			} else {
+				String motDePasse = CryptagePassword.crypteString(mdpO);
+				Utilisateur tmpUtilisateur = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email,
+						telephone, rue, code_postal, ville, motDePasse, utilisateur.getCredit(),
+						utilisateur.isAdministrateur());
+				if (!utilisateur.equals(tmpUtilisateur)) {
+					if (manager.updateUtilisateur(tmpUtilisateur)) {
+						session.setAttribute("utilisateur", tmpUtilisateur);
+					}
 				}
 			}
-			Utilisateur tmpUtilisateur = new Utilisateur(utilisateur.getNoUtilisateur(), pseudo, nom, prenom, email,
-					telephone, rue, code_postal, ville, motDePasse, utilisateur.getCredit(),
-					utilisateur.isAdministrateur());
-			if (!utilisateur.equals(tmpUtilisateur)) {
-				if (manager.updateUtilisateur(tmpUtilisateur)) {
-					session.setAttribute("utilisateur", tmpUtilisateur);
-				}
-			}
+
 		}
 
 		doGet(request, response);

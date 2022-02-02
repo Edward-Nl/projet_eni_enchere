@@ -33,20 +33,20 @@
 				<div class="mx-3 col-4">
 					<fmt:message key="pattern.pseudo.titre" bundle="${r}" var="patternPseudoTitre" />
 					<fmt:message key="pattern.general.titre" bundle="${r}" var="patternGeneralTitre" />
-					<label class="my-2 col-4" for="pseudo"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="pseudo" value="${sessionScope.utilisateur.pseudo}" pattern="^[A-Za-z](?:[-_]?[A-Za-z0-9]+){4,29}$" title="${patternPseudoTitre}" required/><br>
-					<label class="my-2 col-4" for="prenom"><fmt:message key="champ.trois" bundle="${r}"></fmt:message></label> <input class="col-6" type="text"name="prenom" value="${sessionScope.utilisateur.prenom}" pattern="^[A-Za-z-]{1,30}$" title="${patternGeneralTitre}" required /> <br>
+					<label class="my-2 col-4" for="pseudo"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="pseudo" value="${sessionScope.utilisateur.pseudo}" pattern="(?=(^[A-Za-z][a-zA-Z0-9]+[_-]?[0-9a-zA-Z]+$))^.{5,30}$" title="${patternPseudoTitre}" placeholder="Eni_Students" required/><br>
+					<label class="my-2 col-4" for="prenom"><fmt:message key="champ.trois" bundle="${r}"></fmt:message></label> <input class="col-6" type="text"name="prenom" value="${sessionScope.utilisateur.prenom}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" title="${patternGeneralTitre}" placeholder="Jean" required /> <br>
 					<fmt:message key="pattern.telephone" bundle="${r}" var="pattern" />
 					<fmt:message key="pattern.telephone.titre" bundle="${r}" var="patternTitre" /> <!-- Regex pour numéro francais ou anglais -->
-					<label class="my-2 col-4" for="telephone"><fmt:message key="champ.cinq" bundle="${r}"></fmt:message></label> <input class="col-6" type="tel" name="telephone" value="${sessionScope.utilisateur.telephone}" pattern="${pattern}" title="${patternTitre}" required/> <br>
-					<label class="my-2 col-4" for="codePostal"><fmt:message key="champ.sept" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="codePostal" value="${sessionScope.utilisateur.codePostal}" required/> <br>
+					<label class="my-2 col-4" for="telephone"><fmt:message key="champ.cinq" bundle="${r}"></fmt:message></label> <input class="col-6" type="tel" name="telephone" value="${sessionScope.utilisateur.telephone}" pattern="${pattern}" title="${patternTitre}" placeholder="+33 565656565/05 65 65 65 65" required/> <br>
+					<label class="my-2 col-4" for="codePostal"><fmt:message key="champ.sept" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="codePostal" value="${sessionScope.utilisateur.codePostal}" placeholder="22222" required/> <br>
 					<label class="my-2 col-4" for="mdpO"><fmt:message key="champ.onze" bundle="${r}"></fmt:message></label><input class="col-6" type="password" name="mdpO" required/><br>
 					<label class="my-2 col-4" for="mdp"><fmt:message key="champ.neuf" bundle="${r}"></fmt:message></label><input class="col-6" type="password" name="mdp" /><br>
 				</div>
 				<div class="mx-3 col-4">
-					<label class="my-2 col-4" for="nom"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="nom" value="${sessionScope.utilisateur.nom}" pattern="^[A-Za-z-]{1,30}$" title="${patternGeneralTitre}" required /><br>
+					<label class="my-2 col-4" for="nom"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="nom" value="${sessionScope.utilisateur.nom}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" title="${patternGeneralTitre}" placeholder="Dupond-Dupond" required /><br>
 					<label class="my-2 col-4" for="email"><fmt:message key="champ.quatres" bundle="${r}"></fmt:message></label> <input class="col-6" type="email" name="email" value="${sessionScope.utilisateur.email}" placeholder="example@campus-eni.fr"  required /> <br>
-					<label class="my-2 col-4" for="rue"><fmt:message key="champ.six" bundle="${r}"></fmt:message></label><input class="col-6" type="text" name="rue" value="${sessionScope.utilisateur.rue}"  required /><br>
-					<label class="my-2 col-4" for="ville"><fmt:message key="champ.huit" bundle="${r}"></fmt:message></label><input class="col-6" type="text" name="ville" value="${sessionScope.utilisateur.ville}" required /><br>
+					<label class="my-2 col-4" for="rue"><fmt:message key="champ.six" bundle="${r}"></fmt:message></label><input class="col-6" type="text" name="rue" value="${sessionScope.utilisateur.rue}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" placeholder="Rue de Dinan" required /><br>
+					<label class="my-2 col-4" for="ville"><fmt:message key="champ.huit" bundle="${r}"></fmt:message></label><input class="col-6" type="text" name="ville" value="${sessionScope.utilisateur.ville}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" placeholder="Paris" required /><br>
 					<label class="my-2 col-4" for="mdpC"><fmt:message key="champ.dix" bundle="${r}"></fmt:message></label><input class="col-6" type="password" name="mdpC" /> <br>
 				</div>
 			</div>

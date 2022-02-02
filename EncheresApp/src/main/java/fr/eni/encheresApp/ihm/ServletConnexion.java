@@ -34,7 +34,8 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		Cookie[] cookies = request.getCookies();
 		UtilisateurManager manager = new UtilisateurManager();
@@ -42,11 +43,11 @@ public class ServletConnexion extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 		boolean connect = manager.selectByPseudoOrMailAndPsw(pseudo, CryptagePassword.crypteString(motDePasse));
 		if (connect) {
-			if(request.getParameter("souvenir")!=null) {
+			if (request.getParameter("souvenir") != null) {
 				Cookie souvenirPseudo = new Cookie("pseudo", pseudo);
 				Cookie souvenirMdp = new Cookie("Mdp", motDePasse);
-				souvenirPseudo.setMaxAge(3600*24*30); // Durée de vie de 30 Jours
-				souvenirMdp.setMaxAge(3600*24*30); // Durée de vie de 30 Jours
+				souvenirPseudo.setMaxAge(3600 * 24 * 30); // Durée de vie de 30 Jours
+				souvenirMdp.setMaxAge(3600 * 24 * 30); // Durée de vie de 30 Jours
 				response.addCookie(souvenirPseudo);
 				response.addCookie(souvenirMdp);
 			}
@@ -54,10 +55,9 @@ public class ServletConnexion extends HttpServlet {
 			HttpSession sessionCourrante = request.getSession();
 			sessionCourrante.setAttribute("utilisateurCourant", utilisateurCourrant);
 			System.out.println(sessionCourrante);
-			request.getRequestDispatcher("/ServletAccueil").forward(request, response);
-			
+			response.sendRedirect(request.getContextPath() + "/ServletAccueil");
 		} else {
-			request.getRequestDispatcher("/ServletConnexion").forward(request, response);
+			doGet(request, response);
 		}
 	}
 }
