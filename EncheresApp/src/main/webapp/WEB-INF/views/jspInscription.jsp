@@ -34,7 +34,7 @@
 					<label class="my-2 col-4" for="pseudo"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="pseudo" value="${pseudo}" pattern="(?=(^[A-Za-z][a-zA-Z0-9]+[_-]?[0-9a-zA-Z]+$))^.{5,30}$" title="${patternPseudoTitre}" placeholder="Eni_Students" required/><br>
 					<label class="my-2 col-4" for="prenom"><fmt:message key="champ.trois" bundle="${r}"></fmt:message></label> <input class="col-6" type="text"name="prenom" value="${prenom}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" title="${patternGeneralTitre}" placeholder="Jean" required /> <br>
 					<fmt:message key="pattern.telephone" bundle="${r}" var="pattern" />
-					<fmt:message key="pattern.telephone.title" bundle="${r}" var="patternTitre" />
+					<fmt:message key="pattern.telephone.titre" bundle="${r}" var="patternTitre" />
 					<label class="my-2 col-4" for="telephone"><fmt:message key="champ.cinq" bundle="${r}"></fmt:message></label> <input class="col-6" type="tel" name="telephone" value="${telephone}" pattern="${pattern}" title="${patternTitre}" placeholder="+33 565656565/05 65 65 65 65" required/> <br>
 					<label class="my-2 col-4" for="codePostale"><fmt:message key="champ.sept" bundle="${r}"></fmt:message></label> <input class="col-6" type="text" name="codePostale" value="${codePostale}" placeholder="22222" required/> <br>
 					<label class="my-2 col-4" for="mdp"><fmt:message key="champ.neuf" bundle="${r}"></fmt:message></label><input class="col-6" type="password" name="mdp" /><br>
@@ -51,8 +51,8 @@
 			<div class="d-flex justify-content-center">
 				<fmt:message key="champ.creer" bundle="${r}" var="creer" />
 				<fmt:message key="champ.annuler" bundle="${r}" var="annuler" />
-				<input class="mx-5 my-3 col-3" type="submit" value="${creer}"> 
-				<input class="mx-5 my-3 col-3" type="button" value="${annuler}">
+				<input class="btn btn-primary mx-5 my-3 col-3" type="submit" value="${creer}"> 
+				<a href="<%=request.getContextPath()%>/ServletAccueil" class="btn btn-danger mx-5 my-3 col-3"><fmt:message key="champ.annuler" bundle="${r}"></fmt:message></a>
 			</div>
 			
 			

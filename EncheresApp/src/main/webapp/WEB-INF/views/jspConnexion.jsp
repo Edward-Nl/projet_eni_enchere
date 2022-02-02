@@ -38,11 +38,12 @@
 	
 		<div class="mx-auto d-flex flex-column align-items-center">
 			<form action="<%=request.getContextPath()%>/ServletConnexion" method="POST" class="col-6">
+				<fmt:message key="pattern.pseudo.titre" bundle="${r}" var="patternPseudoTitre" />
 				<label for="pseudo" class="col-3 my-3"><fmt:message key="champ.un" bundle="${r}"></fmt:message></label>
-				<input type="text" name="pseudo" placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>" class="col-6" value="<%= pseudo%>"/>
+				<input type="text" name="pseudo" required placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>" class="col-6" pattern="(?=(^[A-Za-z][a-zA-Z0-9]+[_-]?[0-9a-zA-Z]+$))^.{5,30}$" title="${patternPseudoTitre}" value="<%= pseudo%>"/>
 				<br>
 				<label for="motDePasse" class="col-3 my-3"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label>
-				<input type="password" name="motDePasse" placeholder="<fmt:message key="pl.deux" bundle="${r}"></fmt:message>" class="col-6" value="<%= mdp %>"/>
+				<input type="password" name="motDePasse" required placeholder="<fmt:message key="pl.deux" bundle="${r}"></fmt:message>" class="col-6" value="<%= mdp %>"/>
 				<br>
 				<div class="d-flex flex-row-reverse justify-content-center my-3">
 					<div class="d-flex flex-column mx-1">
@@ -52,12 +53,12 @@
 						</div>
 						<a href=""><fmt:message key="a.mdp" bundle="${r}"></fmt:message></a>
 					</div>
-					<button class="col-3" type="submit"><fmt:message key="btn.connexion" bundle="${r}"></fmt:message></button>
+					<button class="btn btn-primary col-3" type="submit"><fmt:message key="btn.connexion" bundle="${r}"></fmt:message></button>
 				</div>
 				
 			</form>
 			
-			<a href="<%=request.getContextPath()%>/ServletInscription"><button><fmt:message key="btn.inscription" bundle="${r}"></fmt:message></button></a>
+			<a href="<%=request.getContextPath()%>/ServletInscription" class="btn btn-warning"><fmt:message key="btn.inscription" bundle="${r}"></fmt:message></a>
 		</div>
 	
 	</div>
