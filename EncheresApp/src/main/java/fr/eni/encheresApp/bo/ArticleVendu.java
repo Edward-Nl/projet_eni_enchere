@@ -99,9 +99,36 @@ public class ArticleVendu {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
+	/**
+	 * Constructeur sans etat de vente
+	 * @param no_Article
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param no_Utilisateur
+	 * @param no_Categorie
+	 */
+	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, int no_Utilisateur, int no_Categorie) {
+		super();
+		this.no_Article = no_Article;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.no_Utilisateur = no_Utilisateur;
+		this.no_Categorie = no_Categorie;
+	}
 
 	/* GETTER AND SETTER*/
 	
+	
+
 	public int getNo_Article() {
 		return no_Article;
 	}
