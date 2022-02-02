@@ -52,7 +52,7 @@
 				<fmt:message key="champ.creer" bundle="${r}" var="creer" />
 				<fmt:message key="champ.annuler" bundle="${r}" var="annuler" />
 				<input class="btn btn-primary mx-5 my-3 col-3" type="submit" value="${creer}"> 
-				<a href="<%=request.getContextPath()%>/ServletAccueil" class="btn btn-danger mx-5 my-3 col-3"><fmt:message key="champ.annuler" bundle="${r}"></fmt:message></a>
+				<a href="<%=request.getContextPath()%>/" class="btn btn-danger mx-5 my-3 col-3"><fmt:message key="champ.annuler" bundle="${r}"></fmt:message></a>
 			</div>
 			
 			

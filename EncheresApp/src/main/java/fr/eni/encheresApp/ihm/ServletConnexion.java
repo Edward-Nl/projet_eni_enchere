@@ -17,7 +17,7 @@ import fr.eni.encheresApp.dal.CryptagePassword;
 /**
  * Servlet implementation class ServletConnexion
  */
-@WebServlet("/ServletConnexion")
+@WebServlet("/Connexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +55,7 @@ public class ServletConnexion extends HttpServlet {
 			HttpSession sessionCourrante = request.getSession();
 			sessionCourrante.setAttribute("utilisateurCourant", utilisateurCourrant);
 			System.out.println(sessionCourrante);
-			response.sendRedirect(request.getContextPath() + "/ServletAccueil");
+			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			doGet(request, response);
 		}

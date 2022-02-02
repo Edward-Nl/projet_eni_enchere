@@ -25,14 +25,14 @@
 						<div>
 							<a class="mx-1" href=""><fmt:message key="aEnch" bundle="${r}"></fmt:message></a>
 							<a class="mx-1" href=""><fmt:message key="aVend" bundle="${r}"></fmt:message></a>
-							<a class="mx-1" href="<%=request.getContextPath()%>/ServletProfils?userID=${sessionScope.utilisateurCourant.getNoUtilisateur()}"><fmt:message key="aProf" bundle="${r}"></fmt:message></a>
-							<a class="mx-1" href="<%=request.getContextPath()%>/ServletDeconnexion"><fmt:message key="aDeco" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/Profil?userID=${sessionScope.utilisateurCourant.getNoUtilisateur()}"><fmt:message key="aProf" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/Profil/Deconnexion"><fmt:message key="aDeco" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div>
-							<a class="mx-1" href="<%=request.getContextPath()%>/ServletInscription"><fmt:message key="aIns" bundle="${r}"></fmt:message></a>
-							<a class="mx-1" href="<%=request.getContextPath()%>/ServletConnexion"><fmt:message key="aConx" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/Inscription"><fmt:message key="aIns" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/Connexion"><fmt:message key="aConx" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:otherwise>
 				</c:choose>

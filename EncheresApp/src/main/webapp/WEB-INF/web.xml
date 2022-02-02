@@ -10,10 +10,10 @@
 	<servlet>
 		<description>Accueil</description>
 		<servlet-name>jspAccueil</servlet-name>
-		<jsp-file>/WEB-INF/views/jspAccueil.jsp</jsp-file>
+		<servlet-class>fr.eni.encheresApp.ihm.ServletAccueil</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>jspAccueil</servlet-name>
-		<url-pattern>/views/ServletAccueil</url-pattern>
+		<url-pattern></url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -14,7 +14,7 @@ import fr.eni.encheresApp.dal.CryptagePassword;
 /**
  * Servlet implementation class ServletInscription
  */
-@WebServlet("/ServletInscription")
+@WebServlet("/Inscription")
 public class ServletInscription extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

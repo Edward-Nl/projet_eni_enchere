@@ -65,12 +65,12 @@
 						test="${sessionScope.utilisateur.noUtilisateur == utilisateurShow.noUtilisateur}">
 						<fmt:message key="champ.modifier" bundle="${r}" var="modifier" />
 						<form method="get"
-							action="<%=response.encodeURL(request.getContextPath() + "/ServletModifierProfil")%>">
+							action="<%=response.encodeURL(request.getContextPath() + "/Profil/Modifier")%>">
 							<input class="btn btn-warning col-2 my-3" type="submit" value="${modifier}">
 						</form>
 					</c:if>
 					
-					<a class="btn btn-primary col-2 my-3" href="<%=request.getContextPath()%>/ServletAccueil">Retour à l'accueil</a>
+					<a class="btn btn-primary col-2 my-3" href="<%=request.getContextPath()%>/">Retour à l'accueil</a>
 		
 				</c:otherwise>
 		

@@ -26,7 +26,7 @@
 		</h1>
 
 		<div class="mx-auto d-flex flex-column align-items-center">
-			<form action="<%=request.getContextPath()%>/ServletConnexion"
+			<form action="<%=request.getContextPath()%>/Connexion"
 				method="POST" class="col-6">
 				<fmt:message key="pattern.pseudo.titre" bundle="${r}"
 					var="patternPseudoTitre" />
@@ -57,11 +57,11 @@
 
 			</form>
 			<div class="col-6 text-center">
-			<a href="<%=request.getContextPath()%>/ServletInscription"
+			<a href="<%=request.getContextPath()%>/Inscription"
 				class="btn btn-outline-warning col-4"><fmt:message key="btn.inscription"
 					bundle="${r}"></fmt:message></a>
 					
-			<a class="btn btn-outline-danger col-4" href="<%=request.getContextPath()%>/ServletAccueil"><fmt:message key="retour" bundle="${r}"></fmt:message></a>
+			<a class="btn btn-outline-danger col-4" href="<%=request.getContextPath()%>/"><fmt:message key="retour" bundle="${r}"></fmt:message></a>
 			</div>
 		</div>
 

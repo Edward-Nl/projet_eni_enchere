@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class ServletDeconnexion
  */
-@WebServlet("/ServletDeconnexion")
+@WebServlet("/Profil/Deconnexion")
 public class ServletDeconnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,7 +19,7 @@ public class ServletDeconnexion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.getSession().invalidate();
-		response.sendRedirect(request.getContextPath()+ "/ServletAccueil");
+		response.sendRedirect(request.getContextPath()+ "/");
 	}
 
 	/**
