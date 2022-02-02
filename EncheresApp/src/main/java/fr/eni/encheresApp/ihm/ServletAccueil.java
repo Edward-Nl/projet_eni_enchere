@@ -29,9 +29,9 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager manager = new ArticlesVenduManager();
 		List<ArticleVendu> listeArticle;
+		ArticleVendu article;
 		try {
 			listeArticle = manager.selectAllArticle();
-			System.out.println(listeArticle);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

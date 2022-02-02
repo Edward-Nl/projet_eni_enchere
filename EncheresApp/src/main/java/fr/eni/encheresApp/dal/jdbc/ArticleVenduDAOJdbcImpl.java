@@ -13,6 +13,8 @@ import fr.eni.encheresApp.dal.ConnectionProvider;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO{
 	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
+	private static final String SELECT_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
+	private static final String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 
 	@Override
 	public void insertArticle(ArticleVendu article) {
@@ -41,8 +43,20 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO{
 
 	@Override
 	public ArticleVendu selectArticleById(int noArticle) {
-		// TODO Auto-generated method stub
-		return null;
+		ArticleVendu article = null;
+		try(Connection cnx = ConnectionProvider.getConnection(); PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID)){
+			pstmt.setInt(1, noArticle);
+			try(ResultSet rs = pstmt.executeQuery()) {
+				if(rs.next()) {
+					article = new ArticleVendu(rs.getInt("no_article"),rs.getString("nom_article"),rs.getString("description"),
+							rs.getDate("date_debut_encheres"),rs.getDate("date_fin_encheres"),rs.getInt("prix_initial"),
+							rs.getInt("prix_vente"),rs.getInt("no_utilisateur"),rs.getInt("no_categorie"));
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return article;
 	}
 
 	@Override
@@ -59,7 +73,12 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO{
 
 	@Override
 	public void deleteArticle(int noArticle) {
-		// TODO Auto-generated method stub
+		try(Connection cnx = ConnectionProvider.getConnection(); PreparedStatement pstmt = cnx.prepareStatement(DELETE)){
+			pstmt.setInt(1, noArticle);
+			pstmt.executeUpdate();
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
