@@ -56,10 +56,13 @@
 				</div>
 
 			</form>
-
+			<div class="col-6 text-center">
 			<a href="<%=request.getContextPath()%>/ServletInscription"
-				class="btn btn-warning"><fmt:message key="btn.inscription"
+				class="btn btn-outline-warning col-4"><fmt:message key="btn.inscription"
 					bundle="${r}"></fmt:message></a>
+					
+			<a class="btn btn-outline-danger col-4" href="<%=request.getContextPath()%>/ServletAccueil"><fmt:message key="retour" bundle="${r}"></fmt:message></a>
+			</div>
 		</div>
 
 	</div>
