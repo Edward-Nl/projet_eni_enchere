@@ -51,8 +51,8 @@ public class ServletModifierProfil extends HttpServlet {
 			String mdpO = request.getParameter("mdpO").trim();
 
 			try {
-				if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(),
-						CryptagePassword.crypteString(mdpO))) {
+				System.out.println("la " + mdpO);
+				if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(), mdpO)) {
 					String mdp = request.getParameter("mdp").trim();
 					String mdpC = request.getParameter("mdpC").trim();
 
@@ -62,6 +62,7 @@ public class ServletModifierProfil extends HttpServlet {
 							utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
 									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
 							if (!utilisateurCourant.equals(utilisateurModifier)) {
+								utilisateurModifier.setMotDePasse(mdp);
 								if (manager.updateUtilisateur(utilisateurModifier)) {
 									session.setAttribute("utilisateurCourant", utilisateurModifier);
 								}
@@ -77,20 +78,23 @@ public class ServletModifierProfil extends HttpServlet {
 								utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
 								utilisateurCourant.isAdministrateur());
 						if (!utilisateurCourant.equals(utilisateurModifier)) {
+							utilisateurModifier.setMotDePasse(mdpO);
 							if (manager.updateUtilisateur(utilisateurModifier)) {
 								session.setAttribute("utilisateurCourant", utilisateurModifier);
 							}
 						}
 					}
 				} else {
-					Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
-							utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+					Utilisateur utilisateurModifier = utilisateurParser(request, "",
+							utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+							utilisateurCourant.isAdministrateur());
 					session.setAttribute("utilisateurModifier", utilisateurModifier);
 				}
 			} catch (BusinessException e) {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 				e.printStackTrace();
 			}
+			System.out.println(utilisateurCourant);
 			doGet(request, response);
 		} else {
 			response.sendRedirect(request.getContextPath() + "/");

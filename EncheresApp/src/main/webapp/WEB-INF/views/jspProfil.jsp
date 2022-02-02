@@ -65,7 +65,7 @@
 					<label class="my-2">${utilisateurShow.ville}</label>
 					<br>
 					<c:if
-						test="${sessionScope.utilisateurCourrant.noUtilisateur == utilisateurShow.noUtilisateur}">
+						test="${sessionScope.utilisateurCourant.noUtilisateur == utilisateurShow.noUtilisateur}">
 						<fmt:message key="champ.modifier" bundle="${r}" var="modifier" />
 						<form method="get"
 							action="<%=response.encodeURL(request.getContextPath() + "/Profil/Modifier")%>">

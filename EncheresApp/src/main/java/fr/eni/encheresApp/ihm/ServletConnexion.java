@@ -48,7 +48,7 @@ public class ServletConnexion extends HttpServlet {
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
-		if (utilisateur != null) {
+		if (utilisateur.getNoUtilisateur() != -1) {
 			if (request.getParameter("souvenir") != null) {
 				Cookie souvenirPseudo = new Cookie("pseudo", pseudo);
 				Cookie souvenirMdp = new Cookie("Mdp", motDePasse);
@@ -58,6 +58,7 @@ public class ServletConnexion extends HttpServlet {
 				response.addCookie(souvenirMdp);
 			}
 			HttpSession sessionCourrante = request.getSession();
+			System.out.println(utilisateur);
 			sessionCourrante.setAttribute("utilisateurCourant", utilisateur);
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {

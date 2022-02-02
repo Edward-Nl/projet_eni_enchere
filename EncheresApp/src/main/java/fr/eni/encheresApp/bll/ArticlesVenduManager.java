@@ -18,7 +18,7 @@ public class ArticlesVenduManager {
 		List<ArticleVendu> articles;
 		try {
 			articles = ArticleVenduDAO.selectAllArticle();
-			System.out.println(articles);
+			//System.out.println(articles);
 		} catch(Exception e) {
 			throw new SQLException();
 		}

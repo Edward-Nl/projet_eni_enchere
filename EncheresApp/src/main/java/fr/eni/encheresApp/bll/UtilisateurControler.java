@@ -80,7 +80,7 @@ public class UtilisateurControler {
 
 	public static void valideRue(String rue, BusinessException businessException) {
 		rue = rue.trim();
-		boolean rueControle = rue.matches("(?=(^[A-Za-z][a-zA-Z0-9]+[-\\s]?[0-9a-zA-Z]+$))^.{5,30}$");
+		boolean rueControle = rue.matches("(?=(^[A-Za-z0-9]*[\s]?[a-zA-Z]+([-\s]?[0-9a-zA-Z]*)+$))^.{5,30}$");
 		if (rue.isEmpty()) {
 			rueControle = false;
 		}
@@ -93,7 +93,7 @@ public class UtilisateurControler {
 	public static void valideCodePostal(String codePostal, BusinessException businessException) {
 		codePostal = codePostal.trim();
 		// Regex Code postal FR
-		boolean codePostalControle = codePostal.matches("^(([1-95]{2}|2A|2B)[0-9]{3})$|^[971-974]$");
+		boolean codePostalControle = codePostal.matches("^(([0-9]{2}|2A|2B)[0-9]{3})$|^[971-974]$");
 		if (codePostal.isEmpty() || codePostal.length() > 10) {
 			codePostalControle = false;
 		}

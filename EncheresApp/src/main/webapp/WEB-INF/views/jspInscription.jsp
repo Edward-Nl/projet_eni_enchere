@@ -65,10 +65,12 @@
 					<label class="my-2 col-4" for="codePostale"><fmt:message
 							key="champ.sept" bundle="${r}"></fmt:message></label> <input
 						class="col-6" type="text" name="codePostale"
-						value="${codePostale}" placeholder="22222" required /> <br>
+						value="${codePostale}" placeholder="22222"
+						pattern="^(([0-9]{2}|2A|2B)[0-9]{3})$|^[971-974]$" required /> <br>
 					<label class="my-2 col-4" for="mdp"><fmt:message
 							key="champ.neuf" bundle="${r}"></fmt:message></label><input class="col-6"
-						type="password" name="mdp" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" /><br>
+						type="password" name="mdp"
+						pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" /><br>
 				</div>
 				<div class="mx-3 col-4">
 					<label class="my-2 col-4" for="nom"><fmt:message
@@ -83,7 +85,7 @@
 						class="my-2 col-4" for="rue"><fmt:message key="champ.six"
 							bundle="${r}"></fmt:message></label><input class="col-6" type="text"
 						name="rue" value="${rue}"
-						pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$"
+						pattern="(?=(^[A-Za-z0-9]*[\s]?[a-zA-Z]+([-\s]?[0-9a-zA-Z]*)+$))^.{5,30}$"
 						placeholder="Rue de Dinan" required /><br> <label
 						class="my-2 col-4" for="ville"><fmt:message
 							key="champ.huit" bundle="${r}"></fmt:message></label><input class="col-6"

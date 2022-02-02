@@ -55,6 +55,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	@Override
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) {
 		Utilisateur utilisateur = new Utilisateur();
+		utilisateur.setNoUtilisateur(-1);
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_AND_PASSW)) {
 			pstmt.setString(1, pseudo);
@@ -68,6 +69,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+
 		return utilisateur;
 	}
 

@@ -30,7 +30,6 @@ public class ServletProfils extends HttpServlet {
 
 		if (userIdString != null) {
 			Utilisateur utilisateurShow = manager.selectAvecId(Integer.parseInt(userIdString));
-			// TEST
 			if (utilisateurShow != null) {
 				request.setAttribute("utilisateurShow", utilisateurShow);
 			}

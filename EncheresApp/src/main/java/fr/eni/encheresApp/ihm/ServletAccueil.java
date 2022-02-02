@@ -31,7 +31,7 @@ public class ServletAccueil extends HttpServlet {
 		List<ArticleVendu> listeArticle;
 		try {
 			listeArticle = manager.selectAllArticle();
-			System.out.println(listeArticle);
+			// System.out.println(listeArticle);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

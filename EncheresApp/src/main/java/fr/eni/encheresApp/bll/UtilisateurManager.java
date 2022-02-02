@@ -50,7 +50,7 @@ public class UtilisateurManager {
 		BusinessException businessException = new BusinessException();
 		UtilisateurControler.valideMotDePasse(password, businessException);
 		if (!businessException.hasErreurs()) {
-			return this.utilisateurDAO.selectByIdAndPsw(id, password);
+			return this.utilisateurDAO.selectByIdAndPsw(id, CryptagePassword.crypteString(password));
 		} else {
 			throw businessException;
 		}
@@ -60,7 +60,6 @@ public class UtilisateurManager {
 		BusinessException businessException = new BusinessException();
 		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
 		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
-		System.out.println(utilisateur);
 		if (!businessException.hasErreurs()) {
 			this.utilisateurDAO.insert(utilisateur);
 			return true;
@@ -78,7 +77,6 @@ public class UtilisateurManager {
 	public boolean updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
-
 		if (!businessException.hasErreurs()) {
 			return this.utilisateurDAO.updateUser(utilisateur);
 		} else {
