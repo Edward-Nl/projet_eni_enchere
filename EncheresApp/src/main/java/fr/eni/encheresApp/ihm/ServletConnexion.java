@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
@@ -37,12 +38,17 @@ public class ServletConnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		Cookie[] cookies = request.getCookies();
 		UtilisateurManager manager = new UtilisateurManager();
 		String pseudo = request.getParameter("pseudo");
 		String motDePasse = request.getParameter("motDePasse");
-		boolean connect = manager.selectByPseudoOrMailAndPsw(pseudo, CryptagePassword.crypteString(motDePasse));
-		if (connect) {
+		BusinessException businessException = new BusinessException();
+		Utilisateur utilisateur = null;
+		try {
+			utilisateur = manager.selectByPseudoAndPsw(pseudo, motDePasse);
+		} catch (BusinessException e) {
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+		}
+		if (utilisateur != null) {
 			if (request.getParameter("souvenir") != null) {
 				Cookie souvenirPseudo = new Cookie("pseudo", pseudo);
 				Cookie souvenirMdp = new Cookie("Mdp", motDePasse);
@@ -51,12 +57,14 @@ public class ServletConnexion extends HttpServlet {
 				response.addCookie(souvenirPseudo);
 				response.addCookie(souvenirMdp);
 			}
-			Utilisateur utilisateurCourrant = manager.selectByPseudo(pseudo);
 			HttpSession sessionCourrante = request.getSession();
-			sessionCourrante.setAttribute("utilisateurCourant", utilisateurCourrant);
-			System.out.println(sessionCourrante);
+			sessionCourrante.setAttribute("utilisateurCourant", utilisateur);
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
+			if (request.getAttribute("listeCodesErreur") == null) {
+				businessException.ajouterErreur(CodesResultatIHM.PSEUDO_OU_MOT_DE_PASSE_FAUX);
+				request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
+			}
 			doGet(request, response);
 		}
 	}

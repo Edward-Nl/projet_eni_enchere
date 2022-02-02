@@ -28,6 +28,12 @@
 		<h1>
 			<fmt:message key="soustitre" bundle="${r}"></fmt:message>
 		</h1>
+		<c:if test="${listeCodesErreur != null}">
+					<p style="color: red;">Erreur lors du login du compte</p>
+					<c:forEach var="erreur" items="${listeCodesErreur}">
+						<p>${LecteurMessage.getMessageErreur(erreur)}</p>
+					</c:forEach>
+				</c:if>
 		<form method="post" action="<%=request.getContextPath() %>/Account/Modifier" class="my-3">
 			<div class="d-flex justify-content-center">
 				<div class="col-6">

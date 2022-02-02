@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
@@ -49,41 +50,46 @@ public class ServletModifierProfil extends HttpServlet {
 
 			String mdpO = request.getParameter("mdpO").trim();
 
-			if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(),
-					CryptagePassword.crypteString(mdpO))) {
-				String mdp = request.getParameter("mdp").trim();
-				String mdpC = request.getParameter("mdpC").trim();
+			try {
+				if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(),
+						CryptagePassword.crypteString(mdpO))) {
+					String mdp = request.getParameter("mdp").trim();
+					String mdpC = request.getParameter("mdpC").trim();
 
-				if (!mdp.isEmpty() || !mdpC.isEmpty()) {
-					Utilisateur utilisateurModifier = null;
-					if (mdp.equals(mdpC)) {
-						utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
-								utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+					if (!mdp.isEmpty() || !mdpC.isEmpty()) {
+						Utilisateur utilisateurModifier = null;
+						if (mdp.equals(mdpC)) {
+							utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
+									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+							if (!utilisateurCourant.equals(utilisateurModifier)) {
+								if (manager.updateUtilisateur(utilisateurModifier)) {
+									session.setAttribute("utilisateurCourant", utilisateurModifier);
+								}
+							}
+						} else {
+							utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
+									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+							session.setAttribute("utilisateurModifier", utilisateurModifier);
+						}
+
+					} else {
+						Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
+								utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+								utilisateurCourant.isAdministrateur());
 						if (!utilisateurCourant.equals(utilisateurModifier)) {
 							if (manager.updateUtilisateur(utilisateurModifier)) {
 								session.setAttribute("utilisateurCourant", utilisateurModifier);
 							}
 						}
-					} else {
-						utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
-								utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-						session.setAttribute("utilisateurModifier", utilisateurModifier);
 					}
-
 				} else {
-					Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
-							utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-							utilisateurCourant.isAdministrateur());
-					if (!utilisateurCourant.equals(utilisateurModifier)) {
-						if (manager.updateUtilisateur(utilisateurModifier)) {
-							session.setAttribute("utilisateurCourant", utilisateurModifier);
-						}
-					}
+					Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
+							utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+					session.setAttribute("utilisateurModifier", utilisateurModifier);
 				}
-			} else {
-				Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
-						utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-				session.setAttribute("utilisateurModifier", utilisateurModifier);
+			} catch (BusinessException e) {
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				e.printStackTrace();
 			}
 			doGet(request, response);
 		} else {
