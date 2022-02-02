@@ -120,7 +120,6 @@ public class UtilisateurControler {
 
 		boolean motDePasseControle = motDePasse
 				.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-		System.out.println("la ici " + motDePasseControle);
 		if (motDePasse.isEmpty()) {
 			motDePasseControle = false;
 		}

@@ -25,22 +25,15 @@ public class ServletProfils extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UtilisateurManager manager = new UtilisateurManager();
-
 		HttpSession session = request.getSession();
-
 		String userIdString = request.getParameter("userID");
+
 		if (userIdString != null) {
 			Utilisateur utilisateurShow = manager.selectAvecId(Integer.parseInt(userIdString));
-
 			// TEST
-
 			if (utilisateurShow != null) {
 				request.setAttribute("utilisateurShow", utilisateurShow);
 			}
-
-			// TEST
-
-			session.setAttribute("utilisateur", utilisateurShow);
 		}
 		request.getRequestDispatcher("/WEB-INF/views/jspProfil.jsp").forward(request, response);
 	}

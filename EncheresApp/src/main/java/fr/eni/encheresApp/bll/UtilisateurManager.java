@@ -17,12 +17,9 @@ public class UtilisateurManager {
 		BusinessException businessException = new BusinessException();
 		UtilisateurControler.validePseudo(pseudo, businessException);
 		UtilisateurControler.valideEmail(mail, businessException);
-		System.out.println(" 4 ");
 		if (!businessException.hasErreurs()) {
-			System.out.println(" 5 ");
 			return this.utilisateurDAO.selectByMailAndPseudp(mail, pseudo);
 		} else {
-			System.out.println(" 6");
 			throw businessException;
 		}
 	}
@@ -32,7 +29,6 @@ public class UtilisateurManager {
 
 		UtilisateurControler.validePseudo(pseudo, businessException);
 		UtilisateurControler.valideMotDePasse(password, businessException);
-
 		if (!businessException.hasErreurs()) {
 			return this.utilisateurDAO.selectByPseudoAndPsw(pseudo, CryptagePassword.crypteString(password));
 		} else {

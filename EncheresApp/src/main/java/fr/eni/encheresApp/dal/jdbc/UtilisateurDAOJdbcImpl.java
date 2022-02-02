@@ -13,7 +13,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	// TODO: gestion admin & cr�dits
 	private static final String INSERT = "INSERT INTO UTILISATEURS(pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur) VALUES (?,?,?,?,?,?,?,?,?,500,0)";
 	private static final String SELECT_BY_MAIL_PSEUDO = "SELECT * FROM UTILISATEURS WHERE email = ? OR pseudo = ?";
-	private static final String SELECT_BY_PSEUDO_AND_PASSW = "SELECT * FROM UTILISATEURS WHERE pseudo = ? WHERE mot_de_passe = ?";
+	private static final String SELECT_BY_PSEUDO_AND_PASSW = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
 	private static final String SELECT_BY_ID = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?";
 	private static final String SELECT_BY_ID_AND_PSW = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ? AND mot_de_passe = ?";
@@ -54,7 +54,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 	@Override
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) {
-		Utilisateur utilisateur = null;
+		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO_AND_PASSW)) {
 			pstmt.setString(1, pseudo);
@@ -78,7 +78,6 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				pstmt.setString(1, pseudo);
 				try (ResultSet rs = pstmt.executeQuery()) {
 					if (rs.next()) {
-						System.out.println("ici");
 						utilisateurParser(rs, utilisateur);
 					}
 				}
