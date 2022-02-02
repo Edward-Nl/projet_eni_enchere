@@ -14,35 +14,28 @@
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 </head>
 <body>
-	<!-- Toutes les infos de l'utilisateur sont récup et on ce sert du numero pour l'affichage connect/pas connect.
-	Par default le numero est de 0 -->
-	<%
-		Utilisateur utils = null; 
-		int no_utilisateur= 0;
-		if(session.getAttribute("utilisateurCourant")!=null){
-			utils = (Utilisateur)session.getAttribute("utilisateurCourant");
-			no_utilisateur = utils.getNoUtilisateur();
-		}	
-	%>
-	
+
 	<div class="container">
 		<header class="d-flex justify-content-between align-items-center">
 			<h1><fmt:message key="titre" bundle="${r}"></fmt:message></h1>
 			<div>
 			<!-- Selon le status de connexion on affiche ou non les liens  -->
-				<%if(no_utilisateur!=0) {%>
-					<div>
-						<a class="mx-1" href=""><fmt:message key="aEnch" bundle="${r}"></fmt:message></a>
-						<a class="mx-1" href=""><fmt:message key="aVend" bundle="${r}"></fmt:message></a>
-						<a class="mx-1" href="<%=request.getContextPath()%>/ServletProfils?userID=<%=no_utilisateur%>"><fmt:message key="aProf" bundle="${r}"></fmt:message></a>
-						<a class="mx-1" href="<%=request.getContextPath()%>/ServletDeconnexion"><fmt:message key="aDeco" bundle="${r}"></fmt:message></a>
-					</div>
-				<%}else if(no_utilisateur==0){ %>
-					<div>
-						<a class="mx-1" href="<%=request.getContextPath()%>/ServletInscription"><fmt:message key="aIns" bundle="${r}"></fmt:message></a>
-						<a class="mx-1" href="<%=request.getContextPath()%>/ServletConnexion"><fmt:message key="aConx" bundle="${r}"></fmt:message></a>
-					</div>
-				<%} %>
+				<c:choose>
+					<c:when test="${sessionScope.utilisateurCourant != null}">
+						<div>
+							<a class="mx-1" href=""><fmt:message key="aEnch" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href=""><fmt:message key="aVend" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/ServletProfils?userID=${sessionScope.utilisateurCourant.getNoUtilisateur()}"><fmt:message key="aProf" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/ServletDeconnexion"><fmt:message key="aDeco" bundle="${r}"></fmt:message></a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div>
+							<a class="mx-1" href="<%=request.getContextPath()%>/ServletInscription"><fmt:message key="aIns" bundle="${r}"></fmt:message></a>
+							<a class="mx-1" href="<%=request.getContextPath()%>/ServletConnexion"><fmt:message key="aConx" bundle="${r}"></fmt:message></a>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</header>
 		<main>
@@ -60,7 +53,7 @@
 						<option>Sport & Loisirs</option>
 					</select>
 					<!-- Si l'utilisateur est connect alors on affiche les radio et checkbox -->
-					<%if(no_utilisateur!=0) {%>
+					<c:if test="${sessionScope.utilisateurCourant != null}">
 						<div class="d-flex">
 							<div class="d-flex flex-column me-3">
 								<div>
@@ -99,7 +92,7 @@
 								</div>
 							</div>
 						</div>
-					<%} %>
+					</c:if>
 				</div>
 				
 				<button id="btnValider" class="btn btn-outline-success my-auto col-4" type="submit"><fmt:message key="btnRech" bundle="${r}"></fmt:message></button>
