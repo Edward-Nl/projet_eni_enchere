@@ -26,7 +26,22 @@ public class ServletModifierProfil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (request.getSession().getAttribute("utilisateurCourant") != null) {
+		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
+		if (pseudo != null) {
+			Utilisateur utilisateurCourantComplet = null;
+			UtilisateurManager manager = new UtilisateurManager();
+			try {
+				utilisateurCourantComplet = manager.selectByPseudo(pseudo);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			if (utilisateurCourantComplet != null) {
+				utilisateurCourantComplet.setNoUtilisateur(-1);
+				utilisateurCourantComplet.setMotDePasse("");
+				utilisateurCourantComplet.setCredit(-1);
+				utilisateurCourantComplet.setAdministrateur(false);
+			}
+			request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
 			request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 			if (request.getSession().getAttribute("utilisateurModifier") != null) {
 				request.getSession().removeAttribute("utilisateurModifier");
@@ -47,10 +62,18 @@ public class ServletModifierProfil extends HttpServlet {
 		HttpSession session = request.getSession();
 		boolean alreadyRedirect = false;
 		if (session.getAttribute("utilisateurCourant") != null) {
-			Utilisateur utilisateurCourant = (Utilisateur) session.getAttribute("utilisateurCourant");
+
+			String pseudo = (String) session.getAttribute("utilisateurCourant");
+			Utilisateur utilisateurCourant = null;
+			try {
+				utilisateurCourant = manager.selectByPseudo(pseudo);
+			} catch (BusinessException e1) {
+				e1.printStackTrace();
+			}
+
 			String mdpO = request.getParameter("mdpO").trim();
 			try {
-				if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(), mdpO)) {
+				if (manager.selectByPseudoAndPswBoolean(pseudo, mdpO)) {
 					if (request.getParameter("update") != null) {
 						String mdp = request.getParameter("mdp").trim();
 						String mdpC = request.getParameter("mdpC").trim();
@@ -61,32 +84,29 @@ public class ServletModifierProfil extends HttpServlet {
 								utilisateurModifier = utilisateurParser(request, mdp,
 										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
 										utilisateurCourant.isAdministrateur());
-								if (!utilisateurCourant.equals(utilisateurModifier)) {
-									utilisateurModifier.setMotDePasse(mdp);
-									if (manager.updateUtilisateur(utilisateurModifier)) {
-										session.setAttribute("utilisateurCourant", utilisateurModifier);
-									}
+								utilisateurModifier.setMotDePasse(mdp);
+								if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
+									session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
 								}
 							} else {
 								utilisateurModifier = utilisateurParser(request, "",
 										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
 										utilisateurCourant.isAdministrateur());
-								session.setAttribute("utilisateurModifier", utilisateurModifier);
+								session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 							}
 						} else {
 							Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
 									utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
 									utilisateurCourant.isAdministrateur());
-							if (!utilisateurCourant.equals(utilisateurModifier)) {
-								utilisateurModifier.setMotDePasse(mdpO);
-								if (manager.updateUtilisateur(utilisateurModifier)) {
-									session.setAttribute("utilisateurCourant", utilisateurModifier);
-								}
-							}
-						}
 
+							utilisateurModifier.setMotDePasse(mdpO);
+							if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
+								session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
+							}
+
+						}
 					} else if (request.getParameter("delete") != null) {
-						manager.supprimerUtilisateur(utilisateurCourant.getNoUtilisateur());
+						manager.supprimerUtilisateur(pseudo);
 						alreadyRedirect = true;
 						response.sendRedirect(request.getContextPath() + "/Profil/Deconnexion");
 					}
@@ -94,7 +114,7 @@ public class ServletModifierProfil extends HttpServlet {
 					Utilisateur utilisateurModifier = utilisateurParser(request, "",
 							utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
 							utilisateurCourant.isAdministrateur());
-					session.setAttribute("utilisateurModifier", utilisateurModifier);
+					session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 				}
 			} catch (BusinessException e) {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());

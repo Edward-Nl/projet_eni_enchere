@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
 
@@ -26,11 +27,22 @@ public class ServletProfils extends HttpServlet {
 			throws ServletException, IOException {
 		UtilisateurManager manager = new UtilisateurManager();
 		HttpSession session = request.getSession();
-		String userIdString = request.getParameter("userID");
+		String userPseudoToShow = request.getParameter("userPseudo");
 
-		if (userIdString != null) {
-			Utilisateur utilisateurShow = manager.selectAvecId(Integer.parseInt(userIdString));
-			if (utilisateurShow != null) {
+		if (userPseudoToShow != null) {
+			Utilisateur utilisateurShow = null;
+			try {
+				utilisateurShow = manager.selectByPseudo(userPseudoToShow);
+			} catch (BusinessException e) {
+				e.printStackTrace();
+			}
+			if (utilisateurShow != null && utilisateurShow.getPseudo() != null) {
+
+				utilisateurShow.setNoUtilisateur(-1);
+				utilisateurShow.setMotDePasse(null);
+				utilisateurShow.setCredit(-1);
+				utilisateurShow.setAdministrateur(false);
+
 				request.setAttribute("utilisateurShow", utilisateurShow);
 			}
 		}

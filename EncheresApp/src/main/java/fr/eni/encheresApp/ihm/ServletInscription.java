@@ -47,28 +47,23 @@ public class ServletInscription extends HttpServlet {
 			String pseudo = request.getParameter("pseudo");
 			String email = request.getParameter("email");
 			try {
-				if (!manager.selectByMailOrPseudo(email, pseudo)) {
-					String prenom = request.getParameter("prenom");
-					String nom = request.getParameter("nom");
-					String telephone = request.getParameter("telephone");
-					String rue = request.getParameter("rue");
-					String codePostale = request.getParameter("codePostale");
-					String ville = request.getParameter("ville");
-					// TODO: changer le system crédit & amdin
-					utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville, mdp,
-							500, false);
-					manager.ajouterUtilisateur(utilisateur);
-
-				} else {
-					businessException.ajouterErreur(CodesResultatIHM.EMAIL_OU_PSEUDO_DEJA_UTILISER);
-				}
+				String prenom = request.getParameter("prenom");
+				String nom = request.getParameter("nom");
+				String telephone = request.getParameter("telephone");
+				String rue = request.getParameter("rue");
+				String codePostale = request.getParameter("codePostale");
+				String ville = request.getParameter("ville");
+				// TODO: changer le system crédit & amdin
+				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville, mdp, 500,
+						false);
+				manager.ajouterUtilisateur(utilisateur);
 			} catch (BusinessException e) {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			}
 
 		}
 		if (!businessException.hasErreurs() && request.getAttribute("listeCodesErreur") == null) {
-			request.getSession().setAttribute("utilisateurCourant", utilisateur);
+			request.getSession().setAttribute("utilisateurCourant", utilisateur.getPseudo());
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			if (request.getAttribute("listeCodesErreur") == null) {

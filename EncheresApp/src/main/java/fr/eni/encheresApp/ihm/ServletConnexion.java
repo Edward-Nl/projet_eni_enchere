@@ -59,7 +59,7 @@ public class ServletConnexion extends HttpServlet {
 			}
 			HttpSession sessionCourrante = request.getSession();
 			System.out.println(utilisateur);
-			sessionCourrante.setAttribute("utilisateurCourant", utilisateur);
+			sessionCourrante.setAttribute("utilisateurCourant", utilisateur.getPseudo());
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			if (request.getAttribute("listeCodesErreur") == null) {

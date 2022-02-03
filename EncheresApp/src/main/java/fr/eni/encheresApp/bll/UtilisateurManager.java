@@ -13,22 +13,12 @@ public class UtilisateurManager {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 
-	public boolean selectByMailOrPseudo(String mail, String pseudo) throws BusinessException {
-		BusinessException businessException = new BusinessException();
-		UtilisateurControler.validePseudo(pseudo, businessException);
-		UtilisateurControler.valideEmail(mail, businessException);
-		if (!businessException.hasErreurs()) {
-			return this.utilisateurDAO.selectByMailAndPseudp(mail, pseudo);
-		} else {
-			throw businessException;
-		}
-	}
-
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 
 		UtilisateurControler.validePseudo(pseudo, businessException);
 		UtilisateurControler.valideMotDePasse(password, businessException);
+
 		if (!businessException.hasErreurs()) {
 			return this.utilisateurDAO.selectByPseudoAndPsw(pseudo, CryptagePassword.crypteString(password));
 		} else {
@@ -46,11 +36,30 @@ public class UtilisateurManager {
 		}
 	}
 
-	public boolean selectByIdAndPassword(int id, String password) throws BusinessException {
+	public Utilisateur selectByEmail(String email) throws BusinessException {
 		BusinessException businessException = new BusinessException();
-		UtilisateurControler.valideMotDePasse(password, businessException);
+		UtilisateurControler.valideEmail(email, businessException);
 		if (!businessException.hasErreurs()) {
-			return this.utilisateurDAO.selectByIdAndPsw(id, CryptagePassword.crypteString(password));
+			return this.utilisateurDAO.selectByMail(email);
+		} else {
+			throw businessException;
+		}
+	}
+
+	public boolean selectByPseudoAndPswBoolean(String pseudo, String password) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+
+		UtilisateurControler.validePseudo(pseudo, businessException);
+		UtilisateurControler.valideMotDePasse(password, businessException);
+
+		if (!businessException.hasErreurs()) {
+			Utilisateur utilisateur = utilisateurDAO.selectByPseudoAndPsw(pseudo,
+					CryptagePassword.crypteString(password));
+			if (utilisateur != null && utilisateur.getNoUtilisateur() != -1) {
+				return true;
+			} else {
+				return false;
+			}
 		} else {
 			throw businessException;
 		}
@@ -58,8 +67,27 @@ public class UtilisateurManager {
 
 	public boolean ajouterUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException businessException = new BusinessException();
+
 		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
+
 		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
+
+		// Vérification email pas deja utiliser pars un autre utilisateur
+		if (!businessException.hasErreurs()) {
+			Utilisateur utilisateurTmp = this.selectByEmail(utilisateur.getEmail());
+			if (utilisateurTmp.getEmail() != null) {
+				businessException.ajouterErreur(CodesResultatBLL.EMAIL_UTILISATEURS_DEJA_UTILISER);
+			}
+		}
+
+		// Vérification pseudo pas deja utiliser pars un autre utilisateur
+		if (!businessException.hasErreurs()) {
+			Utilisateur utilisateurTmp = this.selectByPseudo(utilisateur.getPseudo());
+			if (utilisateurTmp.getPseudo() != null) {
+				businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISATEURS_DEJA_UTILISER);
+			}
+		}
+
 		if (!businessException.hasErreurs()) {
 			this.utilisateurDAO.insert(utilisateur);
 			return true;
@@ -74,19 +102,44 @@ public class UtilisateurManager {
 
 	}
 
-	public boolean updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
+	public boolean updateUtilisateur(Utilisateur utilisateurCourant, Utilisateur utilisateurModifier)
+			throws BusinessException {
 		BusinessException businessException = new BusinessException();
-		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
-		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
+
+		UtilisateurControler.controlerUtilisateur(utilisateurModifier, businessException);
+
+		utilisateurModifier.setMotDePasse(CryptagePassword.crypteString(utilisateurModifier.getMotDePasse()));
+
+		// Vérification que les deux objet ne sont pas semblable
+		if (!businessException.hasErreurs() && utilisateurCourant.equals(utilisateurModifier)) {
+			businessException.ajouterErreur(CodesResultatBLL.TOUS_LES_CHAMPS_IDENTIQUE);
+		}
+
+		// Vérification email pas deja utiliser pars un autre utilisateur
+		if (!businessException.hasErreurs() && !utilisateurCourant.getEmail().equals(utilisateurModifier.getEmail())) {
+			Utilisateur utilisateurTmp = this.selectByEmail(utilisateurModifier.getEmail());
+			if (utilisateurTmp.getEmail() != null) {
+				businessException.ajouterErreur(CodesResultatBLL.EMAIL_UTILISATEURS_DEJA_UTILISER);
+			}
+		}
+		// Vérification pseudo pas deja utiliser pars un autre utilisateur
+		if (!businessException.hasErreurs()
+				&& !utilisateurCourant.getPseudo().equals(utilisateurModifier.getPseudo())) {
+			Utilisateur utilisateurTmp = this.selectByPseudo(utilisateurModifier.getPseudo());
+			if (utilisateurTmp.getPseudo() != null) {
+				businessException.ajouterErreur(CodesResultatBLL.PSEUDO_UTILISATEURS_DEJA_UTILISER);
+			}
+		}
+
 		if (!businessException.hasErreurs()) {
-			return this.utilisateurDAO.updateUser(utilisateur);
+			return this.utilisateurDAO.updateUser(utilisateurModifier);
 		} else {
 			throw businessException;
 		}
 	}
 
-	public boolean supprimerUtilisateur(int i) throws BusinessException {
-		return this.utilisateurDAO.deleteUser(i);
+	public boolean supprimerUtilisateur(String pseudo) throws BusinessException {
+		return this.utilisateurDAO.deleteUser(pseudo);
 
 	}
 

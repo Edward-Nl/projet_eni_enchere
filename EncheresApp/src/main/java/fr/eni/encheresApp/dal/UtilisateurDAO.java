@@ -12,12 +12,10 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectByPseudo(String pseudo);
 
-	public boolean selectByMailAndPseudp(String mail, String pseudo);
-
-	public boolean selectByIdAndPsw(int id, String psw);
+	public Utilisateur selectByMail(String email);
 
 	public boolean updateUser(Utilisateur utilisateur);
 
-	public boolean deleteUser(int id);
+	public boolean deleteUser(String pseudo);
 
 }
