@@ -28,7 +28,6 @@ public class ServletProfils extends HttpServlet {
 		UtilisateurManager manager = new UtilisateurManager();
 		HttpSession session = request.getSession();
 		String userPseudoToShow = request.getParameter("userPseudo");
-
 		if (userPseudoToShow != null) {
 			Utilisateur utilisateurShow = null;
 			try {

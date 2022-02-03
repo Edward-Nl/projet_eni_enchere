@@ -29,7 +29,6 @@
 	<h1>
 		<fmt:message key="soustitre" bundle="${r}"></fmt:message>
 	</h1>
-	<p>ici ${sessionScope.utilisateurCourantComplet.pseudo}</p>
 	<c:if test="${listeCodesErreur != null}">
 		<p style="color: red;">Erreur lors du login du compte</p>
 		<c:forEach var="erreur" items="${listeCodesErreur}">

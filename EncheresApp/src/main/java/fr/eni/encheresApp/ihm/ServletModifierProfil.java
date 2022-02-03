@@ -27,27 +27,23 @@ public class ServletModifierProfil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
-		if (pseudo != null) {
-			Utilisateur utilisateurCourantComplet = null;
-			UtilisateurManager manager = new UtilisateurManager();
-			try {
-				utilisateurCourantComplet = manager.selectByPseudo(pseudo);
-			} catch (BusinessException e) {
-				e.printStackTrace();
-			}
-			if (utilisateurCourantComplet != null) {
-				utilisateurCourantComplet.setNoUtilisateur(-1);
-				utilisateurCourantComplet.setMotDePasse("");
-				utilisateurCourantComplet.setCredit(-1);
-				utilisateurCourantComplet.setAdministrateur(false);
-			}
-			request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
-			request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
-			if (request.getSession().getAttribute("utilisateurModifier") != null) {
-				request.getSession().removeAttribute("utilisateurModifier");
-			}
-		} else {
-			response.sendRedirect(request.getContextPath() + "/");
+		Utilisateur utilisateurCourantComplet = null;
+		UtilisateurManager manager = new UtilisateurManager();
+		try {
+			utilisateurCourantComplet = manager.selectByPseudo(pseudo);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		if (utilisateurCourantComplet != null) {
+			utilisateurCourantComplet.setNoUtilisateur(-1);
+			utilisateurCourantComplet.setMotDePasse("");
+			utilisateurCourantComplet.setCredit(-1);
+			utilisateurCourantComplet.setAdministrateur(false);
+		}
+		request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
+		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
+		if (request.getSession().getAttribute("utilisateurModifier") != null) {
+			request.getSession().removeAttribute("utilisateurModifier");
 		}
 
 	}
