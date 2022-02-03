@@ -35,14 +35,13 @@ public class ArticleVendu {
 	 * @param no_Categorie
 	 */
 	public ArticleVendu(String nomArticle, String description, Date dateDebutEncheres, Date dateFinEncheres,
-			int miseAPrix, int prixVente, int no_Utilisateur, int no_Categorie) {
+			int miseAPrix, int no_Utilisateur, int no_Categorie) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
 		this.dateDebutEncheres = dateDebutEncheres;
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}

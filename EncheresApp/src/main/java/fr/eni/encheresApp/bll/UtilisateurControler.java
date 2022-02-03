@@ -66,7 +66,7 @@ public class UtilisateurControler {
 
 	public static void valideTelephone(String telephone, BusinessException businessException) {
 		telephone = telephone.trim();
-		// Pattern numéro francais
+		// Pattern numï¿½ro francais
 		boolean telephoneControle = telephone
 				.matches("(?:^(?:0|\\(?\\+33\\)?\\s?|0033\\s?)[1-79](?:[\\.\\-\\s]?\\d\\d){4}$)");
 		if (telephone.isEmpty() || telephone.length() > 15) {

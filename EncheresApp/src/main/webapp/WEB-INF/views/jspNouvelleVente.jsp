@@ -21,7 +21,7 @@
 		<div class="mx-auto col-6 ">
 			<h2><fmt:message key="h2" bundle="${r}"></fmt:message></h2>
 			
-			<form action="" method="">
+			<form action="<%=request.getContextPath()%>/ServletNouvelleVente" method="POST">
 				<div>
 					<label for="nom" class="col-4 my-3 fw-bold"><fmt:message key="art" bundle="${r}"></fmt:message></label>
 					<input type="text" name="nom" class="col-6"/>
@@ -32,11 +32,11 @@
 				</div>
 				<div>
 					<label for="categorie" class="col-4 my-3 fw-bold"><fmt:message key="cat" bundle="${r}"></fmt:message></label>
-					<select class="col-6">
-						<option>Informatique</option>
-						<option>Ameublement</option>
-						<option>Vêtement</option>
-						<option>Sport & Loisirs</option>
+					<select class="col-6" name="categorie">
+						<option value="1">Informatique</option>
+						<option value="2">Ameublement</option>
+						<option value="3">Vêtement</option>
+						<option value="4">Sport & Loisirs</option>
 					</select>
 				</div>
 				<div>
@@ -53,7 +53,7 @@
 				</div>
 				<div>
 					<label for="fin" class="col-4 my-3 fw-bold"><fmt:message key="fin" bundle="${r}"></fmt:message></label>
-					<input type="date" name="fin" class=""/>
+					<input type="date" name="fin" class="col-6"/>
 				</div>
 				<fieldset class="border">
 					<legend class="h4"><fmt:message key="retr" bundle="${r}"></fmt:message></legend>

@@ -1,13 +1,11 @@
 package fr.eni.encheresApp.bll;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 import java.util.List;
 
 import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.dal.ArticleVenduDAO;
-import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.DAOFactory;
 
 public class ArticlesVenduManager {
@@ -15,6 +13,16 @@ public class ArticlesVenduManager {
 	
 	public ArticlesVenduManager() {
 		this.ArticleVenduDAO = DAOFactory.getArticleVenduDAO();
+	}
+	
+	public void insert(ArticleVendu article) throws SQLException{
+		try {
+			System.out.println(article);
+			this.ArticleVenduDAO.insertArticle(article);
+		} catch (Exception e ) {
+			throw new SQLException();
+		}
+		
 	}
 	
 	public List<ArticleVendu> selectAllArticle() throws SQLException{

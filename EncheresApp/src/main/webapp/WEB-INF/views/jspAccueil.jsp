@@ -32,7 +32,7 @@
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div>
 							<a class="mx-1" href=""><fmt:message key="aEnch"
-									bundle="${r}"></fmt:message></a> <a class="mx-1" href=""><fmt:message
+									bundle="${r}"></fmt:message></a> <a class="mx-1" href="<%=request.getContextPath()%>/ServletNouvelleVente"><fmt:message
 									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-1"
 								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><fmt:message
 									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-1"
