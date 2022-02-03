@@ -18,6 +18,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?";
 	private static final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String REMOVE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
+	private static final String SELECT_BY_IDANTIFIANT_AND_PSW = "SELECT pseudo FROM UTILISATEURS WHERE (pseudo = ? OR  email = ?) AND  mot_de_passe = ? ";
 
 	@Override
 	public void insert(Utilisateur utilisateur) {
@@ -230,6 +231,25 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 
 		utilisateur.setAdministrateur(admin);
 
+	}
+
+	@Override
+	public String selectByIdentifiantAndPsw(String idantifiant, String password) {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_IDANTIFIANT_AND_PSW)) {
+			pstmt.setString(1, idantifiant);
+			pstmt.setString(2, idantifiant);
+			pstmt.setString(3, password);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					return rs.getString(1);
+				}
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

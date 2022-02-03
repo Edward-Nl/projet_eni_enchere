@@ -15,9 +15,10 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_UTILISATEURS_VILLE_ERREUR = 20007;
 	public static final int REGLE_UTILISATEURS_MOT_DE_PASSE_ERREUR = 20008;
 	public static final int REGLE_UTILISATEURS_CREDIT_ERREUR = 20009;
+	public static final int REGLE_UTILISATEURS_IDANTIFIANT_ERREUR = 20010;
 
-	public static final int EMAIL_UTILISATEURS_DEJA_UTILISER = 20010;
-	public static final int PSEUDO_UTILISATEURS_DEJA_UTILISER = 20011;
-	public static final int TOUS_LES_CHAMPS_IDENTIQUE = 20012;
+	public static final int EMAIL_UTILISATEURS_DEJA_UTILISER = 20011;
+	public static final int PSEUDO_UTILISATEURS_DEJA_UTILISER = 20012;
+	public static final int TOUS_LES_CHAMPS_IDENTIQUE = 20013;
 
 }

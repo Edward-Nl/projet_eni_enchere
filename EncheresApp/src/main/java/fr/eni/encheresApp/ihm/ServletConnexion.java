@@ -18,7 +18,7 @@ import fr.eni.encheresApp.dal.CryptagePassword;
 /**
  * Servlet implementation class ServletConnexion
  */
-@WebServlet("/Connexion")
+@WebServlet("/connexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,16 +39,17 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		UtilisateurManager manager = new UtilisateurManager();
-		String pseudo = request.getParameter("pseudo");
+		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motDePasse");
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = null;
+		String pseudo = null;
 		try {
-			utilisateur = manager.selectByPseudoAndPsw(pseudo, motDePasse);
+			pseudo = manager.connectionUtilisateur(identifiant, motDePasse);
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
-		if (utilisateur != null && utilisateur.getNoUtilisateur() != -1) {
+		if (pseudo != null) {
 			if (request.getParameter("souvenir") != null) {
 				Cookie souvenirPseudo = new Cookie("pseudo", pseudo);
 				Cookie souvenirMdp = new Cookie("Mdp", motDePasse);
@@ -58,8 +59,7 @@ public class ServletConnexion extends HttpServlet {
 				response.addCookie(souvenirMdp);
 			}
 			HttpSession sessionCourrante = request.getSession();
-			System.out.println(utilisateur);
-			sessionCourrante.setAttribute("utilisateurCourant", utilisateur.getPseudo());
+			sessionCourrante.setAttribute("utilisateurCourant", pseudo);
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			if (request.getAttribute("listeCodesErreur") == null) {

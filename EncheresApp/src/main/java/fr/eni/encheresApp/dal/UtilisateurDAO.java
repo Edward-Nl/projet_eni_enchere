@@ -10,6 +10,8 @@ public interface UtilisateurDAO {
 
 	public Utilisateur selectByPseudoAndPsw(String pseudoOrMail, String password);
 
+	public String selectByIdentifiantAndPsw(String indantifiant, String password);
+
 	public Utilisateur selectByPseudo(String pseudo);
 
 	public Utilisateur selectByMail(String email);

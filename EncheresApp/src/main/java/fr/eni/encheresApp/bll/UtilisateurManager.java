@@ -13,6 +13,12 @@ public class UtilisateurManager {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 
+	public boolean logUser(String identifiant, String password) {
+		BusinessException businessException = new BusinessException();
+
+		return false;
+	}
+
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 
@@ -141,6 +147,19 @@ public class UtilisateurManager {
 	public boolean supprimerUtilisateur(String pseudo) throws BusinessException {
 		return this.utilisateurDAO.deleteUser(pseudo);
 
+	}
+
+	public String connectionUtilisateur(String idantifiant, String password) throws BusinessException {
+		BusinessException businessException = new BusinessException();
+		if (idantifiant.trim().isEmpty() || idantifiant == null) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_IDANTIFIANT_ERREUR);
+		}
+
+		if (!businessException.hasErreurs() && (idantifiant.trim().isEmpty() || idantifiant == null)) {
+			businessException.ajouterErreur(CodesResultatBLL.REGLE_UTILISATEURS_MOT_DE_PASSE_ERREUR);
+		}
+
+		return this.utilisateurDAO.selectByIdentifiantAndPsw(idantifiant, CryptagePassword.crypteString(password));
 	}
 
 }

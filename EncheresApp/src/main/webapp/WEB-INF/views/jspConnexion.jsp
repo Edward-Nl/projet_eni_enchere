@@ -27,25 +27,21 @@
 		</h1>
 
 		<div class="mx-auto d-flex flex-column align-items-center">
-			<form action="<%=request.getContextPath()%>/Connexion" method="POST"
+			<form action="<%=request.getContextPath()%>/connexion" method="POST"
 				class="col-6">
-				<fmt:message key="pattern.pseudo.titre" bundle="${r}"
-					var="patternPseudoTitre" />
 				<c:if test="${listeCodesErreur != null}">
 					<p style="color: red;">Erreur lors du login du compte</p>
 					<c:forEach var="erreur" items="${listeCodesErreur}">
 						<p>${LecteurMessage.getMessageErreur(erreur)}</p>
 					</c:forEach>
 				</c:if>
-				<label for="pseudo" class="col-3 my-3"><fmt:message
-						key="champ.un" bundle="${r}"></fmt:message></label> <input type="text"
-					name="pseudo" required
+				<label for="identifiant" class="col-3 my-3"> <fmt:message
+						key="champ.un" bundle="${r}"></fmt:message>
+				</label> <input type="text" name="identifiant" required
 					placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>"
-					class="col-6"
-					pattern="(?=(^[A-Za-z][a-zA-Z0-9]+[_-]?[0-9a-zA-Z]+$))^.{5,30}$"
-					title="${patternPseudoTitre}" value="${cookie.pseudo.value}" /> <br>
-				<label for="motDePasse" class="col-3 my-3"><fmt:message
-						key="champ.deux" bundle="${r}"></fmt:message></label> <input
+					class="col-6" value="${cookie.pseudo.value}" /> <br> <label
+					for="motDePasse" class="col-3 my-3"><fmt:message
+						key="champ.deux" bundle="${r}"></fmt:message></label><input
 					type="password" name="motDePasse" required
 					placeholder="<fmt:message key="pl.deux" bundle="${r}"></fmt:message>"
 					class="col-6" value="${cookie.Mdp.value}" /> <br>
@@ -64,7 +60,7 @@
 
 			</form>
 			<div class="col-6 text-center">
-				<a href="<%=request.getContextPath()%>/Inscription"
+				<a href="<%=request.getContextPath()%>/inscription"
 					class="btn btn-outline-warning col-4"><fmt:message
 						key="btn.inscription" bundle="${r}"></fmt:message></a> <a
 					class="btn btn-outline-danger col-4"

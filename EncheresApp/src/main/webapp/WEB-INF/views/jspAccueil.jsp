@@ -42,9 +42,9 @@
 					</c:when>
 					<c:otherwise>
 						<div>
-							<a class="mx-1" href="<%=request.getContextPath()%>/Inscription"><fmt:message
+							<a class="mx-1" href="<%=request.getContextPath()%>/inscription"><fmt:message
 									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-1"
-								href="<%=request.getContextPath()%>/Connexion"><fmt:message
+								href="<%=request.getContextPath()%>/connexion"><fmt:message
 									key="aConx" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:otherwise>
