@@ -45,44 +45,50 @@ public class ServletModifierProfil extends HttpServlet {
 			throws ServletException, IOException {
 		UtilisateurManager manager = new UtilisateurManager();
 		HttpSession session = request.getSession();
+		boolean alreadyRedirect = false;
 		if (session.getAttribute("utilisateurCourant") != null) {
 			Utilisateur utilisateurCourant = (Utilisateur) session.getAttribute("utilisateurCourant");
-
 			String mdpO = request.getParameter("mdpO").trim();
-
 			try {
-				System.out.println("la " + mdpO);
 				if (manager.selectByIdAndPassword(utilisateurCourant.getNoUtilisateur(), mdpO)) {
-					String mdp = request.getParameter("mdp").trim();
-					String mdpC = request.getParameter("mdpC").trim();
+					if (request.getParameter("update") != null) {
+						String mdp = request.getParameter("mdp").trim();
+						String mdpC = request.getParameter("mdpC").trim();
 
-					if (!mdp.isEmpty() || !mdpC.isEmpty()) {
-						Utilisateur utilisateurModifier = null;
-						if (mdp.equals(mdpC)) {
-							utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
-									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+						if (!mdp.isEmpty() || !mdpC.isEmpty()) {
+							Utilisateur utilisateurModifier = null;
+							if (mdp.equals(mdpC)) {
+								utilisateurModifier = utilisateurParser(request, mdp,
+										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+										utilisateurCourant.isAdministrateur());
+								if (!utilisateurCourant.equals(utilisateurModifier)) {
+									utilisateurModifier.setMotDePasse(mdp);
+									if (manager.updateUtilisateur(utilisateurModifier)) {
+										session.setAttribute("utilisateurCourant", utilisateurModifier);
+									}
+								}
+							} else {
+								utilisateurModifier = utilisateurParser(request, "",
+										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+										utilisateurCourant.isAdministrateur());
+								session.setAttribute("utilisateurModifier", utilisateurModifier);
+							}
+						} else {
+							Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
+									utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+									utilisateurCourant.isAdministrateur());
 							if (!utilisateurCourant.equals(utilisateurModifier)) {
-								utilisateurModifier.setMotDePasse(mdp);
+								utilisateurModifier.setMotDePasse(mdpO);
 								if (manager.updateUtilisateur(utilisateurModifier)) {
 									session.setAttribute("utilisateurCourant", utilisateurModifier);
 								}
 							}
-						} else {
-							utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
-									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-							session.setAttribute("utilisateurModifier", utilisateurModifier);
 						}
 
-					} else {
-						Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
-								utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-								utilisateurCourant.isAdministrateur());
-						if (!utilisateurCourant.equals(utilisateurModifier)) {
-							utilisateurModifier.setMotDePasse(mdpO);
-							if (manager.updateUtilisateur(utilisateurModifier)) {
-								session.setAttribute("utilisateurCourant", utilisateurModifier);
-							}
-						}
+					} else if (request.getParameter("delete") != null) {
+						manager.supprimerUtilisateur(utilisateurCourant.getNoUtilisateur());
+						alreadyRedirect = true;
+						response.sendRedirect(request.getContextPath() + "/Profil/Deconnexion");
 					}
 				} else {
 					Utilisateur utilisateurModifier = utilisateurParser(request, "",
@@ -94,10 +100,9 @@ public class ServletModifierProfil extends HttpServlet {
 				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 				e.printStackTrace();
 			}
-			System.out.println(utilisateurCourant);
-			doGet(request, response);
-		} else {
-			response.sendRedirect(request.getContextPath() + "/");
+			if (!alreadyRedirect) {
+				doGet(request, response);
+			}
 		}
 
 	}

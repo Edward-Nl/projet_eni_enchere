@@ -77,11 +77,17 @@ public class UtilisateurManager {
 	public boolean updateUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
+		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
 		if (!businessException.hasErreurs()) {
 			return this.utilisateurDAO.updateUser(utilisateur);
 		} else {
 			throw businessException;
 		}
+	}
+
+	public boolean supprimerUtilisateur(int i) throws BusinessException {
+		return this.utilisateurDAO.deleteUser(i);
+
 	}
 
 }

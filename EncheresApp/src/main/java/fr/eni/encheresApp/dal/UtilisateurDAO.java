@@ -18,4 +18,6 @@ public interface UtilisateurDAO {
 
 	public boolean updateUser(Utilisateur utilisateur);
 
+	public boolean deleteUser(int id);
+
 }

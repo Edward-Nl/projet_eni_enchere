@@ -115,10 +115,10 @@
 		<div class="d-flex justify-content-center">
 			<fmt:message key="champ.enregistrer" bundle="${r}" var="enregistrer" />
 			<input class="btn btn-warning mx-2 my-3 col-3" type="submit"
-				value="${enregistrer}">
+				value="${enregistrer}" name="update">
 			<fmt:message key="champ.supprimer" bundle="${r}" var="supprimer" />
-			<input class=" btn btn-outline-danger mx-2 my-3 col-3" type="button"
-				value="${supprimer}"> <a
+			<input class=" btn btn-outline-danger mx-2 my-3 col-3" type="submit"
+				value="${supprimer}" name="delete"> <a
 				class="btn btn-outline-primary mx-2 col-3 my-3"
 				href="<%=request.getContextPath()%>/"><fmt:message key="retour"
 					bundle="${r}"></fmt:message></a>
