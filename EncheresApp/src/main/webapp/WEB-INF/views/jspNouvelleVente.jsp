@@ -60,15 +60,18 @@
 					
 					<div>
 						<label for="rue" class="col-4 my-3 fw-bold"><fmt:message key="rue" bundle="${r}"></fmt:message></label>
-						<input type="text" name="rue" class="col-6"/>
+						<input type="text" name="rue" class="col-6"
+						value="${sessionScope.utilisateurCourantComplet.rue}"/>
 					</div>
 					<div>
 						<label for="cPostal" class="col-4 my-3 fw-bold"><fmt:message key="cp" bundle="${r}"></fmt:message></label>
-						<input type="text" name="cPostal" class="col-6"/>
+						<input type="text" name="cPostal" class="col-6"
+						value="${sessionScope.utilisateurCourantComplet.codePostal}"/>
 					</div>
 					<div>
 						<label for="ville" class="col-4 my-3 fw-bold"><fmt:message key="vil" bundle="${r}"></fmt:message></label>
-						<input type="text" name="ville" class="col-6"/>
+						<input type="text" name="ville" class="col-6"
+						value="${sessionScope.utilisateurCourantComplet.ville}"/>
 					</div>
 				</fieldset>
 				

@@ -30,6 +30,15 @@ public class ServletNouvelleVente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
+		Utilisateur utilisateurCourantComplet = null;
+		UtilisateurManager manager = new UtilisateurManager();
+		try {
+			utilisateurCourantComplet = manager.selectByPseudo(pseudo);
+		} catch (BusinessException e) {
+			e.printStackTrace();
+		}
+		request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
 		request.getRequestDispatcher("/WEB-INF/views/jspNouvelleVente.jsp").forward(request, response);
 	}
 
