@@ -126,7 +126,8 @@
 				<c:forEach var="article" items="${articles }">
 					<div>
 						<h4>${article.nomArticle}</h4>
-						<label>Prix : </label><label> ${article.miseAPrix}</label><br>
+						<label>Prix : </label><label>
+							${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}</label><br>
 						<label>Fin de l'enchère : </label><label>
 							${article.dateFinEncheres}</label><br>
 
