@@ -77,21 +77,23 @@
 			<h2 class="text-center my-3">
 				<fmt:message key="sousTitre" bundle="${r}"></fmt:message>
 			</h2>
-
 			<form action="<%=request.getContextPath()%>/" method="post"
 				class="d-flex">
 				<div>
 					<label class="h4" for="filtre"><fmt:message key="lbFil"
 							bundle="${r}"></fmt:message></label><br> <input type="text"
-						name="filtre" class="col-10 bordArr"> <br> <label
+						name="filtre" class="col-10 bordArr"
+						value="${filtre != null?filtre:'' }"> <br> <label
 						class="my-3" for="catg"><fmt:message key="lbCat"
 							bundle="${r}"></fmt:message></label> <select name="catg"
 						class="mx-3 col-8">
-						<option value="0">Toutes Catégories</option>
-						<option value="1">Informatique</option>
-						<option value="2">Ameublement</option>
-						<option value="3">Vêtement</option>
-						<option value="4">Sport & Loisirs</option>
+						<option value="0" ${catg == 0?'selected=\"selected\"':'' }>Toutes
+							Catégories</option>
+						<option value="1" ${catg == 1?'selected=\"selected\"':'' }>Informatique</option>
+						<option value="2" ${catg == 2?'selected=\"selected\"':'' }>Ameublement</option>
+						<option value="3" ${catg == 3?'selected=\"selected\"':'' }>Vêtement</option>
+						<option value="4" ${catg == 4?'selected=\"selected\"':'' }>Sport
+							& Loisirs</option>
 					</select>
 					<!-- Si l'utilisateur est connect alors on affiche les radio et checkbox -->
 					<c:if test="${sessionScope.utilisateurCourant != null}">
@@ -147,35 +149,40 @@
 				</button>
 			</form>
 			<div class="d-flex flex-wrap">
-				<c:if test="${articles != null}">
-					<c:forEach var="article" items="${articles }">
-						<div
-							class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
-							<div class="card-body">
-								<h4 class="card-title">${article.nomArticle}</h4>
-								<label class="ms-2">Prix : </label><label>
-									${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-									points</label><br> <label class="ms-2">Fin de l'enchère :
-								</label><label> ${article.dateFinEncheres}</label><br>
+				<c:choose>
+					<c:when test="${articles != null && articles.size() > 0}">
+						<c:forEach var="article" items="${articles }">
+							<div
+								class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
+								<div class="card-body">
+									<h4 class="card-title">${article.nomArticle}</h4>
+									<label class="ms-2">Prix : </label><label>
+										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
+										points</label><br> <label class="ms-2">Fin de l'enchère :
+									</label><label> ${article.dateFinEncheres}</label><br>
 
 
-								<c:choose>
-									<c:when test="${sessionScope.utilisateurCourant != null}">
-										<label class="ms-2">Pseudo : </label>
-										<a
-											href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
-										<br>
-									</c:when>
-									<c:otherwise>
-										<label class="ms-2">Pseudo : </label>
-										<label>${article.pseudoUtilisateur}</label>
-										<br>
-									</c:otherwise>
-								</c:choose>
+									<c:choose>
+										<c:when test="${sessionScope.utilisateurCourant != null}">
+											<label class="ms-2">Pseudo : </label>
+											<a
+												href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
+											<br>
+										</c:when>
+										<c:otherwise>
+											<label class="ms-2">Pseudo : </label>
+											<label>${article.pseudoUtilisateur}</label>
+											<br>
+										</c:otherwise>
+									</c:choose>
+								</div>
 							</div>
-						</div>
-					</c:forEach>
-				</c:if>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<p>Aucun article a afficher</p>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</main>
 

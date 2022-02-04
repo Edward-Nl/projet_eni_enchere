@@ -50,16 +50,21 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager manager = new ArticlesVenduManager();
 		List<ArticleVendu> listeArticle = null;
+		String filtre = "";
+		int cat = 0;
 		try {
-			String filtre = request.getParameter("filtre");
-			int cat = Integer.parseInt(request.getParameter("catg"));
+			filtre = request.getParameter("filtre");
+			cat = Integer.parseInt(request.getParameter("catg"));
 			listeArticle = manager.selectArticleEnCoursFiltrer(filtre, cat);
+
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		if (listeArticle != null) {
 			request.setAttribute("articles", listeArticle);
 		}
+		request.setAttribute("filtre", filtre);
+		request.setAttribute("catg", cat);
 
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
