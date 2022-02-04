@@ -1,14 +1,18 @@
 @charset "UTF-8";
 
-#btnValider{
+#btnValider {
 	height: 60px;
 	margin-left: 45px;
 }
 
+h1 {
+	color: red;
+}
 
-*{
+* {
 	color: blue !important;
 }
-.bordArr{
+
+.bordArr {
 	border-radius: 9.25rem;
 }

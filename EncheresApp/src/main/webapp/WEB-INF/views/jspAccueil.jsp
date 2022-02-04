@@ -14,7 +14,8 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<link rel=stylesheet type="text/css" href="css/styles.css" />
+<link rel=stylesheet type="text/css"
+	href="<%=request.getContextPath()%>/css/styles.css" />
 <meta charset="UTF-8">
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 <script
@@ -152,30 +153,34 @@
 				<c:choose>
 					<c:when test="${articles != null && articles.size() > 0}">
 						<c:forEach var="article" items="${articles }">
-								<div class="card border border-dark bg-light mx-3 my-3 shadow rounded">
-									<div class="card-body">
-										<h4 class="card-title">${article.nomArticle}</h4>
-										<label class="ms-2">Prix : </label><label>
-											${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-											points</label><br> <label class="ms-2">Fin de l'enchère :
-										</label><label> ${article.dateFinEncheres}</label><br>
-		
-		
-										<c:choose>
-											<c:when test="${sessionScope.utilisateurCourant != null}">
-												<label class="ms-2">Pseudo : </label>
-												<a href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
-												<br>
-												<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="btn btn-outline-primary">Voir l'article</a>
-											</c:when>
-											<c:otherwise>
-												<label class="ms-2">Pseudo : </label>
-												<label>${article.pseudoUtilisateur}</label>
-												<br>
-											</c:otherwise>
-										</c:choose>
-									</div>
+							<div
+								class="card border border-dark bg-light mx-3 my-3 shadow rounded">
+								<div class="card-body">
+									<h4 class="card-title">${article.nomArticle}</h4>
+									<label class="ms-2">Prix : </label><label>
+										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
+										points</label><br> <label class="ms-2">Fin de l'enchère :
+									</label><label> ${article.dateFinEncheres}</label><br>
+
+
+									<c:choose>
+										<c:when test="${sessionScope.utilisateurCourant != null}">
+											<label class="ms-2">Pseudo : </label>
+											<a
+												href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
+											<br>
+											<a
+												href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}"
+												class="btn btn-outline-primary">Voir l'article</a>
+										</c:when>
+										<c:otherwise>
+											<label class="ms-2">Pseudo : </label>
+											<label>${article.pseudoUtilisateur}</label>
+											<br>
+										</c:otherwise>
+									</c:choose>
 								</div>
+							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

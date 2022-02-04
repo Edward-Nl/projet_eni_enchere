@@ -36,6 +36,8 @@ public class ServletAccueil extends HttpServlet {
 		List<Categorie> categories = null;
 		try {
 			listeArticle = managerArticle.selectArticleEnCours();
+			List<ArticleVendu> articles = managerArticle.selectAvecFiltre("", "pe", 0, 0);
+			System.out.println(articles);
 			categories = managerCategorie.selectAll();
 		} catch (SQLException e1) {
 			e1.printStackTrace();

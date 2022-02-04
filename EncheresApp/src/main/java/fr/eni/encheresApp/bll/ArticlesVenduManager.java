@@ -46,6 +46,10 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
+	public List<ArticleVendu> selectAvecFiltre(String pseudo, String filtre, int current, int categorie) {
+		return this.ArticleVenduDAO.selectWithCondition(pseudo, filtre, current, categorie);
+	}
+
 	public List<ArticleVendu> selectArticleEnCoursFiltrer(String filtre, int cat) throws SQLException {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		if (filtre == null || filtre.isEmpty()) {
