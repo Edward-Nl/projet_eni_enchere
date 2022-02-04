@@ -1,19 +1,27 @@
 package fr.eni.encheresApp.bo;
 
-public class Categorie {
-	
+import java.io.Serializable;
+
+public class Categorie implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int no_categorie;
 	private String libelle;
-	
+
 	/**
 	 * Constructeur vide
 	 */
 	public Categorie() {
 		super();
 	}
-	
+
 	/**
 	 * Constructeur complet
+	 * 
 	 * @param no_categorie
 	 * @param libelle
 	 */
@@ -24,7 +32,7 @@ public class Categorie {
 	}
 
 	/* GETTER AND SETTER */
-	
+
 	public int getNo_categorie() {
 		return no_categorie;
 	}
@@ -42,7 +50,7 @@ public class Categorie {
 	}
 
 	/* ToString */
-	
+
 	@Override
 	public String toString() {
 		return "Categorie [no_categorie=" + no_categorie + ", libelle=" + libelle + "]";

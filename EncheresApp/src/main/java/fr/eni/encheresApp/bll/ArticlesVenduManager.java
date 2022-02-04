@@ -54,7 +54,11 @@ public class ArticlesVenduManager {
 			filtre = "%" + filtre + "%";
 		}
 		try {
-			articles = ArticleVenduDAO.selectArticleCurrentWithFilter(filtre, cat);
+			if (cat == 0) {
+				articles = ArticleVenduDAO.selectArticleCurrentWithFilterAllCat(filtre);
+			} else {
+				articles = ArticleVenduDAO.selectArticleCurrentWithFilterSingleCat(filtre, cat);
+			}
 		} catch (Exception e) {
 			throw new SQLException();
 		}

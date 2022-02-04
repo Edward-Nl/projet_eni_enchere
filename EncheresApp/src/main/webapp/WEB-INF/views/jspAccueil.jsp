@@ -89,11 +89,12 @@
 						class="mx-3 col-8">
 						<option value="0" ${catg == 0?'selected=\"selected\"':'' }>Toutes
 							Catégories</option>
-						<option value="1" ${catg == 1?'selected=\"selected\"':'' }>Informatique</option>
-						<option value="2" ${catg == 2?'selected=\"selected\"':'' }>Ameublement</option>
-						<option value="3" ${catg == 3?'selected=\"selected\"':'' }>Vêtement</option>
-						<option value="4" ${catg == 4?'selected=\"selected\"':'' }>Sport
-							& Loisirs</option>
+						<c:if test="${categories != null}">
+							<c:forEach var="categorie" items="${categories}">
+								<option value="${categorie.no_categorie}"
+									${catg == categorie.no_categorie?'selected=\"selected\"':'' }>${categorie.libelle }</option>
+							</c:forEach>
+						</c:if>
 					</select>
 					<!-- Si l'utilisateur est connect alors on affiche les radio et checkbox -->
 					<c:if test="${sessionScope.utilisateurCourant != null}">
