@@ -15,8 +15,10 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.ArticlesVenduManager;
+import fr.eni.encheresApp.bll.RetraitManager;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.ArticleVendu;
+import fr.eni.encheresApp.bo.Retrait;
 import fr.eni.encheresApp.bo.Utilisateur;
 
 /**
@@ -49,8 +51,11 @@ public class ServletNouvelleVente extends HttpServlet {
 		Date dateDebut = null;
 		Date dateFin = null;
 		ArticleVendu article = null;
+		Retrait retrait = null;
+		int no_article=0;
 		UtilisateurManager managerUtils = new UtilisateurManager();
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
+		RetraitManager managerRetrait = new RetraitManager();
 		HttpSession session = request.getSession();
 		String nom = request.getParameter("nom");
 		String description = request.getParameter("description");
@@ -60,6 +65,9 @@ public class ServletNouvelleVente extends HttpServlet {
 		int prix = Integer.parseInt(prixS);
 		String debut = request.getParameter("debut");
 		String fin = request.getParameter("fin");
+		String rue = request.getParameter("rue");
+		String cPostal = request.getParameter("cPostal");
+		String ville = request.getParameter("ville");
 		String pseudo = (String) session.getAttribute("utilisateurCourant");
 		try {
 			Utilisateur utils = managerUtils.selectByPseudo(pseudo);
@@ -68,7 +76,10 @@ public class ServletNouvelleVente extends HttpServlet {
 			dateFin = Date.valueOf(fin);
 			article = new ArticleVendu(nom,description,dateDebut,dateFin,prix,idUtils,cat);
 			try {
-				managerArticle.insert(article);
+				no_article = managerArticle.insert(article);
+				retrait = new Retrait(no_article,rue,cPostal,ville);
+				managerRetrait.insert(retrait);
+				System.out.println(no_article + "ici no ARTICLE");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
