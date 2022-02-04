@@ -32,7 +32,8 @@
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div>
 							<a class="mx-1" href=""><fmt:message key="aEnch"
-									bundle="${r}"></fmt:message></a> <a class="mx-1" href="<%=request.getContextPath()%>/ServletNouvelleVente"><fmt:message
+									bundle="${r}"></fmt:message></a> <a class="mx-1"
+								href="<%=request.getContextPath()%>/ServletNouvelleVente"><fmt:message
 									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-1"
 								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><fmt:message
 									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-1"
@@ -64,10 +65,11 @@
 						class="my-3" for="catg"><fmt:message key="lbCat"
 							bundle="${r}"></fmt:message></label> <select name="catg"
 						class="mx-3 col-8">
-						<option>Informatique</option>
-						<option>Ameublement</option>
-						<option>Vêtement</option>
-						<option>Sport & Loisirs</option>
+						<option value="0">Toutes Catégories</option>
+						<option value="1">Informatique</option>
+						<option value="2">Ameublement</option>
+						<option value="3">Vêtement</option>
+						<option value="4">Sport & Loisirs</option>
 					</select>
 					<!-- Si l'utilisateur est connect alors on affiche les radio et checkbox -->
 					<c:if test="${sessionScope.utilisateurCourant != null}">
@@ -119,6 +121,18 @@
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
+			<c:if test="${articles != null}">
+				<c:forEach var="article" items="${articles }">
+					<div>
+						<h4>${article.nomArticle}</h4>
+						<label>Prix : </label><label> ${article.miseAPrix}</label><br>
+						<label>Fin de l'enchère : </label><label>
+							${article.dateFinEncheres}</label><br>
+					</div>
+
+				</c:forEach>
+			</c:if>
+
 
 			<!-- Récuperation ici de la liste des articles depuis la BD -->
 

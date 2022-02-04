@@ -1,9 +1,16 @@
 package fr.eni.encheresApp.bo;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class ArticleVendu {
-	
+public class ArticleVendu implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private int no_Article;
 	private String nomArticle;
 	private String description;
@@ -14,7 +21,6 @@ public class ArticleVendu {
 	private String etatVente;
 	private int no_Utilisateur;
 	private int no_Categorie;
-	
 
 	/**
 	 * Constructeur vide
@@ -25,6 +31,7 @@ public class ArticleVendu {
 
 	/**
 	 * Constructeur sans etat vente et no Article pour la BDD
+	 * 
 	 * @param nomArticle
 	 * @param description
 	 * @param dateDebutEncheres
@@ -45,9 +52,10 @@ public class ArticleVendu {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
-	
+
 	/**
 	 * Constructeur sans les nn° utilisateur et categories
+	 * 
 	 * @param no_Article
 	 * @param nomArticle
 	 * @param description
@@ -72,6 +80,7 @@ public class ArticleVendu {
 
 	/**
 	 * Constructeur Complet
+	 * 
 	 * @param no_Article
 	 * @param nomArticle
 	 * @param description
@@ -98,8 +107,10 @@ public class ArticleVendu {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
+
 	/**
 	 * Constructeur sans etat de vente
+	 * 
 	 * @param no_Article
 	 * @param nomArticle
 	 * @param description
@@ -124,9 +135,7 @@ public class ArticleVendu {
 		this.no_Categorie = no_Categorie;
 	}
 
-	/* GETTER AND SETTER*/
-	
-	
+	/* GETTER AND SETTER */
 
 	public int getNo_Article() {
 		return no_Article;
@@ -209,7 +218,7 @@ public class ArticleVendu {
 	}
 
 	/* METHODE TOSTRING */
-	
+
 	@Override
 	public String toString() {
 		return "ArticleVendu [no_Article=" + no_Article + ", nomArticle=" + nomArticle + ", description=" + description
@@ -217,5 +226,5 @@ public class ArticleVendu {
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", no_Utilisateur="
 				+ no_Utilisateur + ", no_Categorie=" + no_Categorie + "]";
 	}
-	
+
 }

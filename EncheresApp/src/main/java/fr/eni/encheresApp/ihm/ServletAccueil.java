@@ -2,6 +2,7 @@ package fr.eni.encheresApp.ihm;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,13 +29,16 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArticlesVenduManager manager = new ArticlesVenduManager();
-		List<ArticleVendu> listeArticle;
-		ArticleVendu article;
+		List<ArticleVendu> listeArticle = null;
 		try {
-			listeArticle = manager.selectAllArticle();
-		} catch (SQLException e) {
-			e.printStackTrace();
+			listeArticle = manager.selectArticleEnCours();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
 		}
+		if (listeArticle != null) {
+			request.setAttribute("articles", listeArticle);
+		}
+
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
 
