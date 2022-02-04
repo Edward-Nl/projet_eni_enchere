@@ -22,12 +22,36 @@ public class ArticleVendu implements Serializable {
 	private int no_Utilisateur;
 	private int no_Categorie;
 	private String pseudoUtilisateur;
+	private String libelleCat;
+
+	public String getLibelleCat() {
+		return libelleCat;
+	}
+
+	public void setLibelleCat(String libelleCat) {
+		this.libelleCat = libelleCat;
+	}
 
 	/**
 	 * Constructeur vide
 	 */
 	public ArticleVendu() {
 		super();
+	}
+	
+
+	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, String pseudoUtilisateur, String libelleCat) {
+		super();
+		this.no_Article = no_Article;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.pseudoUtilisateur = pseudoUtilisateur;
+		this.libelleCat = libelleCat;
 	}
 
 	/**
@@ -147,6 +171,8 @@ public class ArticleVendu implements Serializable {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
+	
+	
 
 	/* GETTER AND SETTER */
 

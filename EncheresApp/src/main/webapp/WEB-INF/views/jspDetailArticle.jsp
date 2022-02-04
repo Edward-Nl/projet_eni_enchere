@@ -20,6 +20,9 @@
 	<label><fmt:message key="des" bundle="${r}"></fmt:message></label>
 	<label>${article.description}</label><br>
 	
+	<label><fmt:message key="cat" bundle="${r}"></fmt:message></label>
+	<label>${article.libelleCat}</label><br>
+	
 	<label><fmt:message key="deb" bundle="${r}"></fmt:message></label>
 	<label>${article.dateDebutEncheres }</label><br>
 	
