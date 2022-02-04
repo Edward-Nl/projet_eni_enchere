@@ -5,6 +5,10 @@
 	margin-left: 45px;
 }
 
+
+*{
+	color: blue !important;
+}
 .bordArr{
 	border-radius: 9.25rem;
 }
