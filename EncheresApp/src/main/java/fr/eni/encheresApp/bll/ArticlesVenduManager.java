@@ -22,7 +22,6 @@ public class ArticlesVenduManager {
 		} catch (Exception e) {
 			throw new SQLException();
 		}
-
 	}
 
 	public List<ArticleVendu> selectAllArticle() throws SQLException {
