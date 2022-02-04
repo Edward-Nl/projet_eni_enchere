@@ -57,7 +57,8 @@
 				<fmt:message key="sousTitre" bundle="${r}"></fmt:message>
 			</h2>
 
-			<form action="" method="" class="d-flex">
+			<form action="<%=request.getContextPath()%>/" method="post"
+				class="d-flex">
 				<div>
 					<label class="h4" for="filtre"><fmt:message key="lbFil"
 							bundle="${r}"></fmt:message></label><br> <input type="text"
@@ -128,19 +129,24 @@
 						<label>Prix : </label><label> ${article.miseAPrix}</label><br>
 						<label>Fin de l'enchère : </label><label>
 							${article.dateFinEncheres}</label><br>
-					</div>
 
+
+						<c:choose>
+							<c:when test="${sessionScope.utilisateurCourant != null}">
+								<label>Pseudo : </label>
+								<a
+									href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
+								<br>
+							</c:when>
+							<c:otherwise>
+								<label>Pseudo : </label>
+								<label>${article.pseudoUtilisateur}</label>
+								<br>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</c:forEach>
 			</c:if>
-
-
-			<!-- Récuperation ici de la liste des articles depuis la BD -->
-
-
-
-
-
-
 		</main>
 
 	</div>

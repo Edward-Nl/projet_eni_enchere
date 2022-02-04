@@ -21,6 +21,7 @@ public class ArticleVendu implements Serializable {
 	private String etatVente;
 	private int no_Utilisateur;
 	private int no_Categorie;
+	private String pseudoUtilisateur;
 
 	/**
 	 * Constructeur vide
@@ -51,6 +52,18 @@ public class ArticleVendu implements Serializable {
 		this.miseAPrix = miseAPrix;
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
+	}
+
+	public ArticleVendu(int no_Article, String nomArticle, Date dateFinEncheres, int miseAPrix, int prixVente,
+			int no_Categorie, String pseudoUtilisateur) {
+		super();
+		this.no_Article = no_Article;
+		this.nomArticle = nomArticle;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.no_Categorie = no_Categorie;
+		this.pseudoUtilisateur = pseudoUtilisateur;
 	}
 
 	/**
@@ -225,6 +238,14 @@ public class ArticleVendu implements Serializable {
 				+ ", dateDebutEncheres=" + dateDebutEncheres + ", dateFinEncheres=" + dateFinEncheres + ", miseAPrix="
 				+ miseAPrix + ", prixVente=" + prixVente + ", etatVente=" + etatVente + ", no_Utilisateur="
 				+ no_Utilisateur + ", no_Categorie=" + no_Categorie + "]";
+	}
+
+	public String getPseudoUtilisateur() {
+		return pseudoUtilisateur;
+	}
+
+	public void setPseudoUtilisateur(String pseudoUtilisateur) {
+		this.pseudoUtilisateur = pseudoUtilisateur;
 	}
 
 }

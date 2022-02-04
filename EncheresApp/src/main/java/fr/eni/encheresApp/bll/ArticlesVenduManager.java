@@ -46,6 +46,22 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
+	public List<ArticleVendu> selectArticleEnCoursFiltrer(String filtre, int cat) throws SQLException {
+		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		if (filtre == null || filtre.isEmpty()) {
+			filtre = "%%";
+		} else {
+			filtre = "%" + filtre + "%";
+		}
+		try {
+			articles = ArticleVenduDAO.selectArticleCurrentWithFilter(filtre, cat);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+
+		return articles;
+	}
+
 	public ArticleVendu selectArticleById(int noArticle) throws SQLException {
 		ArticleVendu article = null;
 		try {

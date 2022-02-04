@@ -12,6 +12,8 @@ public interface ArticleVenduDAO {
 
 	public List<ArticleVendu> selectArticleCurrent();
 
+	public List<ArticleVendu> selectArticleCurrentWithFilter(String filtre, int cat);
+
 	public ArticleVendu selectArticleById(int noArticle);
 
 	public void updateArticle(ArticleVendu article);

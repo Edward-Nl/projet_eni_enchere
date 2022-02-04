@@ -14,7 +14,8 @@ import fr.eni.encheresApp.dal.ConnectionProvider;
 
 public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
-	private static final String SELECT_CURRENT = "SELECT * FROM ARTICLES_VENDUS WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 ;";
+	private static final String SELECT_CURRENT = "SELECT no_article,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 ;";
+	private static final String SELECT_CURRENT_WITH_FILTER = "SELECT no_article,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND ((nom_article LIKE ? OR description LIKE ?) AND no_categorie IN (?,?,?,?))";
 	private static final String SELECT_BY_ID = "SELECT * FROM ARTICLES_VENDUS WHERE no_article = ?";
 	private static final String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?)";
@@ -155,14 +156,49 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_CURRENT)) {
-			ArticleVendu art = null;
+			ArticleVendu article = null;
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
-					art = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-							rs.getString("description"), rs.getDate("date_debut_encheres"),
+					article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
 							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
-							rs.getInt("no_utilisateur"), rs.getInt("no_categorie"));
-					articles.add(art);
+							rs.getInt("no_categorie"), rs.getString("pseudo"));
+					articles.add(article);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return articles;
+	}
+
+	@Override
+	public List<ArticleVendu> selectArticleCurrentWithFilter(String filtre, int cat) {
+		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_CURRENT_WITH_FILTER)) {
+			ArticleVendu article = null;
+
+			pstmt.setString(1, filtre);
+			pstmt.setString(2, filtre);
+
+			if (cat == 0) {
+				pstmt.setInt(3, 1);
+				pstmt.setInt(4, 2);
+				pstmt.setInt(5, 3);
+				pstmt.setInt(6, 4);
+			} else {
+				pstmt.setInt(3, cat);
+				pstmt.setInt(4, -1);
+				pstmt.setInt(5, -1);
+				pstmt.setInt(6, -1);
+			}
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
+							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
+							rs.getInt("no_categorie"), rs.getString("pseudo"));
+					articles.add(article);
 				}
 			}
 		} catch (SQLException e) {

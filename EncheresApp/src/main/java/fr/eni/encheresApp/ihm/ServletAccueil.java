@@ -48,8 +48,20 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		ArticlesVenduManager manager = new ArticlesVenduManager();
+		List<ArticleVendu> listeArticle = null;
+		try {
+			String filtre = request.getParameter("filtre");
+			int cat = Integer.parseInt(request.getParameter("catg"));
+			listeArticle = manager.selectArticleEnCoursFiltrer(filtre, cat);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		if (listeArticle != null) {
+			request.setAttribute("articles", listeArticle);
+		}
+
+		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
 
 }
