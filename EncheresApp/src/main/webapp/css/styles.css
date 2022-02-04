@@ -1,14 +1,46 @@
 @charset "UTF-8";
 
-#btnValider{
-	height: 60px;
+/* Balise Principal */
+body{
+    background-color: #121212;
+    color: white;
+}
+/* Carte d'aperçu des article sur la page d'accueil */
+.card{
+    background-color: #1E1E1E;
+    height: 250px;
+    width: 300px;
+}
+.card-title{
+    color: #EE5253;
+}
+.btnLinkCard{
+    background-color: #EE5253;
+    color: white;
+}
+.btnRecherche{
+    background-color: #4d4d4d;
+    height: 60px;
 	margin-left: 45px;
+	color: white;
+	font-size: 1.2em;
+}
+/* Header et Footer */
+header{
+	width: 100% !important;
+	height: 64px;
+    background-color: #2B2B2B;
+    color: white;
+}
+footer {
+    background-color: #272727;
 }
 
-
-*{
-	color: blue !important;
+a{
+	text-decoration: none !important;
+	color: white;
 }
-.bordArr{
-	border-radius: 9.25rem;
+
+.card a.name{
+	color: #F7931E;
 }
