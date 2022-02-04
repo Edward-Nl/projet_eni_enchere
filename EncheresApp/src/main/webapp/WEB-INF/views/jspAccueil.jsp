@@ -19,7 +19,7 @@
 <meta charset="UTF-8">
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 </head>
-<body>
+<body class="">
 
 	<div class="container">
 		<header class="d-flex justify-content-between align-items-center">
@@ -122,32 +122,36 @@
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
-			<c:if test="${articles != null}">
-				<c:forEach var="article" items="${articles }">
-					<div>
-						<h4>${article.nomArticle}</h4>
-						<label>Prix : </label><label>
-							${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}</label><br>
-						<label>Fin de l'enchère : </label><label>
-							${article.dateFinEncheres}</label><br>
-
-
-						<c:choose>
-							<c:when test="${sessionScope.utilisateurCourant != null}">
-								<label>Pseudo : </label>
-								<a
-									href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
-								<br>
-							</c:when>
-							<c:otherwise>
-								<label>Pseudo : </label>
-								<label>${article.pseudoUtilisateur}</label>
-								<br>
-							</c:otherwise>
-						</c:choose>
-					</div>
-				</c:forEach>
-			</c:if>
+			<div class="d-flex flex-wrap">
+				<c:if test="${articles != null}">
+					<c:forEach var="article" items="${articles }">
+						<div class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
+							<div class="card-body">
+								<h4 class="card-title">${article.nomArticle}</h4>
+								<label class="ms-2">Prix : </label><label>
+									${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente} points</label><br>
+								<label class="ms-2">Fin de l'enchère : </label><label>
+									${article.dateFinEncheres}</label><br>
+		
+		
+								<c:choose>
+									<c:when test="${sessionScope.utilisateurCourant != null}">
+										<label class="ms-2">Pseudo : </label>
+										<a
+											href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
+										<br>
+									</c:when>
+									<c:otherwise>
+										<label class="ms-2">Pseudo : </label>
+										<label>${article.pseudoUtilisateur}</label>
+										<br>
+									</c:otherwise>
+								</c:choose>
+							</div>
+						</div>
+					</c:forEach>
+				</c:if>
+			</div>
 		</main>
 
 	</div>
