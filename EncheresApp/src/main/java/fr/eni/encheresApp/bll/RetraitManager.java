@@ -16,6 +16,22 @@ public class RetraitManager {
 	
 	public void insert(Retrait lieu) throws SQLException {
 		System.out.println(lieu);
-		this.RetraitDAO.insert(lieu);
+		try {
+			this.RetraitDAO.insert(lieu);
+		} catch(Exception e) {
+			throw new SQLException();
+		}
+		
+	}
+	
+	public Retrait selectById(int no_article) throws SQLException{
+		Retrait retrait = null;
+		try {
+			retrait = RetraitDAO.selectById(no_article);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+
+		return retrait;
 	}
 }

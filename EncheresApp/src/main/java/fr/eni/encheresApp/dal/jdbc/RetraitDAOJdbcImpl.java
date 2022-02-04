@@ -2,8 +2,10 @@ package fr.eni.encheresApp.dal.jdbc;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.bo.Retrait;
 import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.RetraitDAO;
@@ -31,8 +33,18 @@ public class RetraitDAOJdbcImpl implements RetraitDAO{
 
 	@Override
 	public Retrait selectById(int no_article) {
-		// TODO Auto-generated method stub
-		return null;
+		Retrait retrait =null;
+		try(Connection cnx = ConnectionProvider.getConnection();PreparedStatement pstmt = cnx.prepareStatement(SELECT)) {
+			pstmt.setInt(1, no_article);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (rs.next()) {
+					retrait = new Retrait(rs.getInt("no_article"),rs.getString("rue"),rs.getString("code_postal"),rs.getString("ville"));
+				}
+			}
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return retrait;
 	}
 
 	@Override
