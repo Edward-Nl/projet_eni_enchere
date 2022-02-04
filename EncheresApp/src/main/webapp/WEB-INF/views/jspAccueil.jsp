@@ -153,17 +153,16 @@
 				<c:choose>
 					<c:when test="${articles != null && articles.size() > 0}">
 						<c:forEach var="article" items="${articles }">
-							<div
-								class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
-								<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="text-decoration-none text-dark">
+						<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="col-3 mx-3 my-3 text-decoration-none text-dark">
+							<div class="card border border-dark bg-warning shadow rounded">
 									<div class="card-body">
 										<h4 class="card-title">${article.nomArticle}</h4>
 										<label class="ms-2">Prix : </label><label>
 											${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
 											points</label><br> <label class="ms-2">Fin de l'enchère :
 										</label><label> ${article.dateFinEncheres}</label><br>
-	
-	
+		
+		
 										<c:choose>
 											<c:when test="${sessionScope.utilisateurCourant != null}">
 												<label class="ms-2">Pseudo : </label>
@@ -178,8 +177,8 @@
 											</c:otherwise>
 										</c:choose>
 									</div>
-								</a>
-							</div>
+								</div>
+							</a>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
