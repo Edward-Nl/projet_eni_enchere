@@ -48,35 +48,41 @@ public class ServletNouvelleVente extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date dateDebut = null;
-		Date dateFin = null;
+		/* Création des variable */
+		Date dateDebut, dateFin = null;
 		ArticleVendu article = null;
 		Retrait retrait = null;
-		int no_article=0;
+		/* Appelle des manager*/
 		UtilisateurManager managerUtils = new UtilisateurManager();
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		RetraitManager managerRetrait = new RetraitManager();
+		/* ---------- */
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
+		/* Récuperation des données du form */
 		String nom = request.getParameter("nom");
 		String description = request.getParameter("description");
-		String catS = request.getParameter("categorie");
-		int cat = Integer.parseInt(catS);
-		String prixS = request.getParameter("prix");
-		int prix = Integer.parseInt(prixS);
+		String categorieString = request.getParameter("categorie");
+		String prixString = request.getParameter("prix");
 		String debut = request.getParameter("debut");
 		String fin = request.getParameter("fin");
 		String rue = request.getParameter("rue");
 		String cPostal = request.getParameter("cPostal");
 		String ville = request.getParameter("ville");
 		String pseudo = (String) session.getAttribute("utilisateurCourant");
+		/* ----- */
 		try {
 			Utilisateur utils = managerUtils.selectByPseudo(pseudo);
 			int idUtils = utils.getNoUtilisateur();
 			dateDebut = Date.valueOf(debut);
 			dateFin = Date.valueOf(fin);
-			article = new ArticleVendu(nom,description,dateDebut,dateFin,prix,idUtils,cat);
+			int categorie = Integer.parseInt(categorieString);
+			int prix = Integer.parseInt(prixString);
+			article = new ArticleVendu(nom,description,dateDebut,dateFin,prix,idUtils,categorie);
 			try {
-				no_article = managerArticle.insert(article);
+				managerArticle.insert(article);
+				int no_article=article.getNo_Article();
+				System.out.println("article" + article.getNo_Article());
 				retrait = new Retrait(no_article,rue,cPostal,ville);
 				managerRetrait.insert(retrait);
 				System.out.println(no_article + "ici no ARTICLE");

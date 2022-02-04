@@ -19,7 +19,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?)";
 
 	@Override
-	public int insertArticle(ArticleVendu article) {
+	public void insertArticle(ArticleVendu article) {
 		int no_article=0;
 			try (Connection cnx = ConnectionProvider.getConnection()) {
 				try (PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -34,7 +34,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 					try (ResultSet rs = pstmt.getGeneratedKeys()) {
 						if (rs.next()) {
 							article.setNo_Article(rs.getInt(1));
-							no_article = rs.getInt(1);
 						} else {
 							// TODO: message ajout d'un article échoué
 						}
@@ -45,7 +44,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				// TODO gestion messages erreur
 				e.printStackTrace();
 			}
-			return no_article;
 
 	}
 

@@ -15,15 +15,13 @@ public class ArticlesVenduManager {
 		this.ArticleVenduDAO = DAOFactory.getArticleVenduDAO();
 	}
 	
-	public int insert(ArticleVendu article) throws SQLException{
-		int no_article=0;
+	public void insert(ArticleVendu article) throws SQLException{
 		try {
 			System.out.println(article);
-			no_article = this.ArticleVenduDAO.insertArticle(article);
+			this.ArticleVenduDAO.insertArticle(article);
 		} catch (Exception e ) {
 			throw new SQLException();
 		}
-		return no_article;
 	}
 	
 	public List<ArticleVendu> selectAllArticle() throws SQLException{

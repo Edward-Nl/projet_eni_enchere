@@ -20,5 +20,16 @@ public abstract class CodesResultatBLL {
 	public static final int EMAIL_UTILISATEURS_DEJA_UTILISER = 20011;
 	public static final int PSEUDO_UTILISATEURS_DEJA_UTILISER = 20012;
 	public static final int TOUS_LES_CHAMPS_IDENTIQUE = 20013;
+	
+	public static final int REGLE_ARTICLE_VENDU_NOM_ERREUR = 20014;
+	public static final int REGLE_ARTICLE_VENDU_DESCRIPTION_ERREUR = 20015;
+	public static final int REGLE_ARTICLE_VENDU_CATEGORIE_ERREUR = 20016;
+	public static final int REGLE_ARTICLE_VENDU_PHOTO_ERREUR = 20017;
+	public static final int REGLE_ARTICLE_VENDU_PRIX_ERREUR = 20018;
+	public static final int REGLE_ARTICLE_VENDU_DATE_DEBUT_ERREUR = 20019;
+	public static final int REGLE_ARTICLE_VENDU_DATE_FIN_ERREUR = 20020;
+	public static final int REGLE_RETRAIT_RUE_ERREUR = 20021;
+	public static final int REGLE_RETRAIT_CP_ERREUR = 20022;
+	public static final int REGLE_RETRAIT_VILLE_ERREUR = 20023;
 
 }

@@ -6,7 +6,7 @@ import fr.eni.encheresApp.bo.ArticleVendu;
 
 public interface ArticleVenduDAO {
 	
-	public int insertArticle(ArticleVendu article);
+	public void insertArticle(ArticleVendu article);
 	
 	public List<ArticleVendu> selectAllArticle();
 	
