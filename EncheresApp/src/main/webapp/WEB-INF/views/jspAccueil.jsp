@@ -18,6 +18,27 @@
 	href="<%=request.getContextPath()%>/css/styles.css" rel="stylesheet" />
 <meta charset="UTF-8">
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(function() {
+		$('input[id="filtreRadioA"]').click(function() {
+			if ($(this).is(':checked')) {
+				$('input[name="chkAchat"]').prop("disabled", false)
+				$('input[name="chkVente"]').prop("disabled", true)
+			}
+		});
+	});
+	$(function() {
+		$('input[id="filtreRadioV"]').click(function() {
+			if ($(this).is(':checked')) {
+				$('input[name="chkAchat"]').prop("disabled", true)
+				$('input[name="chkVente"]').prop("disabled", false)
+			}
+		});
+	});
+</script>
 </head>
 <body class="">
 
@@ -77,39 +98,42 @@
 						<div class="d-flex">
 							<div class="d-flex flex-column me-3">
 								<div>
-									<input type="radio" name="achat" value="Achats" /> <label
-										for="achat"><fmt:message key="radioAchat"
-											bundle="${r}"></fmt:message></label>
+									<input type="radio" name="filtreRadio" id="filtreRadioA"
+										value="Achats" checked="checked" /> <label for="achat"><fmt:message
+											key="radioAchat" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
-											key="chEOuv" bundle="${r}"></fmt:message></label>
+									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
+										for=""><fmt:message key="chEOuv" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
-											key="chECou" bundle="${r}"></fmt:message></label>
+									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
+										for=""><fmt:message key="chECou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
-											key="chERem" bundle="${r}"></fmt:message></label>
+									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
+										for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
 							<div class="d-flex flex-column mx-3">
 								<div>
-									<input type="radio" name="vente" value="Mes ventes" /> <label
-										for="vente"><fmt:message key="radioVente"
-											bundle="${r}"></fmt:message></label>
+									<input type="radio" name="filtreRadio" id="filtreRadioV"
+										value="Mes ventes" /> <label for="vente"><fmt:message
+											key="radioVente" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
+									<input class="ms-4" type="checkbox" name="chkVente"
+										disabled="disabled" /> <label for=""><fmt:message
 											key="chVCou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
+									<input class="ms-4" type="checkbox" name="chkVente"
+										disabled="disabled" /> <label for=""><fmt:message
 											key="chVNon" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="" /> <label for=""><fmt:message
+									<input class="ms-4" type="checkbox" name="chkVente"
+										disabled="disabled" /> <label for=""><fmt:message
 											key="chVterm" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
@@ -125,15 +149,16 @@
 			<div class="d-flex flex-wrap">
 				<c:if test="${articles != null}">
 					<c:forEach var="article" items="${articles }">
-						<div class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
+						<div
+							class="card mx-3 my-3 col-3 border border-dark bg-warning shadow rounded">
 							<div class="card-body">
 								<h4 class="card-title">${article.nomArticle}</h4>
 								<label class="ms-2">Prix : </label><label>
-									${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente} points</label><br>
-								<label class="ms-2">Fin de l'enchère : </label><label>
-									${article.dateFinEncheres}</label><br>
-		
-		
+									${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
+									points</label><br> <label class="ms-2">Fin de l'enchère :
+								</label><label> ${article.dateFinEncheres}</label><br>
+
+
 								<c:choose>
 									<c:when test="${sessionScope.utilisateurCourant != null}">
 										<label class="ms-2">Pseudo : </label>
@@ -155,7 +180,6 @@
 		</main>
 
 	</div>
-
 
 
 </body>
