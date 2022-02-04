@@ -14,8 +14,8 @@
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
-<link rel=stylesheet type="text/css"
-	href="<%=request.getContextPath()%>/css/styles.css" />
+<link rel=stylesheet type="text/css" href="/EncheresApp/css/styles.css" />
+<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 <script
@@ -42,8 +42,9 @@
 </head>
 <body class="">
 
-	<div class="container">
-		<header class="d-flex justify-content-between align-items-center">
+	
+	<header class="sticky-top">
+		<div class="container d-flex justify-content-between align-items-center">
 			<h1>
 				<fmt:message key="titre" bundle="${r}"></fmt:message>
 			</h1>
@@ -52,13 +53,13 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div>
-							<a class="mx-1" href=""><fmt:message key="aEnch"
-									bundle="${r}"></fmt:message></a> <a class="mx-1"
-								href="<%=request.getContextPath()%>/ServletNouvelleVente"><fmt:message
-									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-1"
-								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><fmt:message
-									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-1"
-								href="<%=request.getContextPath()%>/Profil/Deconnexion"><fmt:message
+							<a class="mx-2" href=""><i class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
+									bundle="${r}"></fmt:message></a> <a class="mx-2"
+								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i class="fas fa-share-square"></i> <fmt:message
+									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-2"
+								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i class="fas fa-user-alt"></i> <fmt:message
+									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-2"
+								href="<%=request.getContextPath()%>/Profil/Deconnexion"><i class="fas fa-sign-out-alt"></i> <fmt:message
 									key="aDeco" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:when>
@@ -72,7 +73,9 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
+			</div>
 		</header>
+		<div class="container">
 		<main>
 			<h2 class="text-center my-3">
 				<fmt:message key="sousTitre" bundle="${r}"></fmt:message>
@@ -144,8 +147,8 @@
 					</c:if>
 				</div>
 
-				<button id="btnValider"
-					class="btn btn-outline-success my-auto col-4" type="submit">
+				<button
+					class="btn my-auto col-4 btnRecherche" type="submit">
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
@@ -153,34 +156,30 @@
 				<c:choose>
 					<c:when test="${articles != null && articles.size() > 0}">
 						<c:forEach var="article" items="${articles }">
-							<div
-								class="card border border-dark bg-light mx-3 my-3 shadow rounded">
-								<div class="card-body">
-									<h4 class="card-title">${article.nomArticle}</h4>
-									<label class="ms-2">Prix : </label><label>
-										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-										points</label><br> <label class="ms-2">Fin de l'enchère :
-									</label><label> ${article.dateFinEncheres}</label><br>
-
-
-									<c:choose>
-										<c:when test="${sessionScope.utilisateurCourant != null}">
-											<label class="ms-2">Pseudo : </label>
-											<a
-												href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a>
-											<br>
-											<a
-												href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}"
-												class="btn btn-outline-primary">Voir l'article</a>
-										</c:when>
-										<c:otherwise>
-											<label class="ms-2">Pseudo : </label>
-											<label>${article.pseudoUtilisateur}</label>
-											<br>
-										</c:otherwise>
-									</c:choose>
+							<div class="card border text-white mx-3 my-3 shadow rounded">
+									<div class="card-body px-auto py-auto">
+										<h4 class="card-title">${article.nomArticle}</h4>
+										<label class="ms-2">Prix : </label><label>
+											${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
+											points</label><br> <label class="ms-2">Fin de l'enchère :
+										</label><label> ${article.dateFinEncheres}</label><br>
+		
+		
+										<c:choose>
+											<c:when test="${sessionScope.utilisateurCourant != null}">
+												<label class="ms-2">Pseudo : </label>
+												<a href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}" class="name">${article.pseudoUtilisateur}</a>
+												<br>
+												<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="btn btnLinkCard">Voir l'article</a>
+											</c:when>
+											<c:otherwise>
+												<label class="ms-2">Pseudo : </label>
+												<label>${article.pseudoUtilisateur}</label>
+												<br>
+											</c:otherwise>
+										</c:choose>
+									</div>
 								</div>
-							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
