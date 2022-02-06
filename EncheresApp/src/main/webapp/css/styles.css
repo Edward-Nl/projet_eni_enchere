@@ -85,7 +85,7 @@ input[type=text],input[type=password],input[type=email],input[type=tel],input[ty
 	background-color: #e6e6e6;
 	height: 40px;
 	margin-bottom: 15px;
-	font-family: 'Ubuntu', sans-serif;
+	font-family: 'Ubuntu', sans-serif !important;
 	padding-left: 20px;
 }
 textarea{

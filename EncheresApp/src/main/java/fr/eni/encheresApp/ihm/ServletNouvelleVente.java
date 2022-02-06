@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -76,6 +78,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			int idUtils = utils.getNoUtilisateur();
 			dateDebut = Date.valueOf(debut);
 			dateFin = Date.valueOf(fin);
+			System.out.println(fin);
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
 			article = new ArticleVendu(nom,description,dateDebut,dateFin,prix,idUtils,categorie);
