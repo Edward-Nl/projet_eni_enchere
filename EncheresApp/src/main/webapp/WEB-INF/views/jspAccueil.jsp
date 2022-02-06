@@ -43,30 +43,30 @@
 <body class="">
 
 	
-	<header class="sticky-top">
-		<div class="container d-flex justify-content-between align-items-center">
+	<header class="sticky-top divHeader">
+		<div class="container d-flex justify-content-between">
 			<h1>
 				<fmt:message key="titre" bundle="${r}"></fmt:message>
 			</h1>
-			<div>
+			<div class="my-auto">
 				<!-- Selon le status de connexion on affiche ou non les liens  -->
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
-						<div>
-							<a class="mx-2" href=""><i class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
-									bundle="${r}"></fmt:message></a> <a class="mx-2"
+						<div class="my-auto">
+							<a class="mx-2 ahead" href=""><i class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
+									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
 								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i class="fas fa-share-square"></i> <fmt:message
-									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-2"
+									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
 								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i class="fas fa-user-alt"></i> <fmt:message
-									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-2"
+									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
 								href="<%=request.getContextPath()%>/Profil/Deconnexion"><i class="fas fa-sign-out-alt"></i> <fmt:message
 									key="aDeco" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div>
-							<a class="mx-1" href="<%=request.getContextPath()%>/inscription"><fmt:message
-									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-1"
+							<a class="mx-1 ahead" href="<%=request.getContextPath()%>/inscription"><fmt:message
+									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-1 ahead"
 								href="<%=request.getContextPath()%>/connexion"><fmt:message
 									key="aConx" bundle="${r}"></fmt:message></a>
 						</div>
@@ -148,7 +148,7 @@
 				</div>
 
 				<button
-					class="btn my-auto col-4 btnRecherche" type="submit">
+					class="btn btn-outline-success my-auto col-4 btnRecherche" type="submit"><i class="fas fa-search"></i> 
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
@@ -156,25 +156,25 @@
 				<c:choose>
 					<c:when test="${articles != null && articles.size() > 0}">
 						<c:forEach var="article" items="${articles }">
-							<div class="card border text-white mx-3 my-3 shadow rounded">
+							<div class="card text-white mx-3 my-3 shadow rounded">
 									<div class="card-body px-auto py-auto">
 										<h4 class="card-title">${article.nomArticle}</h4>
-										<label class="ms-2">Prix : </label><label>
+										<label class="ms-2 fw-bold">Prix : </label><label class="colorGrey">
 											${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-											points</label><br> <label class="ms-2">Fin de l'enchère :
-										</label><label> ${article.dateFinEncheres}</label><br>
+											points</label><br> <label class="ms-2 fw-bold">Fin de l'enchère :
+										</label><label class="colorGrey"> ${article.dateFinEncheres}</label><br>
 		
 		
 										<c:choose>
 											<c:when test="${sessionScope.utilisateurCourant != null}">
-												<label class="ms-2">Pseudo : </label>
+												<label class="ms-2 fw-bold">Pseudo : </label>
 												<a href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}" class="name">${article.pseudoUtilisateur}</a>
 												<br>
-												<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="btn btnLinkCard">Voir l'article</a>
+												<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="btn btnLinkCard mt-3 ms-2"><i class="fas fa-eye"></i> Voir l'article</a>
 											</c:when>
 											<c:otherwise>
-												<label class="ms-2">Pseudo : </label>
-												<label>${article.pseudoUtilisateur}</label>
+												<label class="ms-2 fw-bold">Pseudo : </label>
+												<label class="colorGrey">${article.pseudoUtilisateur}</label>
 												<br>
 											</c:otherwise>
 										</c:choose>
