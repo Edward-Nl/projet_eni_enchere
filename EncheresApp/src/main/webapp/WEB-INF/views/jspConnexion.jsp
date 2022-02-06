@@ -44,7 +44,7 @@
 				</c:if>
 				<label for="identifiant" class="col-3 my-3"> <fmt:message
 						key="champ.un" bundle="${r}"></fmt:message>
-				</label> <input type="text" name="identifiant" required
+				</label><input type="text" name="identifiant" required
 					placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>"
 					class="col-6" value="${cookie.pseudo.value}" /> <br> <label
 					for="motDePasse" class="col-3 my-3"><fmt:message
