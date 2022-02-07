@@ -175,39 +175,40 @@
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
-			<div class="d-flex flex-wrap">
-				<c:if test="${articles.size() > 0}">
-					<c:forEach var="articlesList" items="${articles}" varStatus="loop">
-						<c:choose>
-							<c:when
-								test="${(filtreRadio == 'Achats' && filtreChkBox[loop.index])}">
-								<c:choose>
-									<c:when test="${loop.index == 0 }">
-										<p>Enchères ouvertes</p>
-									</c:when>
-									<c:when test="${loop.index == 1 }">
-										<p>Mes enchères en cours</p>
-									</c:when>
-									<c:when test="${loop.index == 2 }">
-										<p>Mes enchères remportées</p>
-									</c:when>
-								</c:choose>
-							</c:when>
-							<c:when
-								test="${(filtreRadio == 'Ventes' && filtreChkBox[loop.index])}">
-								<c:choose>
-									<c:when test="${loop.index == 0 }">
-										<p>Mes ventes en cours</p>
-									</c:when>
-									<c:when test="${loop.index == 1 }">
-										<p>Mes ventes non débutées</p>
-									</c:when>
-									<c:when test="${loop.index == 2 }">
-										<p>Mes ventes terminées</p>
-									</c:when>
-								</c:choose>
-							</c:when>
-						</c:choose>
+
+			<c:if test="${articles.size() > 0}">
+				<c:forEach var="articlesList" items="${articles}" varStatus="loop">
+					<c:choose>
+						<c:when
+							test="${(filtreRadio == 'Achats' && filtreChkBox[loop.index])}">
+							<c:choose>
+								<c:when test="${loop.index == 0 }">
+									<p>Enchères ouvertes</p>
+								</c:when>
+								<c:when test="${loop.index == 1 }">
+									<p>Mes enchères en cours</p>
+								</c:when>
+								<c:when test="${loop.index == 2 }">
+									<p>Mes enchères remportées</p>
+								</c:when>
+							</c:choose>
+						</c:when>
+						<c:when
+							test="${(filtreRadio == 'Ventes' && filtreChkBox[loop.index])}">
+							<c:choose>
+								<c:when test="${loop.index == 0 }">
+									<p>Mes ventes en cours</p>
+								</c:when>
+								<c:when test="${loop.index == 1 }">
+									<p>Mes ventes non débutées</p>
+								</c:when>
+								<c:when test="${loop.index == 2 }">
+									<p>Mes ventes terminées</p>
+								</c:when>
+							</c:choose>
+						</c:when>
+					</c:choose>
+					<div class="d-flex flex-wrap">
 						<c:forEach var="article" items="${articlesList}">
 
 							<div class="card text-white mx-3 my-3 shadow rounded">
@@ -242,14 +243,15 @@
 								</div>
 							</div>
 						</c:forEach>
-					</c:forEach>
-				</c:if>
+					</div>
+				</c:forEach>
+			</c:if>
 
-				<c:if
-					test="${(articles[0] == null || articles[0].size() < 0) && (articles[1] == null || articles[1].size() < 0) && (articles[2] == null || articles[2].size() < 0)}">
-					<p>Aucun article a afficher</p>
-				</c:if>
-			</div>
+			<c:if
+				test="${(articles[0] == null || articles[0].size() < 0) && (articles[1] == null || articles[1].size() < 0) && (articles[2] == null || articles[2].size() < 0)}">
+				<p>Aucun article a afficher</p>
+			</c:if>
+
 		</main>
 
 	</div>
