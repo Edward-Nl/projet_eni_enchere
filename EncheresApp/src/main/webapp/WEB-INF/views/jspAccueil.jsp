@@ -15,7 +15,8 @@
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
 	crossorigin="anonymous">
 <link rel=stylesheet type="text/css" href="/EncheresApp/css/styles.css" />
-<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/919a307c94.js"
+	crossorigin="anonymous"></script>
 <meta charset="UTF-8">
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 <script
@@ -25,16 +26,19 @@
 	$(function() {
 		$('input[id="filtreRadioA"]').click(function() {
 			if ($(this).is(':checked')) {
-				$('input[name="chkAchat"]').prop("disabled", false)
-				$('input[name="chkVente"]').prop("disabled", true)
+				$('.chkAchat').prop("disabled", false)
+				$('.chkVente').prop("checked", false)
+				$('.chkVente').prop("disabled", true)
 			}
 		});
 	});
 	$(function() {
 		$('input[id="filtreRadioV"]').click(function() {
 			if ($(this).is(':checked')) {
-				$('input[name="chkAchat"]').prop("disabled", true)
-				$('input[name="chkVente"]').prop("disabled", false)
+				$('.chkAchat').prop("checked", false)
+				$('.chkAchat').prop("disabled", true)
+				$('.chkVente').prop("disabled", false)
+
 			}
 		});
 	});
@@ -42,9 +46,10 @@
 </head>
 <body class="">
 
-	
+
 	<header class="sticky-top">
-		<div class="container d-flex justify-content-between align-items-center">
+		<div
+			class="container d-flex justify-content-between align-items-center">
 			<h1>
 				<fmt:message key="titre" bundle="${r}"></fmt:message>
 			</h1>
@@ -53,14 +58,18 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div>
-							<a class="mx-2" href=""><i class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
+							<a class="mx-2" href=""><i class="fas fa-cart-arrow-down"></i>
+								<fmt:message key="aEnch" bundle="${r}"></fmt:message></a> <a
+								class="mx-2"
+								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i
+								class="fas fa-share-square"></i> <fmt:message key="aVend"
 									bundle="${r}"></fmt:message></a> <a class="mx-2"
-								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i class="fas fa-share-square"></i> <fmt:message
-									key="aVend" bundle="${r}"></fmt:message></a> <a class="mx-2"
-								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i class="fas fa-user-alt"></i> <fmt:message
-									key="aProf" bundle="${r}"></fmt:message></a> <a class="mx-2"
-								href="<%=request.getContextPath()%>/Profil/Deconnexion"><i class="fas fa-sign-out-alt"></i> <fmt:message
-									key="aDeco" bundle="${r}"></fmt:message></a>
+								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i
+								class="fas fa-user-alt"></i> <fmt:message key="aProf"
+									bundle="${r}"></fmt:message></a> <a class="mx-2"
+								href="<%=request.getContextPath()%>/Profil/Deconnexion"><i
+								class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco"
+									bundle="${r}"></fmt:message></a>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -73,9 +82,9 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-			</div>
-		</header>
-		<div class="container">
+		</div>
+	</header>
+	<div class="container">
 		<main>
 			<h2 class="text-center my-3">
 				<fmt:message key="sousTitre" bundle="${r}"></fmt:message>
@@ -109,16 +118,16 @@
 											key="radioAchat" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
-										for=""><fmt:message key="chEOuv" bundle="${r}"></fmt:message></label>
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat1" />
+									<label for=""><fmt:message key="chEOuv" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
-										for=""><fmt:message key="chECou" bundle="${r}"></fmt:message></label>
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat2" />
+									<label for=""><fmt:message key="chECou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkAchat" /> <label
-										for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat3" />
+									<label for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
 							<div class="d-flex flex-column mx-3">
@@ -128,17 +137,17 @@
 											key="radioVente" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkVente"
+									<input class="ms-4 chkVente" type="checkbox" name="chkVente1"
 										disabled="disabled" /> <label for=""><fmt:message
 											key="chVCou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkVente"
+									<input class="ms-4 chkVente" type="checkbox" name="chkVente2"
 										disabled="disabled" /> <label for=""><fmt:message
 											key="chVNon" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4" type="checkbox" name="chkVente"
+									<input class="ms-4 chkVente" type="checkbox" name="chkVente3"
 										disabled="disabled" /> <label for=""><fmt:message
 											key="chVterm" bundle="${r}"></fmt:message></label>
 								</div>
@@ -147,8 +156,7 @@
 					</c:if>
 				</div>
 
-				<button
-					class="btn my-auto col-4 btnRecherche" type="submit">
+				<button class="btn my-auto col-4 btnRecherche" type="submit">
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
 				</button>
 			</form>
@@ -157,29 +165,34 @@
 					<c:when test="${articles != null && articles.size() > 0}">
 						<c:forEach var="article" items="${articles }">
 							<div class="card border text-white mx-3 my-3 shadow rounded">
-									<div class="card-body px-auto py-auto">
-										<h4 class="card-title">${article.nomArticle}</h4>
-										<label class="ms-2">Prix : </label><label>
-											${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-											points</label><br> <label class="ms-2">Fin de l'enchère :
-										</label><label> ${article.dateFinEncheres}</label><br>
-		
-		
-										<c:choose>
-											<c:when test="${sessionScope.utilisateurCourant != null}">
-												<label class="ms-2">Pseudo : </label>
-												<a href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}" class="name">${article.pseudoUtilisateur}</a>
-												<br>
-												<a href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" class="btn btnLinkCard">Voir l'article</a>
-											</c:when>
-											<c:otherwise>
-												<label class="ms-2">Pseudo : </label>
-												<label>${article.pseudoUtilisateur}</label>
-												<br>
-											</c:otherwise>
-										</c:choose>
-									</div>
+								<div class="card-body px-auto py-auto">
+									<h4 class="card-title">${article.nomArticle}</h4>
+									<label class="ms-2">Prix : </label><label>
+										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
+										points</label><br> <label class="ms-2">Fin de l'enchère :
+									</label><label> ${article.dateFinEncheres}</label><br> <label
+										class="ms-2">Status : </label><label>
+										${article.etatVente}</label><br>
+
+									<c:choose>
+										<c:when test="${sessionScope.utilisateurCourant != null}">
+											<label class="ms-2">Pseudo : </label>
+											<a
+												href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}"
+												class="name">${article.pseudoUtilisateur}</a>
+											<br>
+											<a
+												href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}"
+												class="btn btnLinkCard">Voir l'article</a>
+										</c:when>
+										<c:otherwise>
+											<label class="ms-2">Pseudo : </label>
+											<label>${article.pseudoUtilisateur}</label>
+											<br>
+										</c:otherwise>
+									</c:choose>
 								</div>
+							</div>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>

@@ -10,13 +10,8 @@ public interface ArticleVenduDAO {
 
 	public List<ArticleVendu> selectAllArticle();
 
-	public List<ArticleVendu> selectWithCondition(String pseudo, String filtre, int current, int categorie);
-
-	public List<ArticleVendu> selectArticleCurrent();
-
-	public List<ArticleVendu> selectArticleCurrentWithFilterAllCat(String filtre);
-
-	public List<ArticleVendu> selectArticleCurrentWithFilterSingleCat(String filtre, int cat);
+	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie,
+			String etat);
 
 	public ArticleVendu selectArticleById(int noArticle);
 

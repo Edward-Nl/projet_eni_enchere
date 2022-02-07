@@ -35,39 +35,8 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
-	public List<ArticleVendu> selectArticleEnCours() throws SQLException {
-		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
-		try {
-			articles = ArticleVenduDAO.selectArticleCurrent();
-		} catch (Exception e) {
-			throw new SQLException();
-		}
-
-		return articles;
-	}
-
-	public List<ArticleVendu> selectAvecFiltre(String pseudo, String filtre, int current, int categorie) {
-		return this.ArticleVenduDAO.selectWithCondition(pseudo, filtre, current, categorie);
-	}
-
-	public List<ArticleVendu> selectArticleEnCoursFiltrer(String filtre, int cat) throws SQLException {
-		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
-		if (filtre == null || filtre.isEmpty()) {
-			filtre = "%%";
-		} else {
-			filtre = "%" + filtre + "%";
-		}
-		try {
-			if (cat == 0) {
-				articles = ArticleVenduDAO.selectArticleCurrentWithFilterAllCat(filtre);
-			} else {
-				articles = ArticleVenduDAO.selectArticleCurrentWithFilterSingleCat(filtre, cat);
-			}
-		} catch (Exception e) {
-			throw new SQLException();
-		}
-
-		return articles;
+	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie, String etat) {
+		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie, etat);
 	}
 
 	public ArticleVendu selectArticleById(int noArticle) throws SQLException {

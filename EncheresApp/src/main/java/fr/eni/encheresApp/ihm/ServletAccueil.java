@@ -20,7 +20,7 @@ import fr.eni.encheresApp.bo.Categorie;
 /**
  * Servlet implementation class ServletAccueil
  */
-@WebServlet("/")
+@WebServlet("/accueil")
 public class ServletAccueil extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -32,18 +32,12 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
-		List<ArticleVendu> listeArticle = null;
+		List<ArticleVendu> articles = null;
 		List<Categorie> categories = null;
-		try {
-			listeArticle = managerArticle.selectArticleEnCours();
-			List<ArticleVendu> articles = managerArticle.selectAvecFiltre("", "pe", 0, 0);
-			System.out.println(articles);
-			categories = managerCategorie.selectAll();
-		} catch (SQLException e1) {
-			e1.printStackTrace();
-		}
-		if (listeArticle != null) {
-			request.setAttribute("articles", listeArticle);
+		articles = managerArticle.selectAvecFiltre(0, "", "", 0, "En cours");
+		categories = managerCategorie.selectAll();
+		if (articles != null) {
+			request.setAttribute("articles", articles);
 		}
 		if (categories != null) {
 			request.setAttribute("categories", categories);
@@ -60,27 +54,66 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
-		List<ArticleVendu> listeArticle = null;
-		List<Categorie> categories = null;
-		String filtre = "";
-		int cat = 0;
-		try {
-			filtre = request.getParameter("filtre");
-			cat = Integer.parseInt(request.getParameter("catg"));
-			listeArticle = managerArticle.selectArticleEnCoursFiltrer(filtre, cat);
-			categories = managerCategorie.selectAll();
 
-		} catch (SQLException e1) {
-			e1.printStackTrace();
+		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		List<Categorie> categories = null;
+
+		int categorie = Integer.parseInt(request.getParameter("catg"));
+		System.out.println(categorie);
+		String filtre = request.getParameter("filtre");
+		String pseudo = null;
+		int current = 1;
+
+		if (request.getParameter("filtreRadio") != null) {
+			if (request.getParameter("filtreRadio").trim().equals("Achats")) {
+				if (request.getParameter("chkAchat1") != null || (request.getParameter("chkAchat1") == null
+						&& request.getParameter("chkAchat2") == null && request.getParameter("chkAchat3") == null)) {
+					articles.addAll(managerArticle.selectAvecFiltre(0, "", filtre, categorie, "En cours"));
+				}
+				if (request.getParameter("chkAchat2") != null) {
+					articles.addAll(managerArticle.selectAvecFiltre(1,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
+							"En cours/Enchérie"));
+				}
+				if (request.getParameter("chkAchat3") != null) {
+					articles.addAll(managerArticle.selectAvecFiltre(2,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
+							"Enchères Remporter"));
+				}
+			} else {
+				if (request.getParameter("chkVente1") != null) {
+					articles.addAll(managerArticle.selectAvecFiltre(3,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
+							"Mes ventes en cours"));
+				}
+				if (request.getParameter("chkVente2") != null) {
+					articles.addAll(managerArticle.selectAvecFiltre(4,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
+							"Mes ventes non débutées"));
+				}
+				if (request.getParameter("chkVente3") != null) {
+					articles.addAll(managerArticle.selectAvecFiltre(5,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
+							"Mes ventes terminer"));
+				}
+			}
+
+		} else {
+			articles = managerArticle.selectAvecFiltre(1, "", filtre, categorie, "En cours");
 		}
-		if (listeArticle != null) {
-			request.setAttribute("articles", listeArticle);
+
+		categories = managerCategorie.selectAll();
+
+		System.out.println("All " + articles);
+
+		if (articles != null) {
+			request.setAttribute("articles", articles);
 		}
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
 		request.setAttribute("filtre", filtre);
-		request.setAttribute("catg", cat);
+		request.setAttribute("catg", categorie);
 
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}

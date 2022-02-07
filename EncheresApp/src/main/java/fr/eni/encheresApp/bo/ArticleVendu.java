@@ -38,7 +38,6 @@ public class ArticleVendu implements Serializable {
 	public ArticleVendu() {
 		super();
 	}
-	
 
 	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int prixVente, String pseudoUtilisateur, String libelleCat) {
@@ -79,8 +78,9 @@ public class ArticleVendu implements Serializable {
 	}
 
 	public ArticleVendu(int no_Article, String nomArticle, Date dateFinEncheres, int miseAPrix, int prixVente,
-			int no_Categorie, String pseudoUtilisateur) {
+			int no_Categorie, String pseudoUtilisateur, String etatVente) {
 		super();
+		this.etatVente = etatVente;
 		this.no_Article = no_Article;
 		this.nomArticle = nomArticle;
 		this.dateFinEncheres = dateFinEncheres;
@@ -171,8 +171,6 @@ public class ArticleVendu implements Serializable {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
-	
-	
 
 	/* GETTER AND SETTER */
 
