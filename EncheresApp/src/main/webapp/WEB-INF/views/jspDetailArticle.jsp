@@ -7,23 +7,30 @@
 <head>
 <fmt:setLocale value="fr" />
 <fmt:setBundle basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
+<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
+<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
+
+	<header class="sticky-top divHeader">
+		<div class="container">
+			<h1>
+				<fmt:message key="h1" bundle="${r}"></fmt:message>
+			</h1>
+		</div>
+	</header>
 	<div class="container">
 	
-		<h1><fmt:message key="h1" bundle="${r}"></fmt:message></h1>
 		
 		<div class="td-flex flex-column justify-content-center align-item-center">
 		
-			<h2 class="mx-auto text-center my-4"><fmt:message key="h2Det" bundle="${r}"></fmt:message></h2>
+			<h2 class="mx-auto text-center my-4"><fmt:message key="h2Det" bundle="${r}"></fmt:message> - ${article.nomArticle}</h2>
 			
 			<div class="col-4 mx-auto">
-		
-				<p class="h4">${article.nomArticle}</p><br>
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="des" bundle="${r}"></fmt:message></span> ${article.description}</p><br>
 				
@@ -42,7 +49,7 @@
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span> ${article.pseudoUtilisateur}</p><br>
 				
-				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-primary"><fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
+				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-primary"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
 			
 			</div>
 		</div>

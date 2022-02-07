@@ -8,6 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
+<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -24,17 +26,22 @@
 
 <title><fmt:message key="titre" bundle="${r}"></fmt:message></title>
 </head>
+<body>
+	<header class="sticky-top divHeader">
+		<div class="container">
+			<h1>
+				<fmt:message key="soustitre" bundle="${r}"></fmt:message>
+			</h1>
+		</div>
+	</header>
 <div class="container">
-
-	<h1>
-		<fmt:message key="soustitre" bundle="${r}"></fmt:message>
-	</h1>
 	<c:if test="${listeCodesErreur != null}">
 		<p style="color: red;">Erreur lors du login du compte</p>
 		<c:forEach var="erreur" items="${listeCodesErreur}">
 			<p>${LecteurMessage.getMessageErreur(erreur)}</p>
 		</c:forEach>
 	</c:if>
+	<h2 class="mt-4 mb-5 text-center">Modifier le compte</h2>
 	<form method="post"
 		action="<%=request.getContextPath()%>/Profil/Modifier" class="my-3">
 		<div class="d-flex justify-content-center">
@@ -113,12 +120,12 @@
 		</div>
 
 		<div class="d-flex justify-content-center">
-			<fmt:message key="champ.enregistrer" bundle="${r}" var="enregistrer" />
-			<input class="btn btn-warning mx-2 my-3 col-3" type="submit"
-				value="${enregistrer}" name="update">
-			<fmt:message key="champ.supprimer" bundle="${r}" var="supprimer" />
-			<input class=" btn btn-outline-danger mx-2 my-3 col-3" type="submit"
-				value="${supprimer}" name="delete"> <a
+			
+			<button class="btn btn-outline-warning mx-2 my-3 col-3" type="submit"
+			name="update"><i class="far fa-save"></i> <fmt:message key="champ.enregistrer" bundle="${r}"></fmt:message></button>
+			
+			<button class="btn btn-outline-danger mx-2 my-3 col-3" type="submit" 
+			name="delete"><i class="far fa-times-circle"></i>  <fmt:message key="champ.supprimer" bundle="${r}"></fmt:message></button> <a
 				class="btn btn-outline-primary mx-2 col-3 my-3"
 				href="<%=request.getContextPath()%>/"><fmt:message key="retour"
 					bundle="${r}"></fmt:message></a>

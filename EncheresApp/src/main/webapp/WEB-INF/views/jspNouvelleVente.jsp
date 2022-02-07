@@ -9,17 +9,25 @@
 
 <fmt:setLocale value="fr" />
 <fmt:setBundle basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
+<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
+<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 </head>
 <body>
+	<header class="sticky-top divHeader">
+		<div class="container">
+			<h1>
+				<fmt:message key="h1" bundle="${r}"></fmt:message>
+			</h1>
+		</div>
+	</header>
 
 	<div class="container">
-		<h1><fmt:message key="h1" bundle="${r}"></fmt:message></h1>
 		
 		<div class="mx-auto col-6 ">
-			<h2><fmt:message key="h2" bundle="${r}"></fmt:message></h2>
+			<h2 class="mt-4 mb-5"><fmt:message key="h2" bundle="${r}"></fmt:message></h2>
 			
 			<form action="<%=request.getContextPath()%>/ServletNouvelleVente" method="POST">
 				<div>
@@ -76,8 +84,8 @@
 				</fieldset>
 				
 				<div>
-					<input type="submit" class="btn btn-primary mx-2 col-3 my-3"/>
-					<a class="btn btn-outline-danger mx-2 col-3 my-3" href="<%=request.getContextPath()%>/"><fmt:message key="btnAnnul" bundle="${r}"></fmt:message></a>
+					<button type="submit" class="btn btn-outline-primary mx-2 col-3 my-3"><i class="far fa-save"></i> <fmt:message key="btnEn" bundle="${r}"></fmt:message></button>
+					<a class="btn btn-outline-danger mx-2 col-3 my-3" href="<%=request.getContextPath()%>/"><i class="fas fa-angle-double-left"></i> <fmt:message key="btnAnnul" bundle="${r}"></fmt:message></a>
 					<a></a>
 				</div>
 				

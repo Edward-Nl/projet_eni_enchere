@@ -31,5 +31,6 @@ public abstract class CodesResultatBLL {
 	public static final int REGLE_RETRAIT_RUE_ERREUR = 20021;
 	public static final int REGLE_RETRAIT_CP_ERREUR = 20022;
 	public static final int REGLE_RETRAIT_VILLE_ERREUR = 20023;
-
+	
+	public static final int REGLE_ARTICLE_VENDU_NOUVELLE_ENCHERE = 20024;
 }

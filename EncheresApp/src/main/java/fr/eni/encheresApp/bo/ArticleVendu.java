@@ -2,7 +2,7 @@ package fr.eni.encheresApp.bo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 
 public class ArticleVendu implements Serializable {
 

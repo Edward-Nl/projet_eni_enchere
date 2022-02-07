@@ -8,6 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
+<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -26,17 +28,22 @@
 
 </head>
 <body>
-	<div class="container">
 
-		<h1>
-			<fmt:message key="soustitre" bundle="${r}"></fmt:message>
-		</h1>
+	<header class="sticky-top divHeader">
+		<div class="container">
+			<h1>
+				<fmt:message key="soustitre" bundle="${r}"></fmt:message>
+			</h1>
+		</div>
+	</header>
+	<div class="container">
 		<c:if test="${listeCodesErreur != null}">
 			<p style="color: red;">Erreur lors du login du compte</p>
 			<c:forEach var="erreur" items="${listeCodesErreur}">
 				<p>${LecteurMessage.getMessageErreur(erreur)}</p>
 			</c:forEach>
 		</c:if>
+		<h2 class="mt-4 mb-5 text-center"><fmt:message key="h2" bundle="${r}"></fmt:message></h2>
 		<form method="post" action="" class="my-3">
 			<div class="d-flex justify-content-center">
 				<div class="mx-3 col-4">
@@ -45,12 +52,12 @@
 					<fmt:message key="pattern.general.titre" bundle="${r}"
 						var="patternGeneralTitre" />
 					<label class="my-2 col-4" for="pseudo"><fmt:message
-							key="champ.un" bundle="${r}"></fmt:message></label> <input class="col-6"
+							key="champ.un" bundle="${r}"></fmt:message></label><input class="col-6"
 						type="text" name="pseudo" value="${pseudo}"
 						pattern="(?=(^[A-Za-z][a-zA-Z0-9]+[_-]?[0-9a-zA-Z]+$))^.{5,30}$"
 						title="${patternPseudoTitre}" placeholder="Eni_Students" required /><br>
 					<label class="my-2 col-4" for="prenom"><fmt:message
-							key="champ.trois" bundle="${r}"></fmt:message></label> <input
+							key="champ.trois" bundle="${r}"></fmt:message></label><input
 						class="col-6" type="text" name="prenom" value="${prenom}"
 						pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$"
 						title="${patternGeneralTitre}" placeholder="Jean" required /> <br>
@@ -58,12 +65,12 @@
 					<fmt:message key="pattern.telephone.titre" bundle="${r}"
 						var="patternTitre" />
 					<label class="my-2 col-4" for="telephone"><fmt:message
-							key="champ.cinq" bundle="${r}"></fmt:message></label> <input
+							key="champ.cinq" bundle="${r}"></fmt:message></label><input
 						class="col-6" type="tel" name="telephone" value="${telephone}"
 						pattern="${pattern}" title="${patternTitre}"
 						placeholder="+33 565656565/05 65 65 65 65" required /> <br>
 					<label class="my-2 col-4" for="codePostale"><fmt:message
-							key="champ.sept" bundle="${r}"></fmt:message></label> <input
+							key="champ.sept" bundle="${r}"></fmt:message></label><input
 						class="col-6" type="text" name="codePostale"
 						value="${codePostale}" placeholder="22222"
 						pattern="^(([0-9]{2}|2A|2B)[0-9]{3})$|^[971-974]$" required /> <br>
@@ -74,12 +81,12 @@
 				</div>
 				<div class="mx-3 col-4">
 					<label class="my-2 col-4" for="nom"><fmt:message
-							key="champ.deux" bundle="${r}"></fmt:message></label> <input
+							key="champ.deux" bundle="${r}"></fmt:message></label><input
 						class="col-6" type="text" name="nom" value="${nom}"
 						pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$"
 						title="${patternGeneralTitre}" placeholder="Dupond-Dupond"
 						required /><br> <label class="my-2 col-4" for="email"><fmt:message
-							key="champ.quatres" bundle="${r}"></fmt:message></label> <input
+							key="champ.quatres" bundle="${r}"></fmt:message></label><input
 						class="col-6" type="email" name="email" value="${email}"
 						placeholder="example@campus-eni.fr" required /> <br> <label
 						class="my-2 col-4" for="rue"><fmt:message key="champ.six"
@@ -101,11 +108,10 @@
 			</div>
 
 			<div class="d-flex justify-content-center">
-				<fmt:message key="champ.creer" bundle="${r}" var="creer" />
-				<fmt:message key="champ.annuler" bundle="${r}" var="annuler" />
-				<input class="btn btn-primary mx-5 my-3 col-3" type="submit"
-					value="${creer}"> <a href="<%=request.getContextPath()%>/"
-					class="btn btn-danger mx-5 my-3 col-3"><fmt:message
+				<button class="btn btn-outline-primary mx-5 my-3 col-3" type="submit">
+				<i class="fas fa-plus"></i>  <fmt:message key="champ.creer" bundle="${r}"></fmt:message></button> 
+					<a href="<%=request.getContextPath()%>/"
+					class="btn btn-outline-danger mx-5 my-3 col-3"><i class="fas fa-angle-double-left"></i>  <fmt:message
 						key="champ.annuler" bundle="${r}"></fmt:message></a>
 			</div>
 
