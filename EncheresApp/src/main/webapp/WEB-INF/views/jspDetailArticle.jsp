@@ -12,7 +12,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title><fmt:message key="title2" bundle="${r}"></fmt:message></title>
 </head>
 <body>
 
@@ -63,7 +63,9 @@
 				</c:if>
 				
 				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
-			
+				<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'NC'}">
+					<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/ServletModifierVente?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
+				</c:if>
 			</div>
 		</div>
 	

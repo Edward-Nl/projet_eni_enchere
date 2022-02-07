@@ -23,6 +23,15 @@ public class ArticlesVenduManager {
 			throw new SQLException();
 		}
 	}
+	
+	public void update(ArticleVendu article) throws SQLException {
+		try {
+			System.out.println(article);
+			this.ArticleVenduDAO.updateArticle(article);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+	}
 
 	public List<ArticleVendu> selectAllArticle() throws SQLException {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();

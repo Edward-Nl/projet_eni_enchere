@@ -15,9 +15,17 @@ public class RetraitManager {
 	}
 	
 	public void insert(Retrait lieu) throws SQLException {
-		System.out.println(lieu);
 		try {
 			this.RetraitDAO.insert(lieu);
+		} catch(Exception e) {
+			throw new SQLException();
+		}
+		
+	}
+	
+	public void update(Retrait lieu) throws SQLException {
+		try {
+			this.RetraitDAO.update(lieu);
 		} catch(Exception e) {
 			throw new SQLException();
 		}

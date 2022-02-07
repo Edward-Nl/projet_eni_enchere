@@ -29,7 +29,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_BY_ID = "SELECT no_article,nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,prix_vente,pseudo,libelle FROM ARTICLES_VENDUS AS a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur JOIN CATEGORIES AS c on a.no_categorie = c.no_categorie WHERE no_article = ?";
 	private static final String DELETE = "DELETE FROM ARTICLES_VENDUS WHERE no_article = ?";
 	private static final String INSERT = "INSERT INTO ARTICLES_VENDUS(nom_article,description,date_debut_encheres,date_fin_encheres,prix_initial,no_utilisateur,no_categorie) VALUES (?,?,?,?,?,?,?)";
-
+	private static final String UPDATE ="UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?";
+	
 	@Override
 	public void insertArticle(ArticleVendu article) {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -101,7 +102,18 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 	@Override
 	public void updateArticle(ArticleVendu article) {
-		// TODO Auto-generated method stub
+		try (Connection cnx = ConnectionProvider.getConnection(); PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
+			pstmt.setString(1, article.getNomArticle());
+			pstmt.setString(2, article.getDescription());
+			pstmt.setDate(3, (Date) article.getDateDebutEncheres());
+			pstmt.setDate(4, (Date) article.getDateFinEncheres());
+			pstmt.setInt(5, article.getMiseAPrix());
+			pstmt.setInt(6, article.getNo_Categorie());
+			pstmt.setInt(7, article.getNo_Article());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 

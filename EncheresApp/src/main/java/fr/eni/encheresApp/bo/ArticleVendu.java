@@ -173,6 +173,20 @@ public class ArticleVendu implements Serializable {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
+	
+	
+
+	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int no_Categorie) {
+		super();
+		this.no_Article = no_Article;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.no_Categorie = no_Categorie;
+	}
 
 	/* GETTER AND SETTER */
 

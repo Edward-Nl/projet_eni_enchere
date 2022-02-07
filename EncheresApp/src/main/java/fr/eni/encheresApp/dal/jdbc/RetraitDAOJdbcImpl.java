@@ -51,7 +51,16 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 
 	@Override
 	public void update(Retrait retrait) {
-		// TODO Auto-generated method stub
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
+			pstmt.setString(1, retrait.getRue());
+			pstmt.setString(2, retrait.getCodePostal());
+			pstmt.setString(3, retrait.getVille());
+			pstmt.setInt(4, retrait.getNo_article());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
