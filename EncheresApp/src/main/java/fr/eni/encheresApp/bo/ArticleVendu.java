@@ -2,6 +2,8 @@ package fr.eni.encheresApp.bo;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.sql.Date;
 
 public class ArticleVendu implements Serializable {
@@ -271,5 +273,21 @@ public class ArticleVendu implements Serializable {
 	public void setPseudoUtilisateur(String pseudoUtilisateur) {
 		this.pseudoUtilisateur = pseudoUtilisateur;
 	}
-
+	
+	public void modificationEtatVente(Date dateDebut, Date dateFin) {
+		String etat=null;
+		String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		Date dateCourant= Date.valueOf(dateNow);
+		if(dateCourant.before(dateDebut)) {
+			etat = "NC";
+		}
+		if((dateCourant.equals(dateDebut) || dateCourant.after(dateDebut)) && dateCourant.before(dateFin)) {
+			etat = "EC";
+		}
+		if(dateCourant.equals(dateFin) || dateCourant.after(dateFin)) {
+			etat = "TE";
+		}
+		this.setEtatVente(etat);
+		
+	}
 }

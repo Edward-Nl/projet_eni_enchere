@@ -24,7 +24,6 @@
 		</div>
 	</header>
 	<div class="container">
-	
 		
 		<div class="td-flex flex-column justify-content-center align-item-center">
 		
@@ -36,7 +35,7 @@
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="cat" bundle="${r}"></fmt:message></span> ${article.libelleCat}</p><br>
 				
-				<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${article.prixVente}</p><br>
+				<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${article.prixVente != 0 ? article.prixVente: 'Aucune enchère'}</p><br>
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="mise" bundle="${r}"></fmt:message></span> ${article.miseAPrix }</p><br>
 				
@@ -49,7 +48,16 @@
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span> ${article.pseudoUtilisateur}</p><br>
 				
-				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-primary"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
+				<c:if test="${article.etatVente == 'EC' }">
+					<form action="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" method="post">
+						<label for="enchere"><fmt:message key="prop" bundle="${r}"></fmt:message></label>
+						<input type="number" name="enchere" min="${article.prixVente != 0 ? article.prixVente+10:article.miseAPrix}" step="10"
+						placeholder="${article.prixVente != 0 ? article.prixVente+10:article.miseAPrix}"/>
+						<button class="btn btn-outline-primary" type="submit"><fmt:message key="btnEnch" bundle="${r}"></fmt:message></button>
+					</form>
+				</c:if>
+				
+				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
 			
 			</div>
 		</div>

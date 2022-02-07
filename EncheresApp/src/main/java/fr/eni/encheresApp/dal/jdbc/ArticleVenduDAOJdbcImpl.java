@@ -122,45 +122,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 
 	}
-	/*
-	 * private void ArticleVenduParser(ResultSet rs, ArticleVendu article) throws
-	 * SQLException{ int id; try { id = rs.getInt("no_article"); } catch(Exception
-	 * e) { id = -1; } article.setNo_Article(id);
-	 * 
-	 * article.setNomArticle(rs.getString("nom_article"));
-	 * article.setDescription(rs.getString("description"));
-	 * article.setDateDebutEncheres(rs.getDate("date_debut_encheres"));
-	 * article.setDateFinEncheres(rs.getDate("date_fin_encheres"));
-	 * 
-	 * }
-	 * 
-	 * private void utilisateurParser(ResultSet rs, Utilisateur utilisateur) throws
-	 * SQLException { int id; try { id = rs.getInt("no_utilisateur"); } catch
-	 * (Exception e) { id = -1; } utilisateur.setNoUtilisateur(id);
-	 * 
-	 * utilisateur.setPseudo(rs.getString("pseudo"));
-	 * utilisateur.setNom(rs.getString("nom"));
-	 * utilisateur.setPrenom(rs.getString("prenom"));
-	 * utilisateur.setEmail(rs.getString("email"));
-	 * utilisateur.setTelephone(rs.getString("telephone"));
-	 * utilisateur.setRue(rs.getString("rue"));
-	 * utilisateur.setCodePostal(rs.getString("code_postal"));
-	 * utilisateur.setVille(rs.getString("ville"));
-	 * 
-	 * String mdp; try { mdp = rs.getString("mot_de_passe"); } catch (Exception e) {
-	 * mdp = null; } utilisateur.setMotDePasse(mdp);
-	 * 
-	 * int credit; try { credit = rs.getInt("credit"); } catch (Exception e) {
-	 * credit = -1; } utilisateur.setCredit(credit);
-	 * 
-	 * boolean admin; try { admin = rs.getBoolean("administrateur"); } catch
-	 * (Exception e) { admin = false; }
-	 * 
-	 * utilisateur.setAdministrateur(admin);
-	 * 
-	 * }
-	 */
-
 	@Override
 	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie,
 			String etat) {
