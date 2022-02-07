@@ -180,8 +180,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 
-		System.out.println(requeteBuilder);
-
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(requeteBuilder.toString())) {
 
@@ -189,20 +187,23 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 
 			int i = 1;
 
+			if (pseudo != null && !pseudo.trim().isEmpty()) {
+				pstmt.setString(i, pseudo);
+				i++;
+			}
+
 			if (categorie != 0) {
 				pstmt.setInt(i, categorie);
 				i++;
 			}
+
 			if (filtre != null && !filtre.trim().isEmpty()) {
 				pstmt.setString(i, filtre);
 				i++;
 				pstmt.setString(i, filtre);
 				i++;
 			}
-			if (pseudo != null && !pseudo.trim().isEmpty()) {
-				pstmt.setString(i, pseudo);
-				i++;
-			}
+
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),

@@ -114,42 +114,55 @@
 							<div class="d-flex flex-column me-3">
 								<div>
 									<input type="radio" name="filtreRadio" id="filtreRadioA"
-										value="Achats" checked="checked" /> <label for="achat"><fmt:message
-											key="radioAchat" bundle="${r}"></fmt:message></label>
+										value="Achats"
+										${filtreRadio == 'Achats'?'checked=\"checked\"':''} /> <label
+										for="achat"><fmt:message key="radioAchat"
+											bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat1" />
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat1"
+										${filtreRadio == 'Achats'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Achats' && filtreChkBox[0])?'checked=\"checked\"':''} />
 									<label for=""><fmt:message key="chEOuv" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat2" />
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat2"
+										${filtreRadio == 'Achats'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Achats' && filtreChkBox[1])?'checked=\"checked\"':''} />
 									<label for=""><fmt:message key="chECou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
-									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat3" />
+									<input class="ms-4 chkAchat" type="checkbox" name="chkAchat3"
+										${filtreRadio == 'Achats'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Achats' && filtreChkBox[2])?'checked=\"checked\"':''} />
 									<label for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
 							<div class="d-flex flex-column mx-3">
 								<div>
 									<input type="radio" name="filtreRadio" id="filtreRadioV"
-										value="Mes ventes" /> <label for="vente"><fmt:message
-											key="radioVente" bundle="${r}"></fmt:message></label>
+										value="Ventes"
+										${filtreRadio == 'Ventes'?'checked=\"checked\"':''} /> <label
+										for="vente"><fmt:message key="radioVente"
+											bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
 									<input class="ms-4 chkVente" type="checkbox" name="chkVente1"
-										disabled="disabled" /> <label for=""><fmt:message
-											key="chVCou" bundle="${r}"></fmt:message></label>
+										${filtreRadio == 'Ventes'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Ventes' && filtreChkBox[0])?'checked=\"checked\"':''} />
+									<label for=""><fmt:message key="chVCou" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
 									<input class="ms-4 chkVente" type="checkbox" name="chkVente2"
-										disabled="disabled" /> <label for=""><fmt:message
-											key="chVNon" bundle="${r}"></fmt:message></label>
+										${filtreRadio == 'Ventes'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Ventes' && filtreChkBox[1])?'checked=\"checked\"':''} />
+									<label for=""><fmt:message key="chVNon" bundle="${r}"></fmt:message></label>
 								</div>
 								<div>
 									<input class="ms-4 chkVente" type="checkbox" name="chkVente3"
-										disabled="disabled" /> <label for=""><fmt:message
-											key="chVterm" bundle="${r}"></fmt:message></label>
+										${filtreRadio == 'Ventes'?'':'disabled=\"disabled\"'}
+										${(filtreRadio == 'Ventes' && filtreChkBox[2])?'checked=\"checked\"':''} />
+									<label for=""><fmt:message key="chVterm" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
 						</div>

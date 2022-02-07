@@ -40,6 +40,7 @@ public class ServletAccueil extends HttpServlet {
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
+		request.setAttribute("filtreRadio", "Achats");
 
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
@@ -59,7 +60,6 @@ public class ServletAccueil extends HttpServlet {
 		int categorie = Integer.parseInt(request.getParameter("catg"));
 		System.out.println(categorie);
 		String filtre = request.getParameter("filtre");
-		String pseudo = null;
 
 		if (request.getParameter("filtreRadio") != null) {
 			List<Boolean> filtreChkBox = new ArrayList<Boolean>();
