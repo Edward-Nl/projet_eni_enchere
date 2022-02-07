@@ -77,10 +77,15 @@ public class ServletDetailsArticle extends HttpServlet {
 		
 		
 		try {
+			Enchere verifEnchere = managerEnchere.selectById(noArticle);
 			Utilisateur utils = managerUtils.selectByPseudo(pseudo);
 			int idUtils = utils.getNoUtilisateur();
 			Enchere enchere = new Enchere(idUtils,noArticle,dateNow,montantEnchere);
-			managerEnchere.insert(enchere);
+			if(verifEnchere == null) {
+				managerEnchere.insert(enchere);
+			} else if (verifEnchere != null) {
+				managerEnchere.updateEnchere(enchere);
+			}
 		} catch(BusinessException e) {
 			
 		} catch (SQLException e) {

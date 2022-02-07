@@ -23,4 +23,23 @@ public class EnchereManager {
 			throw new SQLException();
 		}
 	}
+	
+	public Enchere selectById(int no_article) throws SQLException{
+		Enchere enchere = null;
+		try {
+			enchere = enchereDAO.selectById(no_article);
+		} catch(Exception e) {
+			throw new SQLException();
+		}
+		return enchere;
+	}
+	
+	public void updateEnchere(Enchere enchere) throws SQLException {
+		try {
+			System.out.println(enchere);
+			this.enchereDAO.updateEnchere(enchere);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
+	}
 }

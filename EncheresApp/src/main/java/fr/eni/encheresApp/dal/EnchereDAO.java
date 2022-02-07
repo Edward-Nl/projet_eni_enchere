@@ -6,4 +6,8 @@ public interface EnchereDAO {
 
 	public void insertEnchere(Enchere enchere);
 	
+	public Enchere selectById(int no_article);
+	
+	public void updateEnchere(Enchere enchere);
+	
 }
