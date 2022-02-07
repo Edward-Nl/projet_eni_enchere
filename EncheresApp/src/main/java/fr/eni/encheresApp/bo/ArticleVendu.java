@@ -79,13 +79,14 @@ public class ArticleVendu implements Serializable {
 		this.no_Categorie = no_Categorie;
 	}
 
-	public ArticleVendu(int no_Article, String nomArticle, Date dateFinEncheres, int miseAPrix, int prixVente,
-			int no_Categorie, String pseudoUtilisateur, String etatVente) {
+	public ArticleVendu(int no_Article, String nomArticle, Date dateDebutEncheres, Date dateFinEncheres, int miseAPrix,
+			int prixVente, int no_Categorie, String pseudoUtilisateur) {
 		super();
-		this.etatVente = etatVente;
+		modificationEtatVente(dateDebutEncheres, dateFinEncheres);
 		this.no_Article = no_Article;
 		this.nomArticle = nomArticle;
 		this.dateFinEncheres = dateFinEncheres;
+		this.dateDebutEncheres = dateDebutEncheres;
 		this.miseAPrix = miseAPrix;
 		this.prixVente = prixVente;
 		this.no_Categorie = no_Categorie;
@@ -273,21 +274,22 @@ public class ArticleVendu implements Serializable {
 	public void setPseudoUtilisateur(String pseudoUtilisateur) {
 		this.pseudoUtilisateur = pseudoUtilisateur;
 	}
-	
+
 	public void modificationEtatVente(Date dateDebut, Date dateFin) {
-		String etat=null;
+		String etat = null;
 		String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		Date dateCourant= Date.valueOf(dateNow);
-		if(dateCourant.before(dateDebut)) {
+		Date dateCourant = Date.valueOf(dateNow);
+		if (dateCourant.before(dateDebut)) {
 			etat = "NC";
 		}
-		if((dateCourant.equals(dateDebut) || dateCourant.after(dateDebut)) && dateCourant.before(dateFin)) {
+		if ((dateCourant.equals(dateDebut) || dateCourant.after(dateDebut)) && dateCourant.before(dateFin)) {
 			etat = "EC";
 		}
-		if(dateCourant.equals(dateFin) || dateCourant.after(dateFin)) {
+		System.out.println(dateDebut + "  " + dateFin + "  " + dateCourant);
+		if (dateCourant.equals(dateFin) || dateCourant.after(dateFin)) {
 			etat = "TE";
 		}
 		this.setEtatVente(etat);
-		
+
 	}
 }

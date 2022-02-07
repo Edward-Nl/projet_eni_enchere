@@ -16,12 +16,12 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String SELECT_ALL = "SELECT * FROM ARTICLES_VENDUS";
 
 	private static final String[] SELECT_FILTRE = {
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND pseudo= ? AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND prix_vente = e.montant_enchere AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND pseudo= ? AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_debut_encheres) > 0 AND pseudo= ? AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND " };
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND prix_vente = e.montant_enchere AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_debut_encheres) > 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND " };
 
 	private static final String FILTER_CONDITION = "(nom_article LIKE ? OR description LIKE ?) AND ";
 	private static final String CATEGORIE_CONDITION = "no_categorie = ? AND ";
@@ -122,6 +122,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 
 	}
+
 	@Override
 	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie,
 			String etat) {
@@ -168,8 +169,9 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
 					article = new ArticleVendu(rs.getInt("no_article"), rs.getString("nom_article"),
-							rs.getDate("date_fin_encheres"), rs.getInt("prix_initial"), rs.getInt("prix_vente"),
-							rs.getInt("no_categorie"), rs.getString("pseudo"), etat);
+							rs.getDate("date_debut_encheres"), rs.getDate("date_fin_encheres"),
+							rs.getInt("prix_initial"), rs.getInt("prix_vente"), rs.getInt("no_categorie"),
+							rs.getString("pseudo"));
 					articles.add(article);
 				}
 			}

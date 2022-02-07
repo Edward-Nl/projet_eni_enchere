@@ -127,6 +127,7 @@ public class ServletAccueil extends HttpServlet {
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
+
 		request.setAttribute("filtre", filtre);
 		request.setAttribute("catg", categorie);
 
