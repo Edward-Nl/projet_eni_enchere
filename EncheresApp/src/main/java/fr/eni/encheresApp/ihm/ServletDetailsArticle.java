@@ -44,17 +44,21 @@ public class ServletDetailsArticle extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		RetraitManager managerRetrait = new RetraitManager();
+		EnchereManager managerEnchere = new EnchereManager();
 		String noArticleString = request.getParameter("noArticle");
 		int noArticle = Integer.parseInt(noArticleString);
 		if(noArticle != 0) {
 			ArticleVendu article = null;
 			Retrait retrait = null;
+			Enchere enchere = null;
 			try {
 				article = managerArticle.selectArticleById(noArticle);
 				retrait = managerRetrait.selectById(noArticle);
+				enchere = managerEnchere.selectById(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
 				request.setAttribute("article", article);
 				request.setAttribute("retrait", retrait);
+				request.setAttribute("enchere", enchere);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

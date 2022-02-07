@@ -8,6 +8,7 @@ public class Enchere {
 	private int no_article;
 	private Date dateEnchere;
 	private int montant_enchere;
+	private String pseudo;
 	
 	/**
 	 * Constructeur vide
@@ -40,6 +41,17 @@ public class Enchere {
 		this.no_article = no_article;
 		this.dateEnchere = dateEnchere;
 		this.montant_enchere = montant_enchere;
+	}
+	
+	
+
+	public Enchere(int no_utilisateur, int no_article, Date dateEnchere, int montant_enchere, String pseudo) {
+		super();
+		this.no_utilisateur = no_utilisateur;
+		this.no_article = no_article;
+		this.dateEnchere = dateEnchere;
+		this.montant_enchere = montant_enchere;
+		this.pseudo = pseudo;
 	}
 
 	/* GETTER AND SETTER */ 
@@ -74,6 +86,17 @@ public class Enchere {
 
 	public void setMontant_enchere(int montant_enchere) {
 		this.montant_enchere = montant_enchere;
+	}
+	
+	
+	
+
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 
 	/* Methode ToString */

@@ -34,8 +34,13 @@
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="des" bundle="${r}"></fmt:message></span> ${article.description}</p><br>
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="cat" bundle="${r}"></fmt:message></span> ${article.libelleCat}</p><br>
+				<c:if test="${enchere.montant_enchere != null }">
+					<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${enchere.montant_enchere} par <a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${enchere.pseudo}">${enchere.pseudo}</a></p><br>
+				</c:if>
+				<c:if test="${enchere.montant_enchere == null }">
+					<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> Aucune enchère</p><br>
+				</c:if>
 				
-				<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${article.prixVente != 0 ? article.prixVente: 'Aucune enchère'}</p><br>
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="mise" bundle="${r}"></fmt:message></span> ${article.miseAPrix }</p><br>
 				
@@ -46,13 +51,13 @@
 				<p class="my-0 py-0"><span class="h6 float-start"><fmt:message key="retr" bundle="${r}"></fmt:message> : </span> ${retrait.rue}<br>
 					${retrait.codePostal} ${retrait.ville}</p><br>
 				
-				<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span> ${article.pseudoUtilisateur}</p><br>
+				<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span><a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a></p><br>
 				
 				<c:if test="${article.etatVente == 'EC' }">
 					<form action="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" method="post">
 						<label for="enchere"><fmt:message key="prop" bundle="${r}"></fmt:message></label>
 						<input type="number" name="enchere" min="${article.prixVente != 0 ? article.prixVente+10:article.miseAPrix}" step="10"
-						placeholder="${article.prixVente != 0 ? article.prixVente+10:article.miseAPrix}"/>
+						placeholder="<fmt:message key="placHol" bundle="${r}"></fmt:message>"/>
 						<button class="btn btn-outline-primary" type="submit"><fmt:message key="btnEnch" bundle="${r}"></fmt:message></button>
 					</form>
 				</c:if>

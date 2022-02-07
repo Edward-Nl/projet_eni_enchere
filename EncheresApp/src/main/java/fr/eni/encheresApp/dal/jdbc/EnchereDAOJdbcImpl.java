@@ -14,7 +14,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 
 	private static final String INSERT = "INSERT INTO ENCHERES(no_utilisateur, no_article, date_enchere, montant_enchere) VALUES(?,?,?,?)";
 	private static final String UPDATE = "UPDATE ENCHERES SET no_utilisateur = ?, montant_enchere = ?, date_enchere = ? WHERE no_article = ?";
-	private static final String SELECT_ID = "SELECT * FROM ENCHERES WHERE no_article = ?";
+	private static final String SELECT_ID = "SELECT e.no_utilisateur,no_article,date_enchere,montant_enchere,u.pseudo FROM ENCHERES as e JOIN UTILISATEURS as u on e.no_utilisateur = u.no_utilisateur WHERE no_article = ?";
 	@Override
 	public void insertEnchere(Enchere enchere) {
 		try (Connection cnx = ConnectionProvider.getConnection();PreparedStatement pstmt = cnx.prepareStatement(INSERT)) {
@@ -35,7 +35,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.setInt(1, noArticle);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if(rs.next()) {
-					enchere = new Enchere(rs.getInt("no_utilisateur"), rs.getInt("no_article"), rs.getDate("date_enchere"), rs.getInt("montant_enchere"));
+					enchere = new Enchere(rs.getInt("no_utilisateur"), rs.getInt("no_article"), rs.getDate("date_enchere"), rs.getInt("montant_enchere"), rs.getString("pseudo"));
 				}
 			}
 		} catch (SQLException e) {

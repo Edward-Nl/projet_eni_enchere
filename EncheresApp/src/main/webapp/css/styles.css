@@ -74,9 +74,10 @@ a {
 	color: white;
 }
 
-.card a.name {
+.card a.name{
 	color: #F7931E;
 }
+
 .colorGrey{
 	color: #CECECE;
 }
@@ -93,4 +94,8 @@ textarea{
 	background-color: #e6e6e6;
 	font-family: 'Ubuntu', sans-serif !important;
 	padding-left: 20px;
+}
+
+a.lienColor{
+	color: #F7931E !important;
 }
