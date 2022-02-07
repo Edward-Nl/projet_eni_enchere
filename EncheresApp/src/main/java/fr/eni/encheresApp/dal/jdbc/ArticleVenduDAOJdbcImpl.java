@@ -124,8 +124,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie,
-			String etat) {
+	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie) {
 		StringBuilder requeteBuilder = new StringBuilder();
 		requeteBuilder.append(SELECT_FILTRE[requete]);
 

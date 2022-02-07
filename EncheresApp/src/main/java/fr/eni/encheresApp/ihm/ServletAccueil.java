@@ -30,9 +30,9 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
-		List<ArticleVendu> articles = null;
+		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
 		List<Categorie> categories = null;
-		articles = managerArticle.selectAvecFiltre(0, "", "", 0, "En cours");
+		articles.add(managerArticle.selectAvecFiltre(0, "", "", 0));
 		categories = managerCategorie.selectAll();
 		if (articles != null) {
 			request.setAttribute("articles", articles);
@@ -54,69 +54,70 @@ public class ServletAccueil extends HttpServlet {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
 
-		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
+		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
+
 		List<Categorie> categories = null;
 
 		int categorie = Integer.parseInt(request.getParameter("catg"));
-		System.out.println(categorie);
+
 		String filtre = request.getParameter("filtre");
 
 		if (request.getParameter("filtreRadio") != null) {
 			List<Boolean> filtreChkBox = new ArrayList<Boolean>();
 			if (request.getParameter("filtreRadio").trim().equals("Achats")) {
-				if (request.getParameter("chkAchat1") != null || (request.getParameter("chkAchat1") == null
-						&& request.getParameter("chkAchat2") == null && request.getParameter("chkAchat3") == null)) {
+				if (request.getParameter("chkAchat1") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(0, "", filtre, categorie, "En cours"));
+					articles.add(managerArticle.selectAvecFiltre(0, "", filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 				if (request.getParameter("chkAchat2") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(1,
-							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
-							"En cours/Enchérie"));
+					articles.add(managerArticle.selectAvecFiltre(1,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 				if (request.getParameter("chkAchat3") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(2,
-							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
-							"Enchères Remporter"));
+					articles.add(managerArticle.selectAvecFiltre(2,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 			} else {
 				if (request.getParameter("chkVente1") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(3,
-							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
-							"Mes ventes en cours"));
+					articles.add(managerArticle.selectAvecFiltre(3,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 				if (request.getParameter("chkVente2") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(4,
-							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
-							"Mes ventes non débutées"));
+					articles.add(managerArticle.selectAvecFiltre(4,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 				if (request.getParameter("chkVente3") != null) {
 					filtreChkBox.add(true);
-					articles.addAll(managerArticle.selectAvecFiltre(5,
-							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie,
-							"Mes ventes terminer"));
+					articles.add(managerArticle.selectAvecFiltre(5,
+							(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 				} else {
 					filtreChkBox.add(false);
+					articles.add(null);
 				}
 			}
 			request.setAttribute("filtreRadio", request.getParameter("filtreRadio"));
 			request.setAttribute("filtreChkBox", filtreChkBox);
 		} else {
-			articles = managerArticle.selectAvecFiltre(1, "", filtre, categorie, "En cours");
+			articles.add(managerArticle.selectAvecFiltre(1, "", filtre, categorie));
 		}
 
 		categories = managerCategorie.selectAll();
@@ -124,6 +125,7 @@ public class ServletAccueil extends HttpServlet {
 		if (articles != null) {
 			request.setAttribute("articles", articles);
 		}
+
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}

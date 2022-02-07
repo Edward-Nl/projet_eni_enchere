@@ -35,8 +35,8 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
-	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie, String etat) {
-		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie, etat);
+	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie) {
+		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie);
 	}
 
 	public ArticleVendu selectArticleById(int noArticle) throws SQLException {

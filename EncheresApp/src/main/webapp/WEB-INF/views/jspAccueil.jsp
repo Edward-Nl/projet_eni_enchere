@@ -176,9 +176,40 @@
 				</button>
 			</form>
 			<div class="d-flex flex-wrap">
-				<c:choose>
-					<c:when test="${articles != null && articles.size() > 0}">
-						<c:forEach var="article" items="${articles }">
+				<c:if test="${articles.size() > 0}">
+					<c:forEach var="articlesList" items="${articles}" varStatus="loop">
+						<c:choose>
+							<c:when
+								test="${(filtreRadio == 'Achats' && filtreChkBox[loop.index])}">
+								<c:choose>
+									<c:when test="${loop.index == 0 }">
+										<p>Enchères ouvertes</p>
+									</c:when>
+									<c:when test="${loop.index == 1 }">
+										<p>Mes enchères en cours</p>
+									</c:when>
+									<c:when test="${loop.index == 2 }">
+										<p>Mes enchères remportées</p>
+									</c:when>
+								</c:choose>
+							</c:when>
+							<c:when
+								test="${(filtreRadio == 'Ventes' && filtreChkBox[loop.index])}">
+								<c:choose>
+									<c:when test="${loop.index == 0 }">
+										<p>Mes ventes en cours</p>
+									</c:when>
+									<c:when test="${loop.index == 1 }">
+										<p>Mes ventes non débutées</p>
+									</c:when>
+									<c:when test="${loop.index == 2 }">
+										<p>Mes ventes terminées</p>
+									</c:when>
+								</c:choose>
+							</c:when>
+						</c:choose>
+						<c:forEach var="article" items="${articlesList}">
+
 							<div class="card text-white mx-3 my-3 shadow rounded">
 								<div class="card-body px-auto py-auto">
 									<h4 class="card-title">${article.nomArticle}</h4>
@@ -190,8 +221,6 @@
 										${article.dateFinEncheres}</label><br> <label
 										class="ms-2 fw-bold">Status de l'enchère : </label><label
 										class="colorGrey"> ${article.etatVente}</label><br>
-
-
 									<c:choose>
 										<c:when test="${sessionScope.utilisateurCourant != null}">
 											<label class="ms-2 fw-bold">Pseudo : </label>
@@ -213,11 +242,13 @@
 								</div>
 							</div>
 						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<p>Aucun article a afficher</p>
-					</c:otherwise>
-				</c:choose>
+					</c:forEach>
+				</c:if>
+
+				<c:if
+					test="${(articles[0] == null || articles[0].size() < 0) && (articles[1] == null || articles[1].size() < 0) && (articles[2] == null || articles[2].size() < 0)}">
+					<p>Aucun article a afficher</p>
+				</c:if>
 			</div>
 		</main>
 
