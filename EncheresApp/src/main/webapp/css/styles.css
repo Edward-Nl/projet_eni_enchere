@@ -54,7 +54,6 @@ body {
 /* Header et Footer */
 header {
 	width: 100% !important;
-	height: 64px;
 	background-color: #2D2D2D;
 	color: white;
 	border-bottom: 5px outset white;
@@ -62,16 +61,19 @@ header {
 h1{
 	color: #CECECE;
 }
-.ahead:hover{
-	color: #EE5253;
-}
 h2{
 	color: #F7931E;
 }
 .divHeader{
 	padding-top: 10px;
+	padding-bottom: 0 !important;
 }
-
+header.divHeader a.ahead{
+	color: white !important;
+}
+header.divHeader a.ahead:hover{
+	color: #EE5253 !important;
+}
 footer {
 	background-color: #272727;
 }
@@ -105,4 +107,15 @@ textarea{
 
 a.lienColor{
 	color: #F7931E !important;
+}
+.navbar-collapse{
+	flex-grow: 0 !important;
+}
+@media screen and (max-width: 768px){
+	.card{
+		width: 100%;
+	}
+	.btnRecherche{
+		margin-left:0;
+	}
 }

@@ -48,36 +48,40 @@
 <body class="">
 
 
-	<header class="sticky-top divHeader">
+	<header class="navbar navbar-expand-lg navbar-dark sticky-top divHeader">
 		<div class="container d-flex justify-content-between">
-			<h1>
+			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+			<h1 class="">
 				<fmt:message key="titre" bundle="${r}"></fmt:message>
 			</h1>
-			<div class="my-auto">
+			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
 				<!-- Selon le status de connexion on affiche ou non les liens  -->
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
-						<div class="my-auto">
-							<a class="mx-2 ahead" href=""><i
+						<div class="my-auto navbar-nav">
+							<a class="mx-2 ahead nav-link" href=""><i
 								class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
-									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
+									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead nav-link"
 								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i
 								class="fas fa-share-square"></i> <fmt:message key="aVend"
-									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
+									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead nav-link"
 								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i
 								class="fas fa-user-alt"></i> <fmt:message key="aProf"
-									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
+									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead nav-link"
 								href="<%=request.getContextPath()%>/Profil/Deconnexion"><i
 								class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco"
 									bundle="${r}"></fmt:message></a>
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div>
-							<a class="mx-1 ahead"
-								href="<%=request.getContextPath()%>/inscription"><fmt:message
-									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-1 ahead"
-								href="<%=request.getContextPath()%>/connexion"><fmt:message
+						<div class="navbar-nav">
+							<a class="mx-2 ahead"
+								href="<%=request.getContextPath()%>/inscription"><i class="fas fa-user-plus"></i> <fmt:message
+									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
+								href="<%=request.getContextPath()%>/connexion"><i class="fas fa-sign-in-alt"></i> <fmt:message
 									key="aConx" bundle="${r}"></fmt:message></a>
 						</div>
 					</c:otherwise>
@@ -91,8 +95,8 @@
 				<fmt:message key="sousTitre" bundle="${r}"></fmt:message>
 			</h2>
 			<form action="<%=request.getContextPath()%>/" method="post"
-				class="d-flex">
-				<div>
+				class="d-flex flex-column flex-md-row">
+				<div class="col-12 col-md-6">
 					<label class="h4" for="filtre"><fmt:message key="lbFil"
 							bundle="${r}"></fmt:message></label><br> <input type="text"
 						name="filtre" class="col-10 bordArr"
@@ -111,7 +115,7 @@
 					</select>
 					<!-- Si l'utilisateur est connect alors on affiche les radio et checkbox -->
 					<c:if test="${sessionScope.utilisateurCourant != null}">
-						<div class="d-flex">
+						<div class="d-flex flex-column flex-md-row">
 							<div class="d-flex flex-column me-3">
 								<div>
 									<input type="radio" name="filtreRadio" id="filtreRadioA"
@@ -139,7 +143,7 @@
 									<label for=""><fmt:message key="chERem" bundle="${r}"></fmt:message></label>
 								</div>
 							</div>
-							<div class="d-flex flex-column mx-3">
+							<div class="d-flex flex-column mx-md-3">
 								<div>
 									<input type="radio" name="filtreRadio" id="filtreRadioV"
 										value="Ventes"
@@ -170,7 +174,7 @@
 					</c:if>
 				</div>
 
-				<button class="btn btn-outline-success my-auto col-4 btnRecherche"
+				<button class="btn btn-outline-success my-auto col-12 col-md-4 btnRecherche"
 					type="submit">
 					<i class="fas fa-search"></i>
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
@@ -184,13 +188,13 @@
 							test="${(filtreRadio == 'Achats' && filtreChkBox[loop.index])}">
 							<c:choose>
 								<c:when test="${loop.index == 0 }">
-									<p>Enchères ouvertes</p>
+									<h4 class="my-3 text-decoration-underline">Enchères ouvertes</h4>
 								</c:when>
 								<c:when test="${loop.index == 1 }">
-									<p>Mes enchères en cours</p>
+									<h4 class="my-3 text-decoration-underline">Mes enchères en cours</h4>
 								</c:when>
 								<c:when test="${loop.index == 2 }">
-									<p>Mes enchères remportées</p>
+									<h4 class="my-3 text-decoration-underline">Mes enchères remportées</h4>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -198,13 +202,13 @@
 							test="${(filtreRadio == 'Ventes' && filtreChkBox[loop.index])}">
 							<c:choose>
 								<c:when test="${loop.index == 0 }">
-									<p>Mes ventes en cours</p>
+									<h4 class="my-3 text-decoration-underline">Mes ventes en cours</h4>
 								</c:when>
 								<c:when test="${loop.index == 1 }">
-									<p>Mes ventes non débutées</p>
+									<h4 class="my-3 text-decoration-underline">Mes ventes non débutées</h4>
 								</c:when>
 								<c:when test="${loop.index == 2 }">
-									<p>Mes ventes terminées</p>
+									<h4 class="my-3 text-decoration-underline">Mes ventes terminées</h4>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -257,6 +261,7 @@
 
 	</div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 </html>
