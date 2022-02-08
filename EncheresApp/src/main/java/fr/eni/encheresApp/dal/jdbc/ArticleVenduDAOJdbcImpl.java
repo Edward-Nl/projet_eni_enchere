@@ -33,13 +33,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_encheres = ?, date_fin_encheres = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?";
 
 	@Override
-<<<<<<< HEAD
 	public void insertArticle(ArticleVendu article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection(); 
-=======
-	public void insertArticle(ArticleVendu article) {
-		try (Connection cnx = ConnectionProvider.getConnection();
->>>>>>> branch 'main' of https://github.com/Edward-Nl/projet_eni_enchere.git
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			System.out.println(article);
 			pstmt.setString(1, article.getNomArticle());
@@ -112,14 +107,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public void updateArticle(ArticleVendu article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection(); PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
-=======
-	public void updateArticle(ArticleVendu article) {
-		try (Connection cnx = ConnectionProvider.getConnection();
-				PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
->>>>>>> branch 'main' of https://github.com/Edward-Nl/projet_eni_enchere.git
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2, article.getDescription());
 			pstmt.setDate(3, (Date) article.getDateDebutEncheres());
