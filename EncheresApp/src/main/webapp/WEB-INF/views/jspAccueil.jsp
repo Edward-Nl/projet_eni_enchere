@@ -214,13 +214,13 @@
 							<div class="card text-white mx-3 my-3 rounded">
 								<div class="card-body px-auto py-auto">
 									<h4 class="card-title">${article.nomArticle}</h4>
-									<label class="ms-2 fw-bold">Prix : </label><label
+									<label class="ms-2 fw-bold">Prix : </label> <label
 										class="colorGrey">
 										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-										points</label><br> <label class="ms-2 fw-bold">Fin de
-										l'enchère : </label><label class="colorGrey">
-										${article.dateFinEncheres}</label><br> <label
-										class="ms-2 fw-bold">Status de l'enchère : </label><label
+										points</label><br>
+									<label class="ms-2 fw-bold">Fin de l'enchère : </label><label
+										class="colorGrey"> ${article.dateFinEncheres}</label><br>
+									<label class="ms-2 fw-bold">Status de l'enchère : </label><label
 										class="colorGrey"> ${article.etatVente}</label><br>
 									<c:choose>
 										<c:when test="${sessionScope.utilisateurCourant != null}">

@@ -21,7 +21,31 @@
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
+	crossorigin="anonymous" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	$(function() {
+		$('input[name="debut"]').change(
+				function() {
+					var inputDate = new Date(this.value);
+					inputDate.setDate(inputDate.getDate() + 1);
+					$('input[name="fin"]').prop("min",
+							inputDate.toISOString().slice(0, 10));
+				});
+		$('input[name="fin"]').change(
+				function() {
+					var inputDate = new Date(this.value);
+					inputDate.setDate(inputDate.getDate() - 1);
+					$('input[name="debut"]').prop("max",
+							inputDate.toISOString().slice(0, 10));
+				});
+	});
+</script>
+
+
 
 <title><fmt:message key="title" bundle="${r}"></fmt:message></title>
 </head>
@@ -57,10 +81,12 @@
 					<label for="categorie" class="col-4 my-3 fw-bold"><fmt:message
 							key="cat" bundle="${r}"></fmt:message></label> <select class="col-6"
 						name="categorie">
-						<option value="1">Informatique</option>
-						<option value="2">Ameublement</option>
-						<option value="3">Vêtement</option>
-						<option value="4">Sport & Loisirs</option>
+						<c:if test="${categories != null}">
+							<c:forEach var="categorie" items="${categories}">
+								<option value="${categorie.no_categorie}"
+									${catg == categorie.no_categorie?'selected=\"selected\"':'' }>${categorie.libelle }</option>
+							</c:forEach>
+						</c:if>
 					</select>
 				</div>
 				<div>
@@ -71,7 +97,7 @@
 				<div>
 					<label for="prix" class="col-4 my-3 fw-bold"><fmt:message
 							key="mise" bundle="${r}"></fmt:message></label> <input type="number"
-						name="prix" class="col-6" min="10" max="500" step="10" />
+						name="prix" class="col-6" min="1" />
 				</div>
 				<div>
 					<label for="debut" class="col-4 my-3 fw-bold"><fmt:message
@@ -82,7 +108,8 @@
 				<div>
 					<label for="fin" class="col-4 my-3 fw-bold"><fmt:message
 							key="fin" bundle="${r}"></fmt:message></label> <input type="date"
-						name="fin" class="col-6" />
+						name="fin" class="col-6"
+						min="${LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
 				</div>
 				<fieldset class="border">
 					<legend class="h4">

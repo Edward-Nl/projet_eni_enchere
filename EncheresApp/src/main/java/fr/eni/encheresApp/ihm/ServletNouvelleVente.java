@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,9 +18,11 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.ArticlesVenduManager;
+import fr.eni.encheresApp.bll.CategorieManager;
 import fr.eni.encheresApp.bll.RetraitManager;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.ArticleVendu;
+import fr.eni.encheresApp.bo.Categorie;
 import fr.eni.encheresApp.bo.Retrait;
 import fr.eni.encheresApp.bo.Utilisateur;
 
@@ -31,10 +34,15 @@ public class ServletNouvelleVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		CategorieManager managerCategorie = new CategorieManager();
 		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
+		List<Categorie> categories = null;
+
 		Utilisateur utilisateurCourantComplet = null;
 		UtilisateurManager manager = new UtilisateurManager();
 		try {
@@ -42,21 +50,31 @@ public class ServletNouvelleVente extends HttpServlet {
 		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
+
+		categories = managerCategorie.selectAll();
+
+		if (categories != null) {
+			request.setAttribute("categories", categories);
+		}
 		request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
 		request.getRequestDispatcher("/WEB-INF/views/jspNouvelleVente.jsp").forward(request, response);
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		/* Création des variable */
 		Date dateDebut, dateFin = null;
 		ArticleVendu article = null;
 		Retrait retrait = null;
-		/* Appelle des manager*/
+		List<Categorie> categories = null;
+		/* Appelle des manager */
 		UtilisateurManager managerUtils = new UtilisateurManager();
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
+		CategorieManager managerCategorie = new CategorieManager();
 		RetraitManager managerRetrait = new RetraitManager();
 		/* ---------- */
 		request.setCharacterEncoding("UTF-8");
@@ -81,12 +99,12 @@ public class ServletNouvelleVente extends HttpServlet {
 			System.out.println(fin);
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
-			article = new ArticleVendu(nom,description,dateDebut,dateFin,prix,idUtils,categorie);
+			article = new ArticleVendu(nom, description, dateDebut, dateFin, prix, idUtils, categorie);
 			try {
 				managerArticle.insert(article);
-				int no_article=article.getNo_Article();
+				int no_article = article.getNo_Article();
 				System.out.println("article" + article.getNo_Article());
-				retrait = new Retrait(no_article,rue,cPostal,ville);
+				retrait = new Retrait(no_article, rue, cPostal, ville);
 				managerRetrait.insert(retrait);
 				System.out.println(no_article + "ici no ARTICLE");
 			} catch (SQLException e) {
@@ -97,7 +115,13 @@ public class ServletNouvelleVente extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
+		categories = managerCategorie.selectAll();
+
+		if (categories != null) {
+			request.setAttribute("categories", categories);
+		}
+
 		doGet(request, response);
 	}
 

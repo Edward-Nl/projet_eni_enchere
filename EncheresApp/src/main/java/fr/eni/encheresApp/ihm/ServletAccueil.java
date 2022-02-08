@@ -56,8 +56,6 @@ public class ServletAccueil extends HttpServlet {
 
 		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
 
-		List<Categorie> categories = null;
-
 		int categorie = Integer.parseInt(request.getParameter("catg"));
 
 		String filtre = request.getParameter("filtre");
@@ -120,6 +118,7 @@ public class ServletAccueil extends HttpServlet {
 			articles.add(managerArticle.selectAvecFiltre(1, "", filtre, categorie));
 		}
 
+		List<Categorie> categories = null;
 		categories = managerCategorie.selectAll();
 
 		if (articles != null) {
