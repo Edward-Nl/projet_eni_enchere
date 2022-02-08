@@ -90,6 +90,7 @@ public class ServletDetailsArticle extends HttpServlet {
 		HttpSession session = request.getSession();
 		UtilisateurManager managerUtils = new UtilisateurManager();
 		EnchereManager managerEnchere = new EnchereManager();
+		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		int montantEnchere = Integer.valueOf(request.getParameter("enchere"));
 		int noArticle = Integer.valueOf(request.getParameter("noArticle"));
 		Date dateNow = Date.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
@@ -97,34 +98,39 @@ public class ServletDetailsArticle extends HttpServlet {
 		try {
 			Enchere verifEnchere = managerEnchere.selectById(noArticle);
 			Utilisateur utils = managerUtils.selectByPseudo(pseudo);
-			int idUtils = utils.getNoUtilisateur();
-			//Solde de credit de l'encherisseur
-			int creditDisponible = utils.getCredit();
-			Enchere enchere = new Enchere(idUtils,noArticle,dateNow,montantEnchere);
-			// Verif que l'utilisateur a les credit disponible pour l'enchere
-			if(creditDisponible >= enchere.getMontant_enchere()) {
-				if(verifEnchere == null) {
-					managerEnchere.insert(enchere);
-					//Insert de la methode pour deduire les crédit de la cagnotte utilisateur
-					creditDisponible = creditDisponible - montantEnchere;
-					System.out.println("Credit dispo : "+creditDisponible);
-					managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
-				} else if (verifEnchere != null) {
-					//Récup de la precedente enchere pour rembourser l'utilisateur
-					int no_utilARembourser = verifEnchere.getNo_utilisateur();
-					int montantARembourser = verifEnchere.getMontant_enchere();
-					Utilisateur util_a_rembourser = managerUtils.selectAvecId(no_utilARembourser);
-					System.out.println("utili a rembourse "+util_a_rembourser);
-					int nouvelleCagnotte_a_rembourser = util_a_rembourser.getCredit() + montantARembourser;
-					System.out.println("Nouvelle : "+nouvelleCagnotte_a_rembourser);
-					managerUtils.nouvelleCagnotte(no_utilARembourser, nouvelleCagnotte_a_rembourser);
-					//Insert de la nouvelle enchere + deduire l'argent de sa cagnotte
-					managerEnchere.updateEnchere(enchere);
-					creditDisponible = creditDisponible - montantEnchere;
-					System.out.println("Credit dispo deux" + creditDisponible);
-					managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+			ArticleVendu articleCourant = managerArticle.selectArticleById(noArticle);
+			//Verifie que l'enchere est toujours ouverte 
+			if (articleCourant.getDateFinEncheres().after(dateNow)) {
+				int idUtils = utils.getNoUtilisateur();
+				//Solde de credit de l'encherisseur
+				int creditDisponible = utils.getCredit();
+				Enchere enchere = new Enchere(idUtils,noArticle,dateNow,montantEnchere);
+				// Verif que l'utilisateur a les credit disponible pour l'enchere
+				if(creditDisponible >= enchere.getMontant_enchere()) {
+					if(verifEnchere == null) {
+						managerEnchere.insert(enchere);
+						//Insert de la methode pour deduire les crédit de la cagnotte utilisateur
+						creditDisponible = creditDisponible - montantEnchere;
+						System.out.println("Credit dispo : "+creditDisponible);
+						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+					} else if (verifEnchere != null) {
+						//Récup de la precedente enchere pour rembourser l'utilisateur
+						int no_utilARembourser = verifEnchere.getNo_utilisateur();
+						int montantARembourser = verifEnchere.getMontant_enchere();
+						Utilisateur util_a_rembourser = managerUtils.selectAvecId(no_utilARembourser);
+						System.out.println("utili a rembourse "+util_a_rembourser);
+						int nouvelleCagnotte_a_rembourser = util_a_rembourser.getCredit() + montantARembourser;
+						System.out.println("Nouvelle : "+nouvelleCagnotte_a_rembourser);
+						managerUtils.nouvelleCagnotte(no_utilARembourser, nouvelleCagnotte_a_rembourser);
+						//Insert de la nouvelle enchere + deduire l'argent de sa cagnotte
+						managerEnchere.updateEnchere(enchere);
+						creditDisponible = creditDisponible - montantEnchere;
+						System.out.println("Credit dispo deux" + creditDisponible);
+						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+					}
 				}
 			}
+			
 			
 		} catch(BusinessException e) {
 			

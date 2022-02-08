@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.Utilisateur;
+import fr.eni.encheresApp.dal.CodeResultatDAL;
 import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.UtilisateurDAO;
 
@@ -22,7 +24,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
 
 	@Override
-	public void insert(Utilisateur utilisateur) {
+	public void insert(Utilisateur utilisateur) throws BusinessException{
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
 				pstmt.setString(1, utilisateur.getPseudo());
@@ -44,15 +46,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				}
 
 			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_INSERT_ERREUR);
+			throw businessException;
 		}
 
 	}
 
 	@Override
-	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) {
+	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		utilisateur.setNoUtilisateur(-1);
 		try (Connection cnx = ConnectionProvider.getConnection();
@@ -65,14 +69,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				}
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_SELECT_PSE_PWD_ERREUR);
+			throw businessException;
 		}
 
 		return utilisateur;
 	}
 
-	public Utilisateur selectByPseudo(String pseudo) {
+	public Utilisateur selectByPseudo(String pseudo) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_PSEUDO)) {
@@ -83,15 +90,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					}
 				}
 			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_SELECT_PSE_ERREUR);
+			throw businessException;
 		}
 		return utilisateur;
 	}
 
 	@Override
-	public Utilisateur selectById(int id) {
+	public Utilisateur selectById(int id) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID)) {
@@ -102,35 +111,17 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					}
 				}
 			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_SELECT_ID_ERREUR);
+			throw businessException;
 		}
 		return utilisateur;
 	}
 
-//	@Override
-//	public boolean selectByIdAndPsw(int id, String password) {
-//		boolean toReturn = false;
-//		try (Connection cnx = ConnectionProvider.getConnection()) {
-//			try (PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID_AND_PSW)) {
-//				pstmt.setInt(1, id);
-//				pstmt.setString(2, password);
-//				try (ResultSet rs = pstmt.executeQuery()) {
-//					if (rs.next()) {
-//						toReturn = true;
-//					}
-//				}
-//			}
-//		} catch (SQLException e) {
-//			// TODO gestion messages erreur
-//			e.printStackTrace();
-//		}
-//		return toReturn;
-//	}
-
 	@Override
-	public boolean updateUser(Utilisateur utilisateur) {
+	public boolean updateUser(Utilisateur utilisateur) throws BusinessException {
 		boolean toReturn = false;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(UPDATE_USER)) {
@@ -148,29 +139,33 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					toReturn = true;
 				}
 			}
-		} catch (SQLException e) {
-			System.out.println("ici");
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_UPDATE_ERREUR);
+			throw businessException;
 		}
 		return toReturn;
 	}
 
 	@Override
-	public boolean deleteUser(String pseudo) {
+	public boolean deleteUser(String pseudo) throws BusinessException {
 		boolean toReturn = false;
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(REMOVE_USER)) {
 				pstmt.setString(1, pseudo);
 			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_DELETE_ERREUR);
+			throw businessException;
 		}
 		return toReturn;
 	}
 
 	@Override
-	public Utilisateur selectByMail(String email) {
+	public Utilisateur selectByMail(String email) throws BusinessException {
 		Utilisateur utilisateur = new Utilisateur();
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_MAIL)) {
@@ -181,9 +176,11 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 					}
 				}
 			}
-		} catch (SQLException e) {
-			// TODO gestion messages erreur
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_SELECT_MAIL_ERREUR);
+			throw businessException;
 		}
 		return utilisateur;
 
@@ -235,7 +232,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public String selectByIdentifiantAndPsw(String idantifiant, String password) {
+	public String selectByIdentifiantAndPsw(String idantifiant, String password) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_IDANTIFIANT_AND_PSW)) {
 			pstmt.setString(1, idantifiant);
@@ -247,20 +244,26 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 				}
 			}
 
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_SELECT_ID_PWD_ERREUR);
+			throw businessException;
 		}
 		return null;
 	}
 	
-	public void nouvelleCagnotte(int no_utilisateur, int nouvelleCagnotte) {
+	public void nouvelleCagnotte(int no_utilisateur, int nouvelleCagnotte) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT)) {
 			pstmt.setInt(1, nouvelleCagnotte);
 			pstmt.setInt(2, no_utilisateur);
 			pstmt.executeUpdate();
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_CAGNOTTE_UPDATE_ERREUR);
+			throw businessException;
 		}
 	}
 

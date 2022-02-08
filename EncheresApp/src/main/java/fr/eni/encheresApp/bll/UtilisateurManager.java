@@ -114,8 +114,14 @@ public class UtilisateurManager {
 	}
 
 	public Utilisateur selectAvecId(int id) {
-		return this.utilisateurDAO.selectById(id);
-
+		Utilisateur utils = null;
+		try {
+			utils = utilisateurDAO.selectById(id);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return utils;
 	}
 
 	public boolean updateUtilisateur(Utilisateur utilisateurCourant, Utilisateur utilisateurModifier)

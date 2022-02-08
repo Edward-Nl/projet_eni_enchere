@@ -51,7 +51,12 @@ public class ServletNouvelleVente extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		categories = managerCategorie.selectAll();
+		try {
+			categories = managerCategorie.selectAll();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (categories != null) {
 			request.setAttribute("categories", categories);
@@ -116,7 +121,12 @@ public class ServletNouvelleVente extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		categories = managerCategorie.selectAll();
+		try {
+			categories = managerCategorie.selectAll();
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		if (categories != null) {
 			request.setAttribute("categories", categories);

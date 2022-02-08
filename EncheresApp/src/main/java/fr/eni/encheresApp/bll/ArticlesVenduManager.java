@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.dal.ArticleVenduDAO;
 import fr.eni.encheresApp.dal.DAOFactory;
@@ -44,7 +45,7 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
-	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie) {
+	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie) throws BusinessException {
 		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie);
 	}
 
