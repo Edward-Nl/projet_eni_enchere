@@ -19,5 +19,7 @@ public interface UtilisateurDAO {
 	public boolean updateUser(Utilisateur utilisateur);
 
 	public boolean deleteUser(String pseudo);
+	
+	public void nouvelleCagnotte(int no_utilisateur, int nouvelleCagnotte);
 
 }

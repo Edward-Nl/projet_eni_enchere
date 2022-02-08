@@ -72,6 +72,9 @@
 					<label class="my-2 fw-bold" for="ville"><fmt:message
 							key="champ.huit" bundle="${r}"></fmt:message></label>
 					<label class="my-2">${utilisateurShow.ville}</label>
+					</div><div class="col-12 col-md-4 mx-auto">
+					<label class="my-2 fw-bold" for="credit"><fmt:message key="crd" bundle="${r}"></fmt:message></label>
+					<label class="my-2">${utilisateurShow.credit}</label>
 					</div>
 					<c:if
 						test="${sessionScope.utilisateurCourant == utilisateurShow.pseudo}">

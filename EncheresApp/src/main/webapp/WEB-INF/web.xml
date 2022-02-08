@@ -5,15 +5,7 @@
 	id="WebApp_ID" version="3.1">
 	<display-name>EncheresApp</display-name>
 	<welcome-file-list>
-		<welcome-file>jspAccueil</welcome-file>
+		<welcome-file>accueil</welcome-file>
 	</welcome-file-list>
-	<servlet>
-		<description>Accueil</description>
-		<servlet-name>jspAccueil</servlet-name>
-		<servlet-class>fr.eni.encheresApp.ihm.ServletAccueil</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>jspAccueil</servlet-name>
-		<url-pattern></url-pattern>
-	</servlet-mapping>
+
 </web-app>

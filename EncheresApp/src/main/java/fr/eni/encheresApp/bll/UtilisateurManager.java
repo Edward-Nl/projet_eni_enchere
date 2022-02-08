@@ -1,5 +1,7 @@
 package fr.eni.encheresApp.bll;
 
+import java.sql.SQLException;
+
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
@@ -17,6 +19,14 @@ public class UtilisateurManager {
 		BusinessException businessException = new BusinessException();
 
 		return false;
+	}
+	
+	public void nouvelleCagnotte(int no_utilisateur, int montantCagnotte) throws SQLException {
+		try {
+			this.utilisateurDAO.nouvelleCagnotte(no_utilisateur, montantCagnotte);
+		} catch (Exception e) {
+			throw new SQLException();
+		}
 	}
 
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) throws BusinessException {
@@ -78,7 +88,7 @@ public class UtilisateurManager {
 
 		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
 
-		// Vérification email pas deja utiliser pars un autre utilisateur
+		// Vï¿½rification email pas deja utiliser pars un autre utilisateur
 		if (!businessException.hasErreurs()) {
 			Utilisateur utilisateurTmp = this.selectByEmail(utilisateur.getEmail());
 			if (utilisateurTmp.getEmail() != null) {
@@ -86,7 +96,7 @@ public class UtilisateurManager {
 			}
 		}
 
-		// Vérification pseudo pas deja utiliser pars un autre utilisateur
+		// Vï¿½rification pseudo pas deja utiliser pars un autre utilisateur
 		if (!businessException.hasErreurs()) {
 			Utilisateur utilisateurTmp = this.selectByPseudo(utilisateur.getPseudo());
 			if (utilisateurTmp.getPseudo() != null) {
@@ -116,19 +126,19 @@ public class UtilisateurManager {
 
 		utilisateurModifier.setMotDePasse(CryptagePassword.crypteString(utilisateurModifier.getMotDePasse()));
 
-		// Vérification que les deux objet ne sont pas semblable
+		// Vï¿½rification que les deux objet ne sont pas semblable
 		if (!businessException.hasErreurs() && utilisateurCourant.equals(utilisateurModifier)) {
 			businessException.ajouterErreur(CodesResultatBLL.TOUS_LES_CHAMPS_IDENTIQUE);
 		}
 
-		// Vérification email pas deja utiliser pars un autre utilisateur
+		// Vï¿½rification email pas deja utiliser pars un autre utilisateur
 		if (!businessException.hasErreurs() && !utilisateurCourant.getEmail().equals(utilisateurModifier.getEmail())) {
 			Utilisateur utilisateurTmp = this.selectByEmail(utilisateurModifier.getEmail());
 			if (utilisateurTmp.getEmail() != null) {
 				businessException.ajouterErreur(CodesResultatBLL.EMAIL_UTILISATEURS_DEJA_UTILISER);
 			}
 		}
-		// Vérification pseudo pas deja utiliser pars un autre utilisateur
+		// Vï¿½rification pseudo pas deja utiliser pars un autre utilisateur
 		if (!businessException.hasErreurs()
 				&& !utilisateurCourant.getPseudo().equals(utilisateurModifier.getPseudo())) {
 			Utilisateur utilisateurTmp = this.selectByPseudo(utilisateurModifier.getPseudo());

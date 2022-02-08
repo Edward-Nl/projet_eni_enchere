@@ -48,17 +48,22 @@ public class ServletDetailsArticle extends HttpServlet {
 		UtilisateurManager managerUtilisateur = new UtilisateurManager();
 		String noArticleString = request.getParameter("noArticle");
 		int noArticle = Integer.parseInt(noArticleString);
+		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
 		if(noArticle != 0) {
 			ArticleVendu article = null;
 			Retrait retrait = null;
 			Enchere enchere = null;
+			
 			try {
+				Utilisateur utilsCourant = managerUtilisateur.selectByPseudo(pseudo);
+				int idUtilCourant = utilsCourant.getNoUtilisateur();
 				article = managerArticle.selectArticleById(noArticle);
 				retrait = managerRetrait.selectById(noArticle);
 				enchere = managerEnchere.selectById(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
+				request.setAttribute("noUtilCourant", idUtilCourant);
 				if(retrait != null) {
 					request.setAttribute("retrait", retrait);
 				} else {
@@ -89,18 +94,38 @@ public class ServletDetailsArticle extends HttpServlet {
 		int noArticle = Integer.valueOf(request.getParameter("noArticle"));
 		Date dateNow = Date.valueOf(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 		String pseudo = (String) session.getAttribute("utilisateurCourant");
-		
-		
 		try {
 			Enchere verifEnchere = managerEnchere.selectById(noArticle);
 			Utilisateur utils = managerUtils.selectByPseudo(pseudo);
 			int idUtils = utils.getNoUtilisateur();
+			//Solde de credit de l'encherisseur
+			int creditDisponible = utils.getCredit();
 			Enchere enchere = new Enchere(idUtils,noArticle,dateNow,montantEnchere);
-			if(verifEnchere == null) {
-				managerEnchere.insert(enchere);
-			} else if (verifEnchere != null) {
-				managerEnchere.updateEnchere(enchere);
+			// Verif que l'utilisateur a les credit disponible pour l'enchere
+			if(creditDisponible >= enchere.getMontant_enchere()) {
+				if(verifEnchere == null) {
+					managerEnchere.insert(enchere);
+					//Insert de la methode pour deduire les crédit de la cagnotte utilisateur
+					creditDisponible = creditDisponible - montantEnchere;
+					System.out.println("Credit dispo : "+creditDisponible);
+					managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+				} else if (verifEnchere != null) {
+					//Récup de la precedente enchere pour rembourser l'utilisateur
+					int no_utilARembourser = verifEnchere.getNo_utilisateur();
+					int montantARembourser = verifEnchere.getMontant_enchere();
+					Utilisateur util_a_rembourser = managerUtils.selectAvecId(no_utilARembourser);
+					System.out.println("utili a rembourse "+util_a_rembourser);
+					int nouvelleCagnotte_a_rembourser = util_a_rembourser.getCredit() + montantARembourser;
+					System.out.println("Nouvelle : "+nouvelleCagnotte_a_rembourser);
+					managerUtils.nouvelleCagnotte(no_utilARembourser, nouvelleCagnotte_a_rembourser);
+					//Insert de la nouvelle enchere + deduire l'argent de sa cagnotte
+					managerEnchere.updateEnchere(enchere);
+					creditDisponible = creditDisponible - montantEnchere;
+					System.out.println("Credit dispo deux" + creditDisponible);
+					managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+				}
 			}
+			
 		} catch(BusinessException e) {
 			
 		} catch (SQLException e) {

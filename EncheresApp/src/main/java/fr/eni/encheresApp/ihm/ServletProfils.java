@@ -39,7 +39,6 @@ public class ServletProfils extends HttpServlet {
 
 				utilisateurShow.setNoUtilisateur(-1);
 				utilisateurShow.setMotDePasse(null);
-				utilisateurShow.setCredit(-1);
 				utilisateurShow.setAdministrateur(false);
 
 				request.setAttribute("utilisateurShow", utilisateurShow);
