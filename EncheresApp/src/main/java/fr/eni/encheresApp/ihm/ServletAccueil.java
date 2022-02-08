@@ -2,6 +2,7 @@ package fr.eni.encheresApp.ihm;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -48,7 +49,7 @@ public class ServletAccueil extends HttpServlet {
 			request.setAttribute("categories", categories);
 		}
 		request.setAttribute("filtreRadio", "Achats");
-
+		request.setAttribute("filtreChkBox", Arrays.asList(true, false, false));
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
 

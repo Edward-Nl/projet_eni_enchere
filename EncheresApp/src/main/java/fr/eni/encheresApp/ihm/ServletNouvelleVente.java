@@ -85,15 +85,15 @@ public class ServletNouvelleVente extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		/* Récuperation des données du form */
-		String nom = request.getParameter("nom");
-		String description = request.getParameter("description");
-		String categorieString = request.getParameter("categorie");
-		String prixString = request.getParameter("prix");
-		String debut = request.getParameter("debut");
-		String fin = request.getParameter("fin");
-		String rue = request.getParameter("rue");
-		String cPostal = request.getParameter("cPostal");
-		String ville = request.getParameter("ville");
+		String nom = request.getParameter("nom").trim();
+		String description = request.getParameter("description").trim();
+		String categorieString = request.getParameter("categorie").trim();
+		String prixString = request.getParameter("prix").trim();
+		String debut = request.getParameter("debut").trim();
+		String fin = request.getParameter("fin").trim();
+		String rue = request.getParameter("rue").trim();
+		String cPostal = request.getParameter("cPostal").trim();
+		String ville = request.getParameter("ville").trim();
 		String pseudo = (String) session.getAttribute("utilisateurCourant");
 		/* ----- */
 		try {
@@ -101,7 +101,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			int idUtils = utils.getNoUtilisateur();
 			dateDebut = Date.valueOf(debut);
 			dateFin = Date.valueOf(fin);
-			System.out.println(fin);
+
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
 			article = new ArticleVendu(nom, description, dateDebut, dateFin, prix, idUtils, categorie);
@@ -117,8 +117,7 @@ public class ServletNouvelleVente extends HttpServlet {
 				e.printStackTrace();
 			}
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
 
 		try {

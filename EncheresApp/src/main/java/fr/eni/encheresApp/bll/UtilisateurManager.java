@@ -20,7 +20,7 @@ public class UtilisateurManager {
 
 		return false;
 	}
-	
+
 	public void nouvelleCagnotte(int no_utilisateur, int montantCagnotte) throws SQLException {
 		try {
 			this.utilisateurDAO.nouvelleCagnotte(no_utilisateur, montantCagnotte);
