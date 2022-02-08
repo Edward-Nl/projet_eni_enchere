@@ -57,7 +57,7 @@
 			</h1>
 		</div>
 	</header>
-
+	<p>${listeCodesErreur }</p>
 	<div class="container">
 
 		<div class="mx-auto col-6 ">
