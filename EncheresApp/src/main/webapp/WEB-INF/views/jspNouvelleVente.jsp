@@ -9,7 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <fmt:setLocale value="fr" />
 <fmt:setBundle
 	basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
@@ -60,7 +60,7 @@
 	<p>${listeCodesErreur }</p>
 	<div class="container">
 
-		<div class="mx-auto col-6 ">
+		<div class="mx-auto col-12 col-md-6 ">
 			<h2 class="mt-4 mb-5">
 				<fmt:message key="h2" bundle="${r}"></fmt:message>
 			</h2>
@@ -68,18 +68,18 @@
 			<form action="<%=request.getContextPath()%>/ServletNouvelleVente"
 				method="POST">
 				<div>
-					<label for="nom" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="nom" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="art" bundle="${r}"></fmt:message></label> <input type="text"
-						name="nom" class="col-6" />
+						name="nom" class="col-12 col-md-6" />
 				</div>
 				<div>
-					<label for="description" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="description" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="des" bundle="${r}"></fmt:message></label>
-					<textarea name="description" rows="" cols="" class="col-6"></textarea>
+					<textarea name="description" rows="" cols="" class="col-12 col-md-6"></textarea>
 				</div>
 				<div>
-					<label for="categorie" class="col-4 my-3 fw-bold"><fmt:message
-							key="cat" bundle="${r}"></fmt:message></label> <select class="col-6"
+					<label for="categorie" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
+							key="cat" bundle="${r}"></fmt:message></label> <select class="col-12 col-md-6"
 						name="categorie">
 						<c:if test="${categories != null}">
 							<c:forEach var="categorie" items="${categories}">
@@ -90,25 +90,25 @@
 					</select>
 				</div>
 				<div>
-					<label for="image" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="image" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="pht" bundle="${r}"></fmt:message></label> <input type="file"
-						name="image" class="col-6" />
+						name="image" class="col-12 col-md-6" />
 				</div>
 				<div>
-					<label for="prix" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="prix" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="mise" bundle="${r}"></fmt:message></label> <input type="number"
-						name="prix" class="col-6" min="1" />
+						name="prix" class="col-12 col-md-6" min="1" />
 				</div>
 				<div>
-					<label for="debut" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="debut" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="deb" bundle="${r}"></fmt:message></label> <input type="date"
-						name="debut" class="col-6"
+						name="debut" class="col-12 col-md-6"
 						min="${LocalDate.now().format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
 				</div>
 				<div>
-					<label for="fin" class="col-4 my-3 fw-bold"><fmt:message
+					<label for="fin" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 							key="fin" bundle="${r}"></fmt:message></label> <input type="date"
-						name="fin" class="col-6"
+						name="fin" class="col-12 col-md-6"
 						min="${LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
 				</div>
 				<fieldset class="border">
@@ -117,32 +117,32 @@
 					</legend>
 
 					<div>
-						<label for="rue" class="col-4 my-3 fw-bold"><fmt:message
+						<label for="rue" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 								key="rue" bundle="${r}"></fmt:message></label> <input type="text"
-							name="rue" class="col-6"
+							name="rue" class="col-12 col-md-6"
 							value="${sessionScope.utilisateurCourantComplet.rue}" />
 					</div>
 					<div>
-						<label for="cPostal" class="col-4 my-3 fw-bold"><fmt:message
+						<label for="cPostal" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 								key="cp" bundle="${r}"></fmt:message></label> <input type="text"
-							name="cPostal" class="col-6"
+							name="cPostal" class="col-12 col-md-6"
 							value="${sessionScope.utilisateurCourantComplet.codePostal}" />
 					</div>
 					<div>
-						<label for="ville" class="col-4 my-3 fw-bold"><fmt:message
+						<label for="ville" class="col-12 col-md-4 my-3 fw-bold"><fmt:message
 								key="vil" bundle="${r}"></fmt:message></label> <input type="text"
-							name="ville" class="col-6"
+							name="ville" class="col-12 col-md-6"
 							value="${sessionScope.utilisateurCourantComplet.ville}" />
 					</div>
 				</fieldset>
 
 				<div>
 					<button type="submit"
-						class="btn btn-outline-primary mx-2 col-3 my-3">
+						class="btn btn-outline-primary mx-md-2 col-12 col-md-3 my-3">
 						<i class="far fa-save"></i>
 						<fmt:message key="btnEn" bundle="${r}"></fmt:message>
 					</button>
-					<a class="btn btn-outline-danger mx-2 col-3 my-3"
+					<a class="btn btn-outline-danger mx-md-2 col-12 col-md-3 my-3"
 						href="<%=request.getContextPath()%>/"><i
 						class="fas fa-angle-double-left"></i> <fmt:message key="btnAnnul"
 							bundle="${r}"></fmt:message></a> <a></a>

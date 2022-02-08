@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
 <script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
@@ -81,12 +82,12 @@
 						
 						<form class="text-center" method="get"
 							action="<%=response.encodeURL(request.getContextPath() + "/Profil/Modifier")%>">
-							<button class="btn btn-outline-warning col-2 mx-auto my-3" type="submit">
+							<button class="btn btn-outline-warning col-10 col-md-2 mx-auto my-3" type="submit">
 							<i class="fas fa-pen"></i> <fmt:message key="champ.modifier" bundle="${r}" /></button>
 						</form>
 					</c:if>
 
-					<a class="btn btn-outline-primary col-2 mx-auto my-3"
+					<a class="btn btn-outline-primary col-10 col-md-2 mx-auto my-3"
 						href="<%=request.getContextPath()%>/"><i class="fas fa-home"></i> Retour à l'accueil</a>
 
 				</c:otherwise>

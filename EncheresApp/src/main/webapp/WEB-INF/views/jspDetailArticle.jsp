@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <fmt:setLocale value="fr" />
 <fmt:setBundle basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
 <link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
@@ -25,11 +26,11 @@
 	</header>
 	<div class="container">
 		
-		<div class="td-flex flex-column justify-content-center align-item-center">
+		<div class="d-flex flex-column justify-content-center align-item-center">
 		
 			<h2 class="mx-auto text-center my-4"><fmt:message key="h2Det" bundle="${r}"></fmt:message> - ${article.nomArticle}</h2>
 			
-			<div class="col-4 mx-auto">
+			<div class="col-12 col-md-4 mx-auto">
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="des" bundle="${r}"></fmt:message></span> ${article.description}</p><br>
 				
@@ -72,7 +73,7 @@
 					</c:if>
 				</c:if>
 				
-				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
+				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning my-3"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
 				<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'NC'}">
 					<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/ServletModifierVente?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
 				</c:if>
