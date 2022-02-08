@@ -56,7 +56,7 @@
 				<c:if test="${article.etatVente == 'EC' }">
 					<form action="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" method="post">
 						<label for="enchere"><fmt:message key="prop" bundle="${r}"></fmt:message></label>
-						<input type="number" name="enchere" min="${article.prixVente != 0 ? article.prixVente+10:article.miseAPrix}" step="10"
+						<input type="number" name="enchere" min="${enchere.montant_enchere != 0 ? enchere.montant_enchere+10:article.miseAPrix}" step="10"
 						placeholder="<fmt:message key="placHol" bundle="${r}"></fmt:message>"/>
 						<button class="btn btn-outline-primary" type="submit"><fmt:message key="btnEnch" bundle="${r}"></fmt:message></button>
 					</form>
