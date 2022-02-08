@@ -211,7 +211,7 @@
 					<div class="d-flex flex-wrap">
 						<c:forEach var="article" items="${articlesList}">
 
-							<div class="card text-white mx-3 my-3 shadow rounded">
+							<div class="card text-white mx-3 my-3 rounded">
 								<div class="card-body px-auto py-auto">
 									<h4 class="card-title">${article.nomArticle}</h4>
 									<label class="ms-2 fw-bold">Prix : </label><label

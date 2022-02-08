@@ -12,12 +12,25 @@ body {
 /* Carte d'aperçu des article sur la page d'accueil */
 .card {
 	background-color: #1E1E1E;
-	height: 200px;
+	height: 215px;
 	width: 320px;
 	border: 1px solid white !important;
+	box-shadow: 2px 1px 7px #CECECE;
 }
 .card:hover{
 	border: 1px solid #EE5253 !important;
+	box-shadow: 2px 1px 7px #EE5253;
+	transition: 750ms;
+}
+.card:hover h4{
+	color: white;
+	transition: 500ms;
+}
+.card:hover .btnLinkCard{
+	color: #EE5253;
+	background-color: transparent;
+	border: 1px solid white;
+	transition: 750ms;
 }
 
 .card-title {
@@ -29,12 +42,6 @@ body {
 	background-color: #EE5253;
 	color: white;
 }
-.btnLinkCard:hover{
-	border: 1px solid white;
-	color: white;
-	transition: 250ms;
-}
-
 .btnRecherche {
 	height: 60px;
 	margin-left: 45px;

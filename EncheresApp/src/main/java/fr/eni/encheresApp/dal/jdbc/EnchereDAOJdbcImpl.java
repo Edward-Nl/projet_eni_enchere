@@ -16,7 +16,7 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 	private static final String UPDATE = "UPDATE ENCHERES SET no_utilisateur = ?, montant_enchere = ?, date_enchere = ? WHERE no_article = ?";
 	private static final String SELECT_ID = "SELECT e.no_utilisateur,no_article,date_enchere,montant_enchere,u.pseudo FROM ENCHERES as e JOIN UTILISATEURS as u on e.no_utilisateur = u.no_utilisateur WHERE no_article = ?";
 	@Override
-	public void insertEnchere(Enchere enchere) {
+	public void insertEnchere(Enchere enchere){
 		try (Connection cnx = ConnectionProvider.getConnection();PreparedStatement pstmt = cnx.prepareStatement(INSERT)) {
 				pstmt.setInt(1, enchere.getNo_utilisateur());
 				pstmt.setInt(2, enchere.getNo_article());
@@ -24,12 +24,11 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				pstmt.setInt(4, enchere.getMontant_enchere());
 				pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO gestion messages erreur
 			e.printStackTrace();
 		}
 	}
 	
-	public Enchere selectById(int noArticle) {
+	public Enchere selectById(int noArticle){
 		Enchere enchere = null;
 		try (Connection cnx = ConnectionProvider.getConnection();PreparedStatement pstmt = cnx.prepareStatement(SELECT_ID)) {
 			pstmt.setInt(1, noArticle);
@@ -39,13 +38,12 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 				}
 			}
 		} catch (SQLException e) {
-			// TODO gestion messages erreur
 			e.printStackTrace();
 		}
 		return enchere;
 	}
 	
-	public void updateEnchere(Enchere enchere) {
+	public void updateEnchere(Enchere enchere){
 		try (Connection cnx = ConnectionProvider.getConnection();PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
 			pstmt.setInt(1, enchere.getNo_utilisateur());
 			pstmt.setInt(2, enchere.getMontant_enchere());
@@ -53,7 +51,6 @@ public class EnchereDAOJdbcImpl implements EnchereDAO {
 			pstmt.setInt(4, enchere.getNo_article());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			// TODO gestion messages erreur
 			e.printStackTrace();
 		}
 	}

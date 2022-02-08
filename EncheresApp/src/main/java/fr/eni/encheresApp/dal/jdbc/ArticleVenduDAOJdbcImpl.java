@@ -33,8 +33,8 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	
 	@Override
 	public void insertArticle(ArticleVendu article) {
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-			try (PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (Connection cnx = ConnectionProvider.getConnection(); 
+				PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
 				pstmt.setString(1, article.getNomArticle());
 				pstmt.setString(2, article.getDescription());
 				pstmt.setDate(3, (Date) article.getDateDebutEncheres());
@@ -46,11 +46,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 				try (ResultSet rs = pstmt.getGeneratedKeys()) {
 					if (rs.next()) {
 						article.setNo_Article(rs.getInt(1));
-					} else {
-						// TODO: message ajout d'un article échoué
 					}
-				}
-
 			}
 		} catch (SQLException e) {
 			// TODO gestion messages erreur

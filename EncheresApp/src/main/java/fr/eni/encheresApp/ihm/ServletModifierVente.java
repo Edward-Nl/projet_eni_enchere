@@ -33,6 +33,7 @@ public class ServletModifierVente extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		RetraitManager managerRetrait = new RetraitManager();
+		UtilisateurManager managerUtilisateur = new UtilisateurManager();
 		String noArticleString = request.getParameter("noArticle");
 		int noArticle = Integer.parseInt(noArticleString);
 		if(noArticle != 0) {
@@ -43,8 +44,19 @@ public class ServletModifierVente extends HttpServlet {
 				retrait = managerRetrait.selectById(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
 				request.setAttribute("article", article);
-				request.setAttribute("retrait", retrait);
+				if(retrait != null) {
+					request.setAttribute("retrait", retrait);
+				} else {
+					String pseudoVendeur = article.getPseudoUtilisateur();
+					Utilisateur vendeur = managerUtilisateur.selectByPseudo(pseudoVendeur);
+					retrait = new Retrait(vendeur.getRue(),vendeur.getCodePostal(),vendeur.getVille());
+					request.setAttribute("retrait", retrait);
+				}
+				
 			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -87,7 +99,13 @@ public class ServletModifierVente extends HttpServlet {
 		try {
 			managerArticle.update(article);
 			retrait = new Retrait(noArticle,rue,cPostal,ville);
-			managerRetrait.update(retrait);
+			Retrait verifRetrait = managerRetrait.selectById(noArticle);
+			if(verifRetrait != null) {
+				managerRetrait.update(retrait);
+			} else {
+				managerRetrait.insert(retrait);
+			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

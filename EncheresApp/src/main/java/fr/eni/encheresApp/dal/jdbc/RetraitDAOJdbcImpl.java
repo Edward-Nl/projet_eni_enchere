@@ -17,7 +17,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	private static final String DELETE = "DELETE FROM RETRAITS WHERE no_article = ?";
 
 	@Override
-	public void insert(Retrait lieu) {
+	public void insert(Retrait lieu){
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT)) {
 			pstmt.setInt(1, lieu.getNo_article());
@@ -32,7 +32,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	}
 
 	@Override
-	public Retrait selectById(int no_article) {
+	public Retrait selectById(int no_article){
 		Retrait retrait = null;
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(SELECT)) {
@@ -50,7 +50,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	}
 
 	@Override
-	public void update(Retrait retrait) {
+	public void update(Retrait retrait){
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE)) {
 			pstmt.setString(1, retrait.getRue());

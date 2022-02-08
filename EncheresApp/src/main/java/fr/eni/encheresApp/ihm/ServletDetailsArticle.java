@@ -45,6 +45,7 @@ public class ServletDetailsArticle extends HttpServlet {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		RetraitManager managerRetrait = new RetraitManager();
 		EnchereManager managerEnchere = new EnchereManager();
+		UtilisateurManager managerUtilisateur = new UtilisateurManager();
 		String noArticleString = request.getParameter("noArticle");
 		int noArticle = Integer.parseInt(noArticleString);
 		if(noArticle != 0) {
@@ -57,9 +58,19 @@ public class ServletDetailsArticle extends HttpServlet {
 				enchere = managerEnchere.selectById(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
 				request.setAttribute("article", article);
-				request.setAttribute("retrait", retrait);
 				request.setAttribute("enchere", enchere);
+				if(retrait != null) {
+					request.setAttribute("retrait", retrait);
+				} else {
+					String pseudoVendeur = article.getPseudoUtilisateur();
+					Utilisateur vendeur = managerUtilisateur.selectByPseudo(pseudoVendeur);
+					retrait = new Retrait(vendeur.getRue(),vendeur.getCodePostal(),vendeur.getVille());
+					request.setAttribute("retrait", retrait);
+				}
 			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (BusinessException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
