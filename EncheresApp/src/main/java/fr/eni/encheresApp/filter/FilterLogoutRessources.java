@@ -1,4 +1,4 @@
-package fr.eni.encheresApp.ihm;
+package fr.eni.encheresApp.filter;
 
 import java.io.IOException;
 
@@ -12,18 +12,18 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns = { "/inscription", "/connexion" }, dispatcherTypes = { DispatcherType.FORWARD,
-		DispatcherType.INCLUDE, DispatcherType.REQUEST, DispatcherType.ERROR, }
+@WebFilter(urlPatterns = { "/Profil/*" }, dispatcherTypes = { DispatcherType.FORWARD, DispatcherType.INCLUDE,
+		DispatcherType.REQUEST, DispatcherType.ERROR, }
 
 )
 
-public class FilterLogedRessources implements Filter {
+public class FilterLogoutRessources implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		if (httpRequest.getSession().getAttribute("utilisateurCourant") == null) {
+		if (httpRequest.getSession().getAttribute("utilisateurCourant") != null) {
 			chain.doFilter(request, response);
 		} else {
 			HttpServletResponse httpResponse = (HttpServletResponse) response;
