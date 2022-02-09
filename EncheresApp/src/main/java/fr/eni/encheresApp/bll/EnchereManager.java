@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.Enchere;
 import fr.eni.encheresApp.dal.DAOFactory;
 import fr.eni.encheresApp.dal.EnchereDAO;
@@ -53,6 +54,17 @@ public class EnchereManager {
 			throw new SQLException();
 		}
 		return enchere;
+	}
+	
+	public List<Enchere> selectAll(int no_article){
+		List<Enchere> listeEnchere = new ArrayList<Enchere>();
+		try {
+			listeEnchere = enchereDAO.selectAll(no_article);
+		} catch (BusinessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return listeEnchere;
 	}
 	
 	public void updateEnchere(Enchere enchere) throws SQLException {

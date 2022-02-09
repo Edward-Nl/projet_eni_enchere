@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,16 +55,18 @@ public class ServletDetailsArticle extends HttpServlet {
 			ArticleVendu article = null;
 			Retrait retrait = null;
 			Enchere enchere = null;
-			
+			List<Enchere> listeEnchere = new ArrayList<Enchere>();
 			try {
 				Utilisateur utilsCourant = managerUtilisateur.selectByPseudo(pseudo);
 				int idUtilCourant = utilsCourant.getNoUtilisateur();
 				article = managerArticle.selectArticleById(noArticle);
 				retrait = managerRetrait.selectById(noArticle);
 				enchere = managerEnchere.selectById(noArticle);
+				listeEnchere = managerEnchere.selectAll(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
 				request.setAttribute("article", article);
 				request.setAttribute("enchere", enchere);
+				request.setAttribute("ListeEnchere", listeEnchere);
 				request.setAttribute("noUtilCourant", idUtilCourant);
 				if(retrait != null) {
 					request.setAttribute("retrait", retrait);

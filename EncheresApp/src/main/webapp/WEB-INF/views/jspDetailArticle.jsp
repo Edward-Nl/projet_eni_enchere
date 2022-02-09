@@ -39,22 +39,24 @@
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="cat" bundle="${r}"></fmt:message></span> ${article.libelleCat}</p><br>
 				<c:if test="${enchere.montant_enchere != null }">
 					<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${enchere.montant_enchere} par <a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${enchere.pseudo}">${enchere.pseudo}</a></p><br>
-					<button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+					<button type="button" class="btn btn-outline-light my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
 					  Voir les enchéres
 					</button>
 					<!-- Modal -->
 					<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-					  <div class="modal-dialog bg-dark">
-					    <div class="modal-content">
+					  <div class="modal-dialog">
+					    <div class="modal-content bg-dark">
 					      <div class="modal-header">
 					        <h5 class="modal-title" id="exampleModalLabel">Liste des enchéres</h5>
 					        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					      </div>
 					      <div class="modal-body">
-					        ...
+					        <c:forEach var="enchere" items="${ListeEnchere}">
+					         <p>${enchere.pseudo} - ${enchere.montant_enchere} - ${enchere.dateEnchere }</p>
+					        </c:forEach>
 					      </div>
 					      <div class="modal-footer">
-					        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+					        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
 					      </div>
 					    </div>
 					  </div>

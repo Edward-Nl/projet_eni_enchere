@@ -235,7 +235,7 @@
 												class="name">${article.pseudoUtilisateur}</a>
 											<br>
 											<a
-												href="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}"
+												href="<%=request.getContextPath()%>/article?noArticle=${article.no_Article}"
 												class="btn btnLinkCard mt-3 ms-2"><i class="fas fa-eye"></i>
 												Voir l'article</a>
 										</c:when>
