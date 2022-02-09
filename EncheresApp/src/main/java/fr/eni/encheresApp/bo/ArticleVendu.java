@@ -305,4 +305,5 @@ public class ArticleVendu implements Serializable {
 		this.setEtatVente(etat);
 
 	}
+	
 }

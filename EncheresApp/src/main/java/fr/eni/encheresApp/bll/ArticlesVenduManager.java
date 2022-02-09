@@ -1,7 +1,6 @@
 package fr.eni.encheresApp.bll;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +8,6 @@ import java.util.List;
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.dal.ArticleVenduDAO;
-import fr.eni.encheresApp.dal.CodeResultatDAL;
-import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.DAOFactory;
 
 public class ArticlesVenduManager {
@@ -37,23 +34,13 @@ public class ArticlesVenduManager {
 		}
 	}
 
-	public void update(ArticleVendu article) throws SQLException {
-		try {
-			System.out.println(article);
-			this.ArticleVenduDAO.updateArticle(article);
-		} catch (Exception e) {
-			throw new SQLException();
-		}
+	public void update(ArticleVendu article) throws BusinessException {
+		this.ArticleVenduDAO.updateArticle(article);
 	}
 
-	public List<ArticleVendu> selectAllArticle() throws SQLException {
+	public List<ArticleVendu> selectAllArticle() throws BusinessException {
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
-		try {
-			articles = ArticleVenduDAO.selectAllArticle();
-		} catch (Exception e) {
-			throw new SQLException();
-		}
-
+		articles = ArticleVenduDAO.selectAllArticle();
 		return articles;
 	}
 
@@ -62,35 +49,21 @@ public class ArticlesVenduManager {
 		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie);
 	}
 
-	public ArticleVendu selectArticleById(int noArticle) throws SQLException {
+	public ArticleVendu selectArticleById(int noArticle) throws BusinessException {
 		ArticleVendu article = null;
-		try {
-			article = ArticleVenduDAO.selectArticleById(noArticle);
-		} catch (Exception e) {
-			throw new SQLException();
-		}
-
+		article = ArticleVenduDAO.selectArticleById(noArticle);
 		return article;
 	}
 
-	public void deleteArticle(int noArticle) {
-		try {
-			ArticleVenduDAO.deleteArticle(noArticle);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+	public void deleteArticle(int noArticle) throws BusinessException {
+		ArticleVenduDAO.deleteArticle(noArticle);
 	}
 
-	public void finVente() {
-		try {
-			List<ArticleVendu> articles = ArticleVenduDAO.endSaleSelect();
-			for (ArticleVendu article : articles) {
-				ArticleVenduDAO.endSaleUpdateArticles(article.getNo_Article());
-				ArticleVenduDAO.updateUserEnd(article.getNo_Article());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void finVente() throws BusinessException {
+		List<ArticleVendu> articles = ArticleVenduDAO.endSaleSelect();
+		for (ArticleVendu article : articles) {
+			ArticleVenduDAO.endSaleUpdateArticles(article.getNo_Article());
+			ArticleVenduDAO.updateUserEnd(article.getNo_Article());
 		}
 	}
 

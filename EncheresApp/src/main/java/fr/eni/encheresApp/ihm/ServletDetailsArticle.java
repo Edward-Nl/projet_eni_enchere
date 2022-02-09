@@ -76,9 +76,7 @@ public class ServletDetailsArticle extends HttpServlet {
 					retrait = new Retrait(vendeur.getRue(),vendeur.getCodePostal(),vendeur.getVille());
 					request.setAttribute("retrait", retrait);
 				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (BusinessException e) {
+			}catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

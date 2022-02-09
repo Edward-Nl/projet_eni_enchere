@@ -2,6 +2,7 @@ package fr.eni.encheresApp.bll;
 
 import java.sql.SQLException;
 
+import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.Retrait;
 import fr.eni.encheresApp.dal.DAOFactory;
 import fr.eni.encheresApp.dal.RetraitDAO;
@@ -14,32 +15,17 @@ public class RetraitManager {
 		this.RetraitDAO = DAOFactory.getRetraitDAO();
 	}
 	
-	public void insert(Retrait lieu) throws SQLException {
-		try {
-			this.RetraitDAO.insert(lieu);
-		} catch(Exception e) {
-			throw new SQLException();
-		}
-		
+	public void insert(Retrait lieu) throws BusinessException {
+		this.RetraitDAO.insert(lieu);
 	}
 	
-	public void update(Retrait lieu) throws SQLException {
-		try {
-			this.RetraitDAO.update(lieu);
-		} catch(Exception e) {
-			throw new SQLException();
-		}
-		
+	public void update(Retrait lieu) throws BusinessException {
+		this.RetraitDAO.update(lieu);
 	}
 	
-	public Retrait selectById(int no_article) throws SQLException{
+	public Retrait selectById(int no_article) throws BusinessException{
 		Retrait retrait = null;
-		try {
-			retrait = RetraitDAO.selectById(no_article);
-		} catch (Exception e) {
-			throw new SQLException();
-		}
-
+		retrait = RetraitDAO.selectById(no_article);
 		return retrait;
 	}
 }

@@ -46,33 +46,19 @@ public class EnchereManager {
 		}
 	}
 	
-	public Enchere selectById(int no_article) throws SQLException{
+	public Enchere selectById(int no_article) throws BusinessException{
 		Enchere enchere = null;
-		try {
-			enchere = enchereDAO.selectById(no_article);
-		} catch(Exception e) {
-			throw new SQLException();
-		}
+		enchere = enchereDAO.selectById(no_article);
 		return enchere;
 	}
 	
-	public List<Enchere> selectAll(int no_article){
+	public List<Enchere> selectAll(int no_article) throws BusinessException{
 		List<Enchere> listeEnchere = new ArrayList<Enchere>();
-		try {
-			listeEnchere = enchereDAO.selectAll(no_article);
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		listeEnchere = enchereDAO.selectAll(no_article);
 		return listeEnchere;
 	}
 	
-	public void updateEnchere(Enchere enchere) throws SQLException {
-		try {
-			System.out.println(enchere);
+	public void updateEnchere(Enchere enchere) throws BusinessException{
 			this.enchereDAO.updateEnchere(enchere);
-		} catch (Exception e) {
-			throw new SQLException();
-		}
 	}
 }

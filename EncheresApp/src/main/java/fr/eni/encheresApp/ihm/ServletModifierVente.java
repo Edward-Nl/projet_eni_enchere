@@ -53,9 +53,7 @@ public class ServletModifierVente extends HttpServlet {
 					request.setAttribute("retrait", retrait);
 				}
 				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} catch (BusinessException e) {
+			}catch (BusinessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -106,7 +104,7 @@ public class ServletModifierVente extends HttpServlet {
 				managerRetrait.insert(retrait);
 			}
 			
-		} catch (SQLException e) {
+		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
