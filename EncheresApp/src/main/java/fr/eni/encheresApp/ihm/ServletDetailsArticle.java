@@ -26,7 +26,7 @@ import fr.eni.encheresApp.bo.Utilisateur;
 /**
  * Servlet implementation class ServletDetailsArticle
  */
-@WebServlet("/ServletDetailsArticle")
+@WebServlet("/article")
 public class ServletDetailsArticle extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -123,7 +123,7 @@ public class ServletDetailsArticle extends HttpServlet {
 						System.out.println("Nouvelle : "+nouvelleCagnotte_a_rembourser);
 						managerUtils.nouvelleCagnotte(no_utilARembourser, nouvelleCagnotte_a_rembourser);
 						//Insert de la nouvelle enchere + deduire l'argent de sa cagnotte
-						managerEnchere.updateEnchere(enchere);
+						managerEnchere.insert(enchere);
 						creditDisponible = creditDisponible - montantEnchere;
 						System.out.println("Credit dispo deux" + creditDisponible);
 						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
