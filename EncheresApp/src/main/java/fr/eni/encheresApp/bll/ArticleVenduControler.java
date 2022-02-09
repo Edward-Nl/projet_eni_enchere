@@ -25,7 +25,6 @@ public class ArticleVenduControler {
 		ArticleVenduControler.valideVille(retrait.getVille(), businessException);
 	}
 
-	// A faire
 	public static void valideNomArticle(String nom, BusinessException businessException) {
 		boolean nomControle = nom.matches("(?=(^[a-zA-Z0-9_\\-\\s]+$))^.{5,30}$");
 		if (nom.length() < 5 || nom.length() > 30) {
@@ -37,7 +36,6 @@ public class ArticleVenduControler {
 
 	}
 
-	// A faire
 	public static String valideDescription(String description, BusinessException businessException) {
 		boolean descriptionControle = true;
 		description = description.replace(";", ",");

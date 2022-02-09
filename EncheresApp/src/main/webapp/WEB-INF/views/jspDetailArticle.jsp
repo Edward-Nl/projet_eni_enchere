@@ -19,9 +19,11 @@
 
 	<header class="sticky-top divHeader">
 		<div class="container">
-			<h1>
-				<fmt:message key="h1" bundle="${r}"></fmt:message>
-			</h1>
+			<a href="<%=request.getContextPath()%>/">
+				<h1>
+					<fmt:message key="h1" bundle="${r}"></fmt:message>
+				</h1>
+			</a>
 		</div>
 	</header>
 	<div class="container">
@@ -54,7 +56,7 @@
 				
 				<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span><a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a></p><br>
 				
-				<c:if test="${article.etatVente == 'EC' }">
+				<c:if test="${article.etatVente == 'En Cours' }">
 					<c:if test="${article.pseudoUtilisateur != sessionScope.utilisateurCourant }">
 						<c:if test="${enchere.no_utilisateur != noUtilCourant }">
 							<form action="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" method="post">
@@ -74,7 +76,7 @@
 				</c:if>
 				
 				<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning my-3"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
-				<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'NC'}">
+				<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'Non commencée'}">
 					<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/ServletModifierVente?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
 				</c:if>
 			</div>

@@ -52,9 +52,11 @@
 <body>
 	<header class="sticky-top divHeader">
 		<div class="container">
+		<a href="<%=request.getContextPath()%>/">
 			<h1>
 				<fmt:message key="h1" bundle="${r}"></fmt:message>
 			</h1>
+		</a>
 		</div>
 	</header>
 	<p>${listeCodesErreur }</p>

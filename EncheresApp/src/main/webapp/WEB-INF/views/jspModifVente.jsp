@@ -19,9 +19,11 @@
 
 	<header class="sticky-top divHeader">
 		<div class="container">
-			<h1>
-				<fmt:message key="h1" bundle="${r}"></fmt:message>
-			</h1>
+			<a href="<%=request.getContextPath()%>/">
+				<h1>
+					<fmt:message key="h1" bundle="${r}"></fmt:message>
+				</h1>
+			</a>
 		</div>
 	</header>
 

@@ -293,14 +293,14 @@ public class ArticleVendu implements Serializable {
 		String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		Date dateCourant = Date.valueOf(dateNow);
 		if (dateCourant.before(dateDebut)) {
-			etat = "NC";
+			etat = "Non commencée";
 		}
 		if ((dateCourant.equals(dateDebut) || dateCourant.after(dateDebut)) && dateCourant.before(dateFin)) {
-			etat = "EC";
+			etat = "En Cours";
 		}
 		System.out.println(dateDebut + "  " + dateFin + "  " + dateCourant);
 		if (dateCourant.equals(dateFin) || dateCourant.after(dateFin)) {
-			etat = "TE";
+			etat = "Terminée";
 		}
 		this.setEtatVente(etat);
 
