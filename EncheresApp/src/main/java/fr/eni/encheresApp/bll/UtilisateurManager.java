@@ -1,8 +1,10 @@
 package fr.eni.encheresApp.bll;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import fr.eni.encheresApp.BusinessException;
+import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
 import fr.eni.encheresApp.dal.DAOFactory;
@@ -177,5 +179,4 @@ public class UtilisateurManager {
 
 		return this.utilisateurDAO.selectByIdentifiantAndPsw(idantifiant, CryptagePassword.crypteString(password));
 	}
-
 }

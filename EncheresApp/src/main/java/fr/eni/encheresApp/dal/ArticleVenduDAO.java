@@ -11,7 +11,8 @@ public interface ArticleVenduDAO {
 
 	public List<ArticleVendu> selectAllArticle() throws BusinessException;
 
-	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie) throws BusinessException;
+	public List<ArticleVendu> selectWithCondition(int requete, String pseudo, String filtre, int categorie)
+			throws BusinessException;
 
 	public ArticleVendu selectArticleById(int noArticle) throws BusinessException;
 
@@ -20,5 +21,11 @@ public interface ArticleVenduDAO {
 	public void enchereArticle(int noArticle, int nouveauPrix) throws BusinessException;
 
 	public void deleteArticle(int noArticle) throws BusinessException;
+
+	public List<ArticleVendu> endSaleSelect() throws BusinessException;
+
+	public void endSaleUpdateArticles(int id) throws BusinessException;
+
+	public void updateUserEnd(int id) throws BusinessException;
 
 }

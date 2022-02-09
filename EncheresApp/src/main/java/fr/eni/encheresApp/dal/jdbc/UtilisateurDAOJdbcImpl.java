@@ -22,9 +22,9 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String REMOVE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private static final String SELECT_BY_IDANTIFIANT_AND_PSW = "SELECT pseudo FROM UTILISATEURS WHERE (pseudo = ? OR  email = ?) AND  mot_de_passe = ? ";
 	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
-
+	
 	@Override
-	public void insert(Utilisateur utilisateur) throws BusinessException{
+	public void insert(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try (PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
 				pstmt.setString(1, utilisateur.getPseudo());
@@ -252,7 +252,7 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 		return null;
 	}
-	
+
 	public void nouvelleCagnotte(int no_utilisateur, int nouvelleCagnotte) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(UPDATE_CREDIT)) {

@@ -1,5 +1,7 @@
 package fr.eni.encheresApp.bll;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +9,8 @@ import java.util.List;
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.ArticleVendu;
 import fr.eni.encheresApp.dal.ArticleVenduDAO;
+import fr.eni.encheresApp.dal.CodeResultatDAL;
+import fr.eni.encheresApp.dal.ConnectionProvider;
 import fr.eni.encheresApp.dal.DAOFactory;
 
 public class ArticlesVenduManager {
@@ -53,7 +57,8 @@ public class ArticlesVenduManager {
 		return articles;
 	}
 
-	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie) throws BusinessException {
+	public List<ArticleVendu> selectAvecFiltre(int requete, String pseudo, String filtre, int categorie)
+			throws BusinessException {
 		return this.ArticleVenduDAO.selectWithCondition(requete, pseudo, filtre, categorie);
 	}
 
@@ -76,4 +81,17 @@ public class ArticlesVenduManager {
 		}
 
 	}
+
+	public void finVente() {
+		try {
+			List<ArticleVendu> articles = ArticleVenduDAO.endSaleSelect();
+			for (ArticleVendu article : articles) {
+				ArticleVenduDAO.endSaleUpdateArticles(article.getNo_Article());
+				ArticleVenduDAO.updateUserEnd(article.getNo_Article());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
