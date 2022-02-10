@@ -11,7 +11,6 @@ public class ListenerDemarrageArret implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
 		//new TimerUpdateVente();
-		System.out.println("ici");
 	}
 
 }

@@ -18,8 +18,6 @@ public interface ArticleVenduDAO {
 
 	public void updateArticle(ArticleVendu article) throws BusinessException;
 
-	public void enchereArticle(int noArticle, int nouveauPrix) throws BusinessException;
-
 	public void deleteArticle(int noArticle) throws BusinessException;
 
 	public List<ArticleVendu> endSaleSelect() throws BusinessException;

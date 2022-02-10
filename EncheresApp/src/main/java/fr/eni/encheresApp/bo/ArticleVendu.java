@@ -334,7 +334,6 @@ public class ArticleVendu implements Serializable {
 		if ((dateCourant.equals(dateDebut) || dateCourant.after(dateDebut)) && dateCourant.before(dateFin)) {
 			etat = "En Cours";
 		}
-		System.out.println(dateDebut + "  " + dateFin + "  " + dateCourant);
 		if (dateCourant.equals(dateFin) || dateCourant.after(dateFin)) {
 			etat = "Terminée";
 		}

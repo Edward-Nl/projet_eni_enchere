@@ -24,18 +24,14 @@ public class EnchereManager {
 		Boolean update = false;
 		for (int i = 0; i < listeEnchere.size(); i++) {
 			Enchere e = listeEnchere.get(i);
-			System.out.println("ici boucle : " + e);
 			if (e.getNo_utilisateur() == no_utilisateur) {
 				update = true;
 				break;
 			}
 		}
-		System.out.println("bool  " + update);
 		if (update) {
-			System.out.println("dans update" + enchere);
 			this.enchereDAO.updateEnchere(enchere);
 		} else {
-			System.out.println("dans insert" + enchere);
 			this.enchereDAO.insertEnchere(enchere);
 		}
 	}

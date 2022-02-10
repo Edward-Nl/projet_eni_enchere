@@ -12,8 +12,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter(urlPatterns = { "/Profil/*","/article/*" }, dispatcherTypes = { DispatcherType.FORWARD, DispatcherType.INCLUDE,
-		DispatcherType.REQUEST, DispatcherType.ERROR, }
+@WebFilter(urlPatterns = { "/Profil/*", "/article/*" }, dispatcherTypes = { DispatcherType.FORWARD,
+		DispatcherType.INCLUDE, DispatcherType.REQUEST, DispatcherType.ERROR, }
 
 )
 

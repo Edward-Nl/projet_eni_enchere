@@ -63,6 +63,7 @@
 	</header>
 		<div class="container">
 			<c:if test="${listeCodesErreur != null && listeCodesErreur.size() > 0}">
+
 				<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
 				<c:forEach var="erreur" items="${listeCodesErreur}">
 					<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>

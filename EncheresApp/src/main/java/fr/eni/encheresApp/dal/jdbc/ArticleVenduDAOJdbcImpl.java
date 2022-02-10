@@ -21,12 +21,13 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	private static final String UPDATE_END_USER = "UPDATE UTILISATEURS SET credit = credit + ISNULL((SELECT TOP 1 montant_enchere FROM ENCHERES AS E JOIN ARTICLES_VENDUS AS A ON e.no_article = a.no_article WHERE e.no_article = ? AND DATEDIFF(day,date_fin_encheres,date_enchere) < 0 ORDER BY montant_enchere DESC),0) WHERE no_utilisateur = (SELECT no_utilisateur FROM ARTICLES_VENDUS WHERE no_article = ?);";
 
 	private static final String[] SELECT_FILTRE = {
-			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) >= 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) <= 0 AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) >= 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) <= 0 AND pseudo= ? AND ",
 			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN ENCHERES as e ON a.no_article = e.no_article JOIN UTILISATEURS as u ON e.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND prix_vente = e.montant_enchere AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) > 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) < 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) >= 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) <= 0 AND pseudo= ? AND ",
 			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_debut_encheres) > 0 AND pseudo= ? AND ",
-			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND " };
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) < 0 AND pseudo= ? AND ",
+			"SELECT a.no_article ,no_categorie, nom_article, date_debut_encheres, date_fin_encheres, pseudo, prix_initial,prix_vente FROM ARTICLES_VENDUS as a JOIN UTILISATEURS as u on a.no_utilisateur = u.no_utilisateur WHERE DATEDIFF(day, GETDATE(), date_fin_encheres) >= 0 AND DATEDIFF(day, GETDATE(), date_debut_encheres) <= 0 AND pseudo != ? AND" };
 
 	private static final String FILTER_CONDITION = "(nom_article LIKE ? OR description LIKE ?) AND ";
 	private static final String CATEGORIE_CONDITION = "no_categorie = ? AND ";
@@ -40,7 +41,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	public void insertArticle(ArticleVendu article) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(INSERT, PreparedStatement.RETURN_GENERATED_KEYS)) {
-			System.out.println(article);
 			pstmt.setString(1, article.getNomArticle());
 			pstmt.setString(2, article.getDescription());
 			pstmt.setDate(3, (Date) article.getDateDebutEncheres());
@@ -132,12 +132,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 	}
 
 	@Override
-	public void enchereArticle(int noArticle, int nouveauPrix) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void deleteArticle(int noArticle) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection();
 				PreparedStatement pstmt = cnx.prepareStatement(DELETE)) {
@@ -168,7 +162,6 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 
 		requeteBuilder = requeteBuilder.delete(requeteBuilder.length() - 4, requeteBuilder.length());
-		System.out.println(requeteBuilder);
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 
 		try (Connection cnx = ConnectionProvider.getConnection();

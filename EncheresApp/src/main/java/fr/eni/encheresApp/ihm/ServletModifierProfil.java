@@ -41,10 +41,10 @@ public class ServletModifierProfil extends HttpServlet {
 			utilisateurCourantComplet.setAdministrateur(false);
 		}
 		request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
-		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 		if (request.getSession().getAttribute("utilisateurModifier") != null) {
 			request.getSession().removeAttribute("utilisateurModifier");
 		}
+		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 
 	}
 
@@ -58,70 +58,65 @@ public class ServletModifierProfil extends HttpServlet {
 		BusinessException businessException = new BusinessException();
 		HttpSession session = request.getSession();
 		boolean alreadyRedirect = false;
-		if (session.getAttribute("utilisateurCourant") != null) {
 
-			String pseudo = (String) session.getAttribute("utilisateurCourant");
-			Utilisateur utilisateurCourant = null;
-			try {
-				utilisateurCourant = manager.selectByPseudo(pseudo);
-			} catch (BusinessException e1) {
-				businessException.ajouterToutesErreurs(e1.getListeCodesErreur());
-			}
+		String pseudo = (String) session.getAttribute("utilisateurCourant");
+		Utilisateur utilisateurCourant = null;
+		try {
+			utilisateurCourant = manager.selectByPseudo(pseudo);
+		} catch (BusinessException e1) {
+			businessException.ajouterToutesErreurs(e1.getListeCodesErreur());
+		}
 
-			String mdpO = request.getParameter("mdpO").trim();
-			try {
-				if (manager.selectByPseudoAndPswBoolean(pseudo, mdpO)) {
-					if (request.getParameter("update") != null) {
-						String mdp = request.getParameter("mdp").trim();
-						String mdpC = request.getParameter("mdpC").trim();
-
-						if (!mdp.isEmpty() || !mdpC.isEmpty()) {
-							Utilisateur utilisateurModifier = null;
-							if (mdp.equals(mdpC)) {
-								utilisateurModifier = utilisateurParser(request, mdp,
-										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-										utilisateurCourant.isAdministrateur());
-								utilisateurModifier.setMotDePasse(mdp);
-								if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
-									session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
-								}
-							} else {
-								utilisateurModifier = utilisateurParser(request, "",
-										utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-										utilisateurCourant.isAdministrateur());
-								session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
-							}
-						} else {
-							Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
-									utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-									utilisateurCourant.isAdministrateur());
-
-							utilisateurModifier.setMotDePasse(mdpO);
+		String mdpO = request.getParameter("mdpO").trim();
+		try {
+			if (manager.selectByPseudoAndPswBoolean(pseudo, mdpO)) {
+				if (request.getParameter("update") != null) {
+					String mdp = request.getParameter("mdp").trim();
+					String mdpC = request.getParameter("mdpC").trim();
+					if (!mdp.isEmpty() || !mdpC.isEmpty()) {
+						Utilisateur utilisateurModifier = null;
+						if (mdp.equals(mdpC)) {
+							utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
+									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+							utilisateurModifier.setMotDePasse(mdp);
 							if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
 								session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
 							}
-
+						} else {
+							businessException.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_NON_IDENTIQUE);
+							utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
+									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+							session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 						}
-					} else if (request.getParameter("delete") != null) {
-						manager.supprimerUtilisateur(pseudo);
-						alreadyRedirect = true;
-						response.sendRedirect(request.getContextPath() + "/Profil/Deconnexion");
+					} else {
+						Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
+								utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
+								utilisateurCourant.isAdministrateur());
+
+						utilisateurModifier.setMotDePasse(mdpO);
+						if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
+							session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
+						}
+
 					}
-				} else {
-					Utilisateur utilisateurModifier = utilisateurParser(request, "",
-							utilisateurCourant.getNoUtilisateur(), utilisateurCourant.getCredit(),
-							utilisateurCourant.isAdministrateur());
-					session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
+				} else if (request.getParameter("delete") != null) {
+					manager.supprimerUtilisateur(pseudo);
+					alreadyRedirect = true;
+					response.sendRedirect(request.getContextPath() + "/Profil/Deconnexion");
 				}
-			} catch (BusinessException e) {
-				businessException.ajouterToutesErreurs(e.getListeCodesErreur());
+			} else {
+				Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
+						utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
+				session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 			}
-			if (businessException.hasErreurs()) {
-				request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-			}
-			if (!alreadyRedirect) {
-				doGet(request, response);
-			}
+		} catch (BusinessException e) {
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
+		}
+		if (businessException.hasErreurs()) {
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
+		}
+		if (!alreadyRedirect) {
+			doGet(request, response);
 		}
 
 	}
