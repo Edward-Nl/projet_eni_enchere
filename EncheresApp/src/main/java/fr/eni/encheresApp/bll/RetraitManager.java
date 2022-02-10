@@ -28,4 +28,8 @@ public class RetraitManager {
 		retrait = RetraitDAO.selectById(no_article);
 		return retrait;
 	}
+	
+	public void delete(int no_article) throws BusinessException{
+		RetraitDAO.delete(no_article);
+	}
 }

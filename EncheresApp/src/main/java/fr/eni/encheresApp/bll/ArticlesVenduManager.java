@@ -23,7 +23,6 @@ public class ArticlesVenduManager {
 			ArticleVenduControler.ArticleVenduController(article, businessException);
 			System.out.println(businessException.getListeCodesErreur());
 			if (!businessException.hasErreurs()) {
-				System.out.println("ici");
 				this.ArticleVenduDAO.insertArticle(article);
 			} else {
 				throw businessException;

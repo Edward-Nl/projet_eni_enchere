@@ -15,7 +15,7 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	private static final String INSERT = "INSERT INTO RETRAITS(no_article,rue,code_postal,ville) VALUES (?,?,?,?)";
 	private static final String SELECT = "SELECT * FROM RETRAITS WHERE no_article = ?";
 	private static final String UPDATE = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?";
-	//private static final String DELETE = "DELETE FROM RETRAITS WHERE no_article = ?";
+	private static final String DELETE = "DELETE FROM RETRAITS WHERE no_article = ?";
 
 	@Override
 	public void insert(Retrait lieu) throws BusinessException{
@@ -75,8 +75,17 @@ public class RetraitDAOJdbcImpl implements RetraitDAO {
 	}
 
 	@Override
-	public void delete(int no_article) {
-		// TODO Auto-generated method stub
+	public void delete(int no_article) throws BusinessException {
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(DELETE)) {
+			pstmt.setInt(1, no_article);
+			pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_RETRAIT_DAL_DELETE_ERREUR);
+			throw businessException;
+		}
 
 	}
 

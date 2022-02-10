@@ -88,7 +88,8 @@
 				
 				<div>
 					<button type="submit" class="btn btn-outline-primary mx-md-2 col-12 col-md-3 my-3"><i class="far fa-save"></i> <fmt:message key="btnEn" bundle="${r}"></fmt:message></button>
-					<a class="btn btn-outline-danger mx-md-2 col-12 col-md-3 my-3" href="<%=request.getContextPath()%>/"><i class="fas fa-angle-double-left"></i> <fmt:message key="btnAnnul" bundle="${r}"></fmt:message></a>
+					<a class="btn btn-outline-warning mx-md-2 col-12 col-md-3 my-3" href="<%=request.getContextPath()%>/"><i class="fas fa-angle-double-left"></i> <fmt:message key="btnAnnul" bundle="${r}"></fmt:message></a>
+					<button type="submit" name="delete" class="btn btn-outline-danger mx-md-2 col-12 col-md-3 my-3"><i class="far fa-save"></i> Supprimer</button>
 					<a></a>
 				</div>
 				

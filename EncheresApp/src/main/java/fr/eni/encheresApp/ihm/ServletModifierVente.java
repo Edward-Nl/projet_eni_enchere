@@ -69,6 +69,7 @@ public class ServletModifierVente extends HttpServlet {
 		Date dateDebut, dateFin = null;
 		ArticleVendu article = null;
 		Retrait retrait = null;
+		boolean alreadyRedirect = false;
 		/* Appelle des manager*/
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		RetraitManager managerRetrait = new RetraitManager();
@@ -95,20 +96,30 @@ public class ServletModifierVente extends HttpServlet {
 		int prix = Integer.parseInt(prixString);
 		article = new ArticleVendu(noArticle,nom,description,dateDebut,dateFin,prix,categorie);
 		try {
-			managerArticle.update(article);
 			retrait = new Retrait(noArticle,rue,cPostal,ville);
 			Retrait verifRetrait = managerRetrait.selectById(noArticle);
-			if(verifRetrait != null) {
-				managerRetrait.update(retrait);
+			if (request.getParameter("delete") != null) {
+				if(verifRetrait != null) {
+					managerRetrait.delete(noArticle);
+				}
+				managerArticle.deleteArticle(article.getNo_Article());
+				alreadyRedirect = true;
+				response.sendRedirect(request.getContextPath() + "/");
 			} else {
-				managerRetrait.insert(retrait);
+				managerArticle.update(article);
+				if(verifRetrait != null) {
+					managerRetrait.update(retrait);
+				} else {
+					managerRetrait.insert(retrait);
+				}
 			}
-			
 		} catch (BusinessException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		doGet(request, response);
+		if (!alreadyRedirect) {
+			doGet(request, response);
+		}
 	}
 
 }
