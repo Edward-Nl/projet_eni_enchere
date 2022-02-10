@@ -48,16 +48,20 @@
 <body class="">
 
 
-	<header class="navbar navbar-expand-lg navbar-dark sticky-top divHeader">
+	<header
+		class="navbar navbar-expand-lg navbar-dark sticky-top divHeader">
 		<div class="container d-flex justify-content-between">
-			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+			<button class="navbar-toggler d-md-none" type="button"
+				data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+				aria-controls="navbarNavAltMarkup" aria-expanded="false"
+				aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 			<h1 class="">
 				<fmt:message key="titre" bundle="${r}"></fmt:message>
 			</h1>
-			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
+			<div class="my-auto collapse navbar-collapse nav-masthead "
+				id="navbarNavAltMarkup">
 				<!-- Selon le status de connexion on affiche ou non les liens  -->
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
@@ -79,10 +83,12 @@
 					<c:otherwise>
 						<div class="navbar-nav">
 							<a class="mx-2 ahead"
-								href="<%=request.getContextPath()%>/inscription"><i class="fas fa-user-plus"></i> <fmt:message
-									key="aIns" bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
-								href="<%=request.getContextPath()%>/connexion"><i class="fas fa-sign-in-alt"></i> <fmt:message
-									key="aConx" bundle="${r}"></fmt:message></a>
+								href="<%=request.getContextPath()%>/inscription"><i
+								class="fas fa-user-plus"></i> <fmt:message key="aIns"
+									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead"
+								href="<%=request.getContextPath()%>/connexion"><i
+								class="fas fa-sign-in-alt"></i> <fmt:message key="aConx"
+									bundle="${r}"></fmt:message></a>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -174,7 +180,8 @@
 					</c:if>
 				</div>
 
-				<button class="btn btn-outline-success my-auto col-12 col-md-4 btnRecherche"
+				<button
+					class="btn btn-outline-success my-auto col-12 col-md-4 btnRecherche"
 					type="submit">
 					<i class="fas fa-search"></i>
 					<fmt:message key="btnRech" bundle="${r}"></fmt:message>
@@ -188,13 +195,16 @@
 							test="${(filtreRadio == 'Achats' && filtreChkBox[loop.index])}">
 							<c:choose>
 								<c:when test="${loop.index == 0 }">
-									<h4 class="my-3 text-decoration-underline">Enchères ouvertes</h4>
+									<h4 class="my-3 text-decoration-underline">Enchères
+										ouvertes</h4>
 								</c:when>
 								<c:when test="${loop.index == 1 }">
-									<h4 class="my-3 text-decoration-underline">Mes enchères en cours</h4>
+									<h4 class="my-3 text-decoration-underline">Mes enchères en
+										cours</h4>
 								</c:when>
 								<c:when test="${loop.index == 2 }">
-									<h4 class="my-3 text-decoration-underline">Mes enchères remportées</h4>
+									<h4 class="my-3 text-decoration-underline">Mes enchères
+										remportées</h4>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -202,13 +212,16 @@
 							test="${(filtreRadio == 'Ventes' && filtreChkBox[loop.index])}">
 							<c:choose>
 								<c:when test="${loop.index == 0 }">
-									<h4 class="my-3 text-decoration-underline">Mes ventes en cours</h4>
+									<h4 class="my-3 text-decoration-underline">Mes ventes en
+										cours</h4>
 								</c:when>
 								<c:when test="${loop.index == 1 }">
-									<h4 class="my-3 text-decoration-underline">Mes ventes non débutées</h4>
+									<h4 class="my-3 text-decoration-underline">Mes ventes non
+										débutées</h4>
 								</c:when>
 								<c:when test="${loop.index == 2 }">
-									<h4 class="my-3 text-decoration-underline">Mes ventes terminées</h4>
+									<h4 class="my-3 text-decoration-underline">Mes ventes
+										terminées</h4>
 								</c:when>
 							</c:choose>
 						</c:when>
@@ -222,10 +235,10 @@
 									<label class="ms-2 fw-bold">Prix : </label> <label
 										class="colorGrey">
 										${article.miseAPrix>article.prixVente?article.miseAPrix:article.prixVente}
-										points</label><br>
-									<label class="ms-2 fw-bold">Fin de l'enchère : </label><label
-										class="colorGrey"> ${article.dateFinEncheres}</label><br>
-									<label class="ms-2 fw-bold">Status de l'enchère : </label><label
+										points</label><br> <label class="ms-2 fw-bold">Fin de
+										l'enchère : </label><label class="colorGrey">
+										${article.dateFinEncheres}</label><br> <label
+										class="ms-2 fw-bold">Status de l'enchère : </label><label
 										class="colorGrey"> ${article.etatVente}</label><br>
 									<c:choose>
 										<c:when test="${sessionScope.utilisateurCourant != null}">
@@ -261,7 +274,10 @@
 
 	</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 
 </body>
 </html>
