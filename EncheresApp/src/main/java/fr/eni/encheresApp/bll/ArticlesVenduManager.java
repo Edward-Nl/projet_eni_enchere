@@ -18,7 +18,6 @@ public class ArticlesVenduManager {
 	public void insert(ArticleVendu article) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 		ArticleVenduControler.ArticleVenduController(article, businessException);
-		System.out.println(businessException.getListeCodesErreur());
 		if (!businessException.hasErreurs()) {
 			this.ArticleVenduDAO.insertArticle(article);
 		} else {

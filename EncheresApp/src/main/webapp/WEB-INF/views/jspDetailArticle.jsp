@@ -27,6 +27,7 @@
 			</div>
 		</header>
 		<div class="container">
+		
 			<c:if test="${listeCodesErreur != null}">
 				<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
 				<c:forEach var="erreur" items="${listeCodesErreur}">

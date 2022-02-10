@@ -1,3 +1,4 @@
+
 package fr.eni.encheresApp.ihm;
 
 import java.io.IOException;
@@ -60,7 +61,6 @@ public class ServletConnexion extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			businessException.ajouterErreur(CodesResultatIHM.PSEUDO_OU_MOT_DE_PASSE_FAUX);
-			System.out.println(businessException.getListeCodesErreur());
 			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 			doGet(request, response);
 		}

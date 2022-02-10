@@ -121,21 +121,17 @@ public class ServletDetailsArticle extends HttpServlet {
 						managerEnchere.insert(enchere);
 						// Insert de la methode pour deduire les crédit de la cagnotte utilisateur
 						creditDisponible = creditDisponible - montantEnchere;
-						System.out.println("Credit dispo : " + creditDisponible);
 						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
 					} else if (verifEnchere != null) {
 						// Récup de la precedente enchere pour rembourser l'utilisateur
 						int no_utilARembourser = verifEnchere.getNo_utilisateur();
 						int montantARembourser = verifEnchere.getMontant_enchere();
 						Utilisateur util_a_rembourser = managerUtils.selectAvecId(no_utilARembourser);
-						System.out.println("utili a rembourse " + util_a_rembourser);
 						int nouvelleCagnotte_a_rembourser = util_a_rembourser.getCredit() + montantARembourser;
-						System.out.println("Nouvelle : " + nouvelleCagnotte_a_rembourser);
 						managerUtils.nouvelleCagnotte(no_utilARembourser, nouvelleCagnotte_a_rembourser);
 						// Insert de la nouvelle enchere + deduire l'argent de sa cagnotte
 						managerEnchere.insert(enchere);
 						creditDisponible = creditDisponible - montantEnchere;
-						System.out.println("Credit dispo deux" + creditDisponible);
 						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
 					}
 				}

@@ -84,6 +84,8 @@ public class ServletInscription extends HttpServlet {
 		if (mdp.trim().equals(mdpC)) {
 			UtilisateurControler.valideMotDePasse(mdpC, businessException);
 			return true;
+		} else {
+			businessException.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_NON_IDENTIQUE);
 		}
 		return false;
 	}

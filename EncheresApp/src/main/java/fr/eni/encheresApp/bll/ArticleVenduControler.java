@@ -61,7 +61,6 @@ public class ArticleVenduControler {
 
 	public static void valideFin(Date dfin, Date ddebut, BusinessException businessException) {
 		boolean datefinControler = true;
-		System.out.println(dfin + "  " + ddebut);
 		if (dfin.before(ddebut)) {
 			datefinControler = false;
 		}

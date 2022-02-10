@@ -30,12 +30,15 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Déclaration de manager
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
 		BusinessException businessException = new BusinessException();
+		// Declaration Variable
 		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
 		List<Categorie> categories = null;
 		try {
+			// Récuperation des articles courant sans filtre et toutes les catégories
 			articles.add(managerArticle.selectAvecFiltre(0, "", "", 0));
 			categories = managerCategorie.selectAll();
 		} catch (BusinessException e) {
@@ -76,7 +79,8 @@ public class ServletAccueil extends HttpServlet {
 				if (request.getParameter("filtreRadio").trim().equals("Achats")) {
 					if (request.getParameter("chkAchat1") != null) {
 						filtreChkBox.add(true);
-						articles.add(managerArticle.selectAvecFiltre(0, "", filtre, categorie));
+						articles.add(managerArticle.selectAvecFiltre(6,
+								(String) request.getSession().getAttribute("utilisateurCourant"), filtre, categorie));
 					} else {
 						filtreChkBox.add(false);
 						articles.add(null);
