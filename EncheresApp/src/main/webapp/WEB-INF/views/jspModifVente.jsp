@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="fr.eni.encheresApp.exceptions.LecteurMessage"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,6 +29,13 @@
 	</header>
 
 	<div class="container">
+	
+		<c:if test="${listeCodesErreur != null}">
+			<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
+			<c:forEach var="erreur" items="${listeCodesErreur}">
+				<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
+			</c:forEach>
+		</c:if>
 		
 		<div class="mx-auto col-12 col-md-6 ">
 			<h2 class="mt-4 mb-5"><fmt:message key="h2M" bundle="${r}"></fmt:message></h2>

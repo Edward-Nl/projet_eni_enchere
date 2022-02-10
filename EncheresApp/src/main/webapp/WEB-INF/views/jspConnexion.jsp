@@ -8,11 +8,9 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- Import des CSS -->
 		<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
 		<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-		<!-- Gestion de la langue -->
 		<fmt:setLocale value="fr" />
 		<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_connexion" var="r" />
 		<title><fmt:message key="title" bundle="${r}"></fmt:message></title>
@@ -31,14 +29,14 @@
 	
 			<div class="mx-auto d-flex flex-column align-items-center">
 				<h2 class="mt-4 mb-5"><fmt:message key="h2" bundle="${r}"></fmt:message></h2>
+				
+				<c:if test="${listeCodesErreur != null}">
+					<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
+					<c:forEach var="erreur" items="${listeCodesErreur}">
+						<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
+					</c:forEach>
+				</c:if>
 				<form action="<%=request.getContextPath()%>/connexion" method="POST" class="col-12 col-md-6">
-					<!-- Condition qui affiche ou non les messages d'erreurs -->
-					<c:if test="${listeCodesErreur != null}">
-						<p style="color: red;">Erreur lors du login du compte</p>
-						<c:forEach var="erreur" items="${listeCodesErreur}">
-							<p>${LecteurMessage.getMessageErreur(erreur)}</p>
-						</c:forEach>
-					</c:if>
 					
 					<label for="identifiant" class="col-10 col-md-3 my-3"> <fmt:message key="champ.un" bundle="${r}"></fmt:message></label>
 					<input type="text" name="identifiant" required placeholder="<fmt:message key="pl.un" bundle="${r}"></fmt:message>" class="col-12 col-md-6" value="${cookie.pseudo.value}" /> <br> 

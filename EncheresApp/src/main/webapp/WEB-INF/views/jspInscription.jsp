@@ -28,9 +28,9 @@
 		</header>
 		<div class="container">
 			<c:if test="${listeCodesErreur != null}">
-				<p style="color: red;">Erreur lors du login du compte</p>
+				<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
 				<c:forEach var="erreur" items="${listeCodesErreur}">
-					<p>${LecteurMessage.getMessageErreur(erreur)}</p>
+					<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
 				</c:forEach>
 			</c:if>
 			

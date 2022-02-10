@@ -2,15 +2,14 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@page import="fr.eni.encheresApp.exceptions.LecteurMessage"%>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<!-- Affichage et choix de la langue -->
 		<fmt:setLocale value="fr" />
 		<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
-		<!-- Balise de CSS -->
 		<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
 		<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -28,6 +27,12 @@
 			</div>
 		</header>
 		<div class="container">
+			<c:if test="${listeCodesErreur != null}">
+				<p class="text-danger"><fmt:message key="erreur" bundle="${r}"></fmt:message></p>
+				<c:forEach var="erreur" items="${listeCodesErreur}">
+					<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
+				</c:forEach>
+			</c:if>
 			
 			<div class="d-flex flex-column justify-content-center align-item-center">
 			
@@ -41,14 +46,14 @@
 					<c:if test="${enchere.montant_enchere != null }">
 						<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> ${enchere.montant_enchere} par <a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${enchere.pseudo}">${enchere.pseudo}</a></p><br>
 						<button type="button" class="btn btn-outline-light my-3" data-bs-toggle="modal" data-bs-target="#exampleModal">
-						  Voir les enchéres
+						  <fmt:message key="popVoir" bundle="${r}"></fmt:message>
 						</button>
 						<!-- Modal -->
 						<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						  <div class="modal-dialog">
 						    <div class="modal-content bg-dark">
 						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">Liste des enchéres</h5>
+						        <h5 class="modal-title" id="exampleModalLabel"><fmt:message key="popHead" bundle="${r}"></fmt:message></h5>
 						        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						      </div>
 						      <div class="modal-body">
@@ -57,14 +62,14 @@
 						        </c:forEach>
 						      </div>
 						      <div class="modal-footer">
-						        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal">Close</button>
+						        <button type="button" class="btn btn-outline-light" data-bs-dismiss="modal"><fmt:message key="popClose" bundle="${r}"></fmt:message></button>
 						      </div>
 						    </div>
 						  </div>
 						</div>
 					</c:if>
 					<c:if test="${enchere.montant_enchere == null }">
-						<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> Aucune enchère</p><br>
+						<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> <fmt:message key="aucEnch" bundle="${r}"></fmt:message>e</p><br>
 					</c:if>
 					
 					
