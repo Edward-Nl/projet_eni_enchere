@@ -13,18 +13,53 @@
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 		<fmt:setLocale value="fr" />
 		<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_profil" var="r" />
+		<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_Header" var="h" />
 		<title><fmt:message key="titre" bundle="${r}"></fmt:message></title>
 	</head>
 	<body>
-		<header class="sticky-top divHeader">
-			<div class="container">
-				<a href="<%=request.getContextPath()%>/">
-					<h1>
-						<fmt:message key="soustitre" bundle="${r}"></fmt:message>
-					</h1>
-				</a>
+		<header class="navbar navbar-expand-lg navbar-dark sticky-top divHeader">
+		<div class="container d-flex justify-content-between">
+			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<a href="<%=request.getContextPath()%>/">
+			<h1>
+				<fmt:message key="titre" bundle="${h}"></fmt:message>
+			</h1>
+			</a>
+			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
+				<c:choose>
+					<c:when test="${sessionScope.utilisateurCourant != null}">
+						<div class="my-auto navbar-nav">
+						<!-- Affiche les credit -->
+							<div class="mx-2 ahead nav-link">
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+							</div> 
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
+								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
+							</a>
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}">
+								<i class="fas fa-user-alt"></i> <fmt:message key="aProf" bundle="${h}"></fmt:message>
+							</a> 
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil/Deconnexion">
+								<i class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco" bundle="${h}"></fmt:message>
+							</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="navbar-nav">
+							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/inscription">
+								<i class="fas fa-user-plus"></i> <fmt:message key="aIns" bundle="${h}"></fmt:message>
+							</a>
+							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/connexion">
+								<i class="fas fa-sign-in-alt"></i> <fmt:message key="aConx" bundle="${h}"></fmt:message>
+							</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
 			</div>
-		</header>
+		</div>
+	</header>
 		
 		<div class="container">
 			<c:if test="${listeCodesErreur != null}">
@@ -104,6 +139,11 @@
 			</div>
 		</div>
 	
+	
+		<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 	
 	</body>
 </html>

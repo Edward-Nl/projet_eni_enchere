@@ -2,6 +2,7 @@ package fr.eni.encheresApp.ihm;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.ArticlesVenduManager;
+import fr.eni.encheresApp.bll.CategorieManager;
 import fr.eni.encheresApp.bll.RetraitManager;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.ArticleVendu;
+import fr.eni.encheresApp.bo.Categorie;
 import fr.eni.encheresApp.bo.Retrait;
 import fr.eni.encheresApp.bo.Utilisateur;
 
@@ -34,12 +37,15 @@ public class ServletModifierVente extends HttpServlet {
 		BusinessException businessException = new BusinessException();
 		RetraitManager managerRetrait = new RetraitManager();
 		UtilisateurManager managerUtilisateur = new UtilisateurManager();
+		CategorieManager managerCategorie = new CategorieManager();
+		List<Categorie> categories = null;
 		String noArticleString = request.getParameter("noArticle");
 		int noArticle = Integer.parseInt(noArticleString);
 		if (noArticle != 0) {
 			ArticleVendu article = null;
 			Retrait retrait = null;
 			try {
+				categories = managerCategorie.selectAll();
 				article = managerArticle.selectArticleById(noArticle);
 				retrait = managerRetrait.selectById(noArticle);
 				article.modificationEtatVente(article.getDateDebutEncheres(), article.getDateFinEncheres());
@@ -60,6 +66,9 @@ public class ServletModifierVente extends HttpServlet {
 		}
 		if (businessException.hasErreurs()) {
 			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
+		}
+		if (categories != null) {
+			request.setAttribute("categories", categories);
 		}
 		request.getRequestDispatcher("/WEB-INF/views/jspModifVente.jsp").forward(request, response);
 	}

@@ -10,7 +10,7 @@ import fr.eni.encheresApp.bll.TimerUpdateVente;
 public class ListenerDemarrageArret implements ServletContextListener {
 
 	public void contextInitialized(ServletContextEvent sce) {
-		new TimerUpdateVente();
+		//new TimerUpdateVente();
 		System.out.println("ici");
 	}
 

@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<fmt:setLocale value="fr" />
 	<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_accueil" var="r" />
+	<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_Header" var="h" />
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<link rel=stylesheet type="text/css" href="/EncheresApp/css/styles.css" />
 	<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
@@ -44,34 +45,37 @@
 			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
+			<a href="<%=request.getContextPath()%>/">
 			<h1>
-				<fmt:message key="titre" bundle="${r}"></fmt:message>
+				<fmt:message key="titre" bundle="${h}"></fmt:message>
 			</h1>
+			</a>
 			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div class="my-auto navbar-nav">
-							<a class="mx-2 ahead nav-link" href="">
-								<i class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch" bundle="${r}"></fmt:message>
-							</a> 
+						<!-- Affiche les credit -->
+							<div class="mx-2 ahead nav-link">
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+							</div> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
-								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${r}"></fmt:message>
+								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
 							</a>
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}">
-								<i class="fas fa-user-alt"></i> <fmt:message key="aProf" bundle="${r}"></fmt:message>
+								<i class="fas fa-user-alt"></i> <fmt:message key="aProf" bundle="${h}"></fmt:message>
 							</a> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil/Deconnexion">
-								<i class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco" bundle="${r}"></fmt:message>
+								<i class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco" bundle="${h}"></fmt:message>
 							</a>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="navbar-nav">
 							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/inscription">
-								<i class="fas fa-user-plus"></i> <fmt:message key="aIns" bundle="${r}"></fmt:message>
+								<i class="fas fa-user-plus"></i> <fmt:message key="aIns" bundle="${h}"></fmt:message>
 							</a>
 							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/connexion">
-								<i class="fas fa-sign-in-alt"></i> <fmt:message key="aConx" bundle="${r}"></fmt:message>
+								<i class="fas fa-sign-in-alt"></i> <fmt:message key="aConx" bundle="${h}"></fmt:message>
 							</a>
 						</div>
 					</c:otherwise>
@@ -191,8 +195,10 @@
 					</c:choose>
 					
 					<div class="d-flex flex-wrap">
+						<c:if test="${articlesList.size() == 0 }">
+							<p><fmt:message key="aucun" bundle="${r}"></fmt:message></p>
+						</c:if>
 						<c:forEach var="article" items="${articlesList}">
-
 							<div class="card text-white mx-3 my-3 rounded">
 								<div class="card-body px-auto py-auto">
 									<h4 class="card-title">${article.nomArticle}</h4>

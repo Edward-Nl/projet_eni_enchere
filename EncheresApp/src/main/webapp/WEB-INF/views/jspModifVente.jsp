@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<fmt:setLocale value="fr" />
 	<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
+	<fmt:setBundle basename="fr.eni.encheresApp.content.contenue_Header" var="h" />
 	<link rel=stylesheet type="text/css" href="<%=request.getContextPath()%>/css/styles.css" />
 	<script src="https://kit.fontawesome.com/919a307c94.js" crossorigin="anonymous"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -18,13 +19,47 @@
 </head>
 <body>
 
-	<header class="sticky-top divHeader">
-		<div class="container">
+	<header class="navbar navbar-expand-lg navbar-dark sticky-top divHeader">
+		<div class="container d-flex justify-content-between">
+			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
 			<a href="<%=request.getContextPath()%>/">
-				<h1>
-					<fmt:message key="h1" bundle="${r}"></fmt:message>
-				</h1>
+			<h1>
+				<fmt:message key="titre" bundle="${h}"></fmt:message>
+			</h1>
 			</a>
+			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
+				<c:choose>
+					<c:when test="${sessionScope.utilisateurCourant != null}">
+						<div class="my-auto navbar-nav">
+						<!-- Affiche les credit -->
+							<div class="mx-2 ahead nav-link">
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+							</div> 
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
+								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
+							</a>
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}">
+								<i class="fas fa-user-alt"></i> <fmt:message key="aProf" bundle="${h}"></fmt:message>
+							</a> 
+							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/Profil/Deconnexion">
+								<i class="fas fa-sign-out-alt"></i> <fmt:message key="aDeco" bundle="${h}"></fmt:message>
+							</a>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<div class="navbar-nav">
+							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/inscription">
+								<i class="fas fa-user-plus"></i> <fmt:message key="aIns" bundle="${h}"></fmt:message>
+							</a>
+							<a class="mx-2 ahead" href="<%=request.getContextPath()%>/connexion">
+								<i class="fas fa-sign-in-alt"></i> <fmt:message key="aConx" bundle="${h}"></fmt:message>
+							</a>
+						</div>
+					</c:otherwise>
+				</c:choose>
+			</div>
 		</div>
 	</header>
 
@@ -52,10 +87,11 @@
 				<div>
 					<label for="categorie" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="cat" bundle="${r}"></fmt:message></label>
 					<select class="col-12 col-md-6" name="categorie">
-						<option value="1">Informatique</option>
-						<option value="2">Ameublement</option>
-						<option value="3">Vêtement</option>
-						<option value="4">Sport & Loisirs</option>
+						<c:if test="${categories != null}">
+							<c:forEach var="categorie" items="${categories}">
+								<option value="${categorie.no_categorie}" ${catg == categorie.no_categorie?'selected=\"selected\"':'' }>${categorie.libelle }</option>
+							</c:forEach>
+						</c:if>
 					</select>
 				</div>
 				<div>
@@ -104,6 +140,11 @@
 			</form>
 		</div>
 	</div>
+
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
 
 </body>
 </html>
