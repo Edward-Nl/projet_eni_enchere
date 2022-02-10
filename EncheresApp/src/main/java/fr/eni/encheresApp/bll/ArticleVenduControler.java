@@ -38,9 +38,11 @@ public class ArticleVenduControler {
 	public static String valideDescription(String description, BusinessException businessException) {
 		boolean descriptionControle = true;
 		description = description.replace(";", ",");
+		System.out.println(description);
 		if (description.length() < 10 || description.length() > 300) {
 			descriptionControle = false;
 		}
+		System.out.println(descriptionControle);
 		if (!descriptionControle) {
 			businessException.ajouterErreur(CodesResultatBLL.REGLE_ARTICLE_VENDU_DESCRIPTION_ERREUR);
 		}

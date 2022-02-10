@@ -109,6 +109,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			int no_article = article.getNo_Article();
 			retrait = new Retrait(no_article, rue, cPostal, ville);
 			managerRetrait.insert(retrait);
+			//TODO: Redirection 
 
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
@@ -124,6 +125,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
+		
 		doGet(request, response);
 	}
 

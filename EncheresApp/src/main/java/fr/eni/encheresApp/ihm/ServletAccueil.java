@@ -131,6 +131,8 @@ public class ServletAccueil extends HttpServlet {
 				request.setAttribute("filtreChkBox", filtreChkBox);
 			} else {
 				articles.add(managerArticle.selectAvecFiltre(0, null, filtre, categorie));
+				request.setAttribute("filtreRadio", "Achats");
+				request.setAttribute("filtreChkBox", Arrays.asList(true, false, false));
 			}
 
 			List<Categorie> categories = null;
