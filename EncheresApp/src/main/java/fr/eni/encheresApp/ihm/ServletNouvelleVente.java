@@ -3,10 +3,6 @@ package fr.eni.encheresApp.ihm;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -105,25 +101,20 @@ public class ServletNouvelleVente extends HttpServlet {
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
 			article = new ArticleVendu(nom, description, dateDebut, dateFin, prix, idUtils, categorie);
-			try {
-				managerArticle.insert(article);
-				int no_article = article.getNo_Article();
-				System.out.println("article" + article.getNo_Article());
-				retrait = new Retrait(no_article, rue, cPostal, ville);
-				managerRetrait.insert(retrait);
-				System.out.println(no_article + "ici no ARTICLE");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			managerArticle.insert(article);
+			int no_article = article.getNo_Article();
+			System.out.println("article" + article.getNo_Article());
+			retrait = new Retrait(no_article, rue, cPostal, ville);
+			managerRetrait.insert(retrait);
+			System.out.println(no_article + "ici no ARTICLE");
+
 		} catch (BusinessException e) {
+			System.out.println("ICI " + e.getListeCodesErreur());
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
-
 		try {
 			categories = managerCategorie.selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

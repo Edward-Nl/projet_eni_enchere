@@ -1,6 +1,5 @@
 package fr.eni.encheresApp.bll;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,20 +16,17 @@ public class ArticlesVenduManager {
 		this.ArticleVenduDAO = DAOFactory.getArticleVenduDAO();
 	}
 
-	public void insert(ArticleVendu article) throws SQLException {
+	public void insert(ArticleVendu article) throws BusinessException {
 		BusinessException businessException = new BusinessException();
-		try {
-			ArticleVenduControler.ArticleVenduController(article, businessException);
-			System.out.println(businessException.getListeCodesErreur());
-			if (!businessException.hasErreurs()) {
-				this.ArticleVenduDAO.insertArticle(article);
-			} else {
-				throw businessException;
-			}
 
-		} catch (Exception e) {
-			throw new SQLException();
+		ArticleVenduControler.ArticleVenduController(article, businessException);
+		System.out.println(businessException.getListeCodesErreur());
+		if (!businessException.hasErreurs()) {
+			this.ArticleVenduDAO.insertArticle(article);
+		} else {
+			throw businessException;
 		}
+
 	}
 
 	public void update(ArticleVendu article) throws BusinessException {

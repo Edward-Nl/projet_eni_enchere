@@ -41,7 +41,7 @@ public class ServletAccueil extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		if (articles != null) {
 			request.setAttribute("articles", articles);
 		}
@@ -122,7 +122,7 @@ public class ServletAccueil extends HttpServlet {
 				request.setAttribute("filtreRadio", request.getParameter("filtreRadio"));
 				request.setAttribute("filtreChkBox", filtreChkBox);
 			} else {
-				articles.add(managerArticle.selectAvecFiltre(1, "", filtre, categorie));
+				articles.add(managerArticle.selectAvecFiltre(0, null, filtre, categorie));
 			}
 
 			List<Categorie> categories = null;
@@ -135,15 +135,12 @@ public class ServletAccueil extends HttpServlet {
 			if (categories != null) {
 				request.setAttribute("categories", categories);
 			}
-			
+
 			request.setAttribute("filtre", filtre);
 			request.setAttribute("catg", categorie);
-		} catch(BusinessException e) {
+		} catch (BusinessException e) {
 			e.printStackTrace();
 		}
-		
-
-		
 
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}

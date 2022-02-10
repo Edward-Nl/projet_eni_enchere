@@ -67,7 +67,7 @@
 				<fmt:message key="h2" bundle="${r}"></fmt:message>
 			</h2>
 
-			<form action="<%=request.getContextPath()%>/ServletNouvelleVente"
+			<form action="<%=request.getContextPath()%>/article/nouvelleVente"
 				method="POST">
 				<div>
 					<label for="nom" class="col-12 col-md-4 my-3 fw-bold"><fmt:message

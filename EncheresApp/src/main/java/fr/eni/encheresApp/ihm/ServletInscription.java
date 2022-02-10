@@ -42,6 +42,7 @@ public class ServletInscription extends HttpServlet {
 		String mdpC = request.getParameter("mdpC");
 
 		boolean mdpValid = valideMdp(mdp, mdpC, businessException);
+
 		if (mdpValid && !businessException.hasErreurs()) {
 			UtilisateurManager manager = new UtilisateurManager();
 			String pseudo = request.getParameter("pseudo");
@@ -53,7 +54,7 @@ public class ServletInscription extends HttpServlet {
 				String rue = request.getParameter("rue");
 				String codePostale = request.getParameter("codePostale");
 				String ville = request.getParameter("ville");
-				// TODO: changer le system crédit & amdin
+				// TODO: changer le system crï¿½dit & amdin
 				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville, mdp, 500,
 						false);
 				manager.ajouterUtilisateur(utilisateur);

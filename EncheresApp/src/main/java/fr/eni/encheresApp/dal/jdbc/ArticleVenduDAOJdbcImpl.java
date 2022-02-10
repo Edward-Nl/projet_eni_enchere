@@ -168,7 +168,7 @@ public class ArticleVenduDAOJdbcImpl implements ArticleVenduDAO {
 		}
 
 		requeteBuilder = requeteBuilder.delete(requeteBuilder.length() - 4, requeteBuilder.length());
-
+		System.out.println(requeteBuilder);
 		List<ArticleVendu> articles = new ArrayList<ArticleVendu>();
 
 		try (Connection cnx = ConnectionProvider.getConnection();
