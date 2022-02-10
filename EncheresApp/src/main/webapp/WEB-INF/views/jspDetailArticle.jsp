@@ -82,7 +82,7 @@
 					<c:if test="${article.etatVente == 'En Cours' }">
 						<c:if test="${article.pseudoUtilisateur != sessionScope.utilisateurCourant }">
 							<c:if test="${enchere.no_utilisateur != noUtilCourant }">
-								<form action="<%=request.getContextPath()%>/ServletDetailsArticle?noArticle=${article.no_Article}" method="post">
+								<form action="<%=request.getContextPath()%>/article?noArticle=${article.no_Article}" method="post">
 									<label for="enchere"><fmt:message key="prop" bundle="${r}"></fmt:message></label>
 									<input type="number" name="enchere" min="${enchere.montant_enchere != 0 ? enchere.montant_enchere+1:article.miseAPrix}"
 									placeholder="<fmt:message key="placHol" bundle="${r}"></fmt:message>"/>
@@ -100,7 +100,7 @@
 					
 					<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning my-3"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
 					<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'Non commencée'}">
-						<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/ServletModifierVente?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
+						<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/article/modifierArticle?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
 					</c:if>
 				</div>
 			</div>

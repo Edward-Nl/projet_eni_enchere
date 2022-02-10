@@ -22,7 +22,7 @@ import fr.eni.encheresApp.bo.Utilisateur;
 /**
  * Servlet implementation class ServletModifierVente
  */
-@WebServlet("/ServletModifierVente")
+@WebServlet("/article/modifierArticle")
 public class ServletModifierVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -105,17 +105,12 @@ public class ServletNouvelleVente extends HttpServlet {
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
 			article = new ArticleVendu(nom, description, dateDebut, dateFin, prix, idUtils, categorie);
-			try {
 				managerArticle.insert(article);
 				int no_article = article.getNo_Article();
 				System.out.println("article" + article.getNo_Article());
 				retrait = new Retrait(no_article, rue, cPostal, ville);
 				managerRetrait.insert(retrait);
 				System.out.println(no_article + "ici no ARTICLE");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		} catch (BusinessException e) {
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}

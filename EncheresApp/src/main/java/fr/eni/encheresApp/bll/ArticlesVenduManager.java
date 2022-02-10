@@ -17,9 +17,8 @@ public class ArticlesVenduManager {
 		this.ArticleVenduDAO = DAOFactory.getArticleVenduDAO();
 	}
 
-	public void insert(ArticleVendu article) throws SQLException {
+	public void insert(ArticleVendu article) throws BusinessException {
 		BusinessException businessException = new BusinessException();
-		try {
 			ArticleVenduControler.ArticleVenduController(article, businessException);
 			System.out.println(businessException.getListeCodesErreur());
 			if (!businessException.hasErreurs()) {
@@ -28,9 +27,6 @@ public class ArticlesVenduManager {
 				throw businessException;
 			}
 
-		} catch (Exception e) {
-			throw new SQLException();
-		}
 	}
 
 	public void update(ArticleVendu article) throws BusinessException {
