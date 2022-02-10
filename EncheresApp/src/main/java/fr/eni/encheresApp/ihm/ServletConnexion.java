@@ -12,8 +12,6 @@ import javax.servlet.http.HttpSession;
 
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurManager;
-import fr.eni.encheresApp.bo.Utilisateur;
-import fr.eni.encheresApp.dal.CryptagePassword;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -42,12 +40,11 @@ public class ServletConnexion extends HttpServlet {
 		String identifiant = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motDePasse");
 		BusinessException businessException = new BusinessException();
-		Utilisateur utilisateur = null;
 		String pseudo = null;
 		try {
 			pseudo = manager.connectionUtilisateur(identifiant, motDePasse);
 		} catch (BusinessException e) {
-			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
 		if (pseudo != null) {
 			if (request.getParameter("souvenir") != null) {
@@ -62,10 +59,9 @@ public class ServletConnexion extends HttpServlet {
 			sessionCourrante.setAttribute("utilisateurCourant", pseudo);
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
-			if (request.getAttribute("listeCodesErreur") == null) {
-				businessException.ajouterErreur(CodesResultatIHM.PSEUDO_OU_MOT_DE_PASSE_FAUX);
-				request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-			}
+			businessException.ajouterErreur(CodesResultatIHM.PSEUDO_OU_MOT_DE_PASSE_FAUX);
+			System.out.println(businessException.getListeCodesErreur());
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 			doGet(request, response);
 		}
 	}

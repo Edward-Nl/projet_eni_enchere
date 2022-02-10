@@ -5,7 +5,7 @@ package fr.eni.encheresApp.ihm;
  */
 public abstract class CodesResultatIHM {
 
-	public static final int EMAIL_OU_PSEUDO_DEJA_UTILISER = 30000;
-	public static final int PSEUDO_OU_MOT_DE_PASSE_FAUX= 30001;
+	public static final int EMAIL_OU_PSEUDO_DEJA_UTILISER = 40000;
+	public static final int PSEUDO_OU_MOT_DE_PASSE_FAUX = 40001;
 
 }

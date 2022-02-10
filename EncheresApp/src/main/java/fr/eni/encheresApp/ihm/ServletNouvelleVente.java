@@ -2,7 +2,6 @@ package fr.eni.encheresApp.ihm;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -35,6 +34,7 @@ public class ServletNouvelleVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		BusinessException businessException = new BusinessException();
 		CategorieManager managerCategorie = new CategorieManager();
 		String pseudo = (String) request.getSession().getAttribute("utilisateurCourant");
 		List<Categorie> categories = null;
@@ -44,16 +44,18 @@ public class ServletNouvelleVente extends HttpServlet {
 		try {
 			utilisateurCourantComplet = manager.selectByPseudo(pseudo);
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
 
 		try {
 			categories = managerCategorie.selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
+		if (businessException.hasErreurs()) {
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 
+		}
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
@@ -72,6 +74,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		ArticleVendu article = null;
 		Retrait retrait = null;
 		List<Categorie> categories = null;
+		BusinessException businessException = new BusinessException();
 		/* Appelle des manager */
 		UtilisateurManager managerUtils = new UtilisateurManager();
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
@@ -110,19 +113,19 @@ public class ServletNouvelleVente extends HttpServlet {
 			System.out.println(no_article + "ici no ARTICLE");
 
 		} catch (BusinessException e) {
-			System.out.println("ICI " + e.getListeCodesErreur());
-			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
 		try {
 			categories = managerCategorie.selectAll();
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
-
+		if (businessException.hasErreurs()) {
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
+		}
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
-
 		doGet(request, response);
 	}
 

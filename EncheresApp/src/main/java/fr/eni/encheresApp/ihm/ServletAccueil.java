@@ -32,14 +32,14 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
+		BusinessException businessException = new BusinessException();
 		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
 		List<Categorie> categories = null;
 		try {
 			articles.add(managerArticle.selectAvecFiltre(0, "", "", 0));
 			categories = managerCategorie.selectAll();
 		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
 
 		if (articles != null) {
@@ -47,6 +47,9 @@ public class ServletAccueil extends HttpServlet {
 		}
 		if (categories != null) {
 			request.setAttribute("categories", categories);
+		}
+		if (businessException.hasErreurs()) {
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 		}
 		request.setAttribute("filtreRadio", "Achats");
 		request.setAttribute("filtreChkBox", Arrays.asList(true, false, false));
@@ -61,6 +64,7 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		ArticlesVenduManager managerArticle = new ArticlesVenduManager();
 		CategorieManager managerCategorie = new CategorieManager();
+		BusinessException businessException = new BusinessException();
 
 		List<List<ArticleVendu>> articles = new ArrayList<List<ArticleVendu>>();
 
@@ -139,9 +143,11 @@ public class ServletAccueil extends HttpServlet {
 			request.setAttribute("filtre", filtre);
 			request.setAttribute("catg", categorie);
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
-
+		if (businessException.hasErreurs()) {
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
+		}
 		request.getRequestDispatcher("/WEB-INF/views/jspAccueil.jsp").forward(request, response);
 	}
 

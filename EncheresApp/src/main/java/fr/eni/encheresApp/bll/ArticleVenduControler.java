@@ -1,6 +1,5 @@
 package fr.eni.encheresApp.bll;
 
-import java.nio.file.spi.FileTypeDetector;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

@@ -32,7 +32,7 @@ public class ServletModifierProfil extends HttpServlet {
 		try {
 			utilisateurCourantComplet = manager.selectByPseudo(pseudo);
 		} catch (BusinessException e) {
-			e.printStackTrace();
+			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 		}
 		if (utilisateurCourantComplet != null) {
 			utilisateurCourantComplet.setNoUtilisateur(-1);
@@ -55,6 +55,7 @@ public class ServletModifierProfil extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UtilisateurManager manager = new UtilisateurManager();
+		BusinessException businessException = new BusinessException();
 		HttpSession session = request.getSession();
 		boolean alreadyRedirect = false;
 		if (session.getAttribute("utilisateurCourant") != null) {
@@ -64,7 +65,7 @@ public class ServletModifierProfil extends HttpServlet {
 			try {
 				utilisateurCourant = manager.selectByPseudo(pseudo);
 			} catch (BusinessException e1) {
-				e1.printStackTrace();
+				businessException.ajouterToutesErreurs(e1.getListeCodesErreur());
 			}
 
 			String mdpO = request.getParameter("mdpO").trim();
@@ -113,8 +114,10 @@ public class ServletModifierProfil extends HttpServlet {
 					session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 				}
 			} catch (BusinessException e) {
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
-				e.printStackTrace();
+				businessException.ajouterToutesErreurs(e.getListeCodesErreur());
+			}
+			if (businessException.hasErreurs()) {
+				request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 			}
 			if (!alreadyRedirect) {
 				doGet(request, response);

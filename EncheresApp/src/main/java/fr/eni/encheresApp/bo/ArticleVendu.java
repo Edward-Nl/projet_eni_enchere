@@ -40,20 +40,6 @@ public class ArticleVendu implements Serializable {
 		super();
 	}
 
-	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
-			Date dateFinEncheres, int miseAPrix, int prixVente, String pseudoUtilisateur, String libelleCat) {
-		super();
-		this.no_Article = no_Article;
-		this.nomArticle = nomArticle;
-		this.description = description;
-		this.dateDebutEncheres = dateDebutEncheres;
-		this.dateFinEncheres = dateFinEncheres;
-		this.miseAPrix = miseAPrix;
-		this.prixVente = prixVente;
-		this.pseudoUtilisateur = pseudoUtilisateur;
-		this.libelleCat = libelleCat;
-	}
-
 	/**
 	 * Constructeur sans etat vente et no Article pour la BDD
 	 * 
@@ -78,6 +64,17 @@ public class ArticleVendu implements Serializable {
 		this.no_Categorie = no_Categorie;
 	}
 
+	/**
+	 * 
+	 * @param no_Article
+	 * @param nomArticle
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param no_Categorie
+	 * @param pseudoUtilisateur
+	 */
 	public ArticleVendu(int no_Article, String nomArticle, Date dateDebutEncheres, Date dateFinEncheres, int miseAPrix,
 			int prixVente, int no_Categorie, String pseudoUtilisateur) {
 		super();
@@ -173,9 +170,17 @@ public class ArticleVendu implements Serializable {
 		this.no_Utilisateur = no_Utilisateur;
 		this.no_Categorie = no_Categorie;
 	}
-	
-	
 
+	/**
+	 * 
+	 * @param no_Article
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param no_Categorie
+	 */
 	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
 			Date dateFinEncheres, int miseAPrix, int no_Categorie) {
 		super();
@@ -186,6 +191,32 @@ public class ArticleVendu implements Serializable {
 		this.dateFinEncheres = dateFinEncheres;
 		this.miseAPrix = miseAPrix;
 		this.no_Categorie = no_Categorie;
+	}
+
+	/**
+	 * 
+	 * @param no_Article
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param miseAPrix
+	 * @param prixVente
+	 * @param pseudoUtilisateur
+	 * @param libelleCat
+	 */
+	public ArticleVendu(int no_Article, String nomArticle, String description, Date dateDebutEncheres,
+			Date dateFinEncheres, int miseAPrix, int prixVente, String pseudoUtilisateur, String libelleCat) {
+		super();
+		this.no_Article = no_Article;
+		this.nomArticle = nomArticle;
+		this.description = description;
+		this.dateDebutEncheres = dateDebutEncheres;
+		this.dateFinEncheres = dateFinEncheres;
+		this.miseAPrix = miseAPrix;
+		this.prixVente = prixVente;
+		this.pseudoUtilisateur = pseudoUtilisateur;
+		this.libelleCat = libelleCat;
 	}
 
 	/* GETTER AND SETTER */
@@ -270,6 +301,14 @@ public class ArticleVendu implements Serializable {
 		this.no_Categorie = no_Categorie;
 	}
 
+	public String getPseudoUtilisateur() {
+		return pseudoUtilisateur;
+	}
+
+	public void setPseudoUtilisateur(String pseudoUtilisateur) {
+		this.pseudoUtilisateur = pseudoUtilisateur;
+	}
+
 	/* METHODE TOSTRING */
 
 	@Override
@@ -280,14 +319,11 @@ public class ArticleVendu implements Serializable {
 				+ no_Utilisateur + ", no_Categorie=" + no_Categorie + "]";
 	}
 
-	public String getPseudoUtilisateur() {
-		return pseudoUtilisateur;
-	}
-
-	public void setPseudoUtilisateur(String pseudoUtilisateur) {
-		this.pseudoUtilisateur = pseudoUtilisateur;
-	}
-
+	/**
+	 * 
+	 * @param dateDebut
+	 * @param dateFin
+	 */
 	public void modificationEtatVente(Date dateDebut, Date dateFin) {
 		String etat = null;
 		String dateNow = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
@@ -305,5 +341,5 @@ public class ArticleVendu implements Serializable {
 		this.setEtatVente(etat);
 
 	}
-	
+
 }

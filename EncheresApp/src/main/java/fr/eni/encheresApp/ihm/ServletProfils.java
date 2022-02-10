@@ -6,7 +6,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurManager;
@@ -26,14 +25,13 @@ public class ServletProfils extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		UtilisateurManager manager = new UtilisateurManager();
-		HttpSession session = request.getSession();
 		String userPseudoToShow = request.getParameter("userPseudo");
 		if (userPseudoToShow != null) {
 			Utilisateur utilisateurShow = null;
 			try {
 				utilisateurShow = manager.selectByPseudo(userPseudoToShow);
 			} catch (BusinessException e) {
-				e.printStackTrace();
+				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
 			}
 			if (utilisateurShow != null && utilisateurShow.getPseudo() != null) {
 

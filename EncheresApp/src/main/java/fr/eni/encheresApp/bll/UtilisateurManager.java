@@ -1,7 +1,5 @@
 package fr.eni.encheresApp.bll;
 
-import java.sql.SQLException;
-
 import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bo.Utilisateur;
 import fr.eni.encheresApp.dal.CryptagePassword;
@@ -15,12 +13,9 @@ public class UtilisateurManager {
 		this.utilisateurDAO = DAOFactory.getUtilisateurDAO();
 	}
 
-	public void nouvelleCagnotte(int no_utilisateur, int montantCagnotte) throws SQLException {
-		try {
-			this.utilisateurDAO.nouvelleCagnotte(no_utilisateur, montantCagnotte);
-		} catch (Exception e) {
-			throw new SQLException();
-		}
+	public void nouvelleCagnotte(int no_utilisateur, int montantCagnotte) throws BusinessException {
+		this.utilisateurDAO.nouvelleCagnotte(no_utilisateur, montantCagnotte);
+
 	}
 
 	public Utilisateur selectByPseudoAndPsw(String pseudo, String password) throws BusinessException {
@@ -107,15 +102,8 @@ public class UtilisateurManager {
 
 	}
 
-	public Utilisateur selectAvecId(int id) {
-		Utilisateur utils = null;
-		try {
-			utils = utilisateurDAO.selectById(id);
-		} catch (BusinessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return utils;
+	public Utilisateur selectAvecId(int id) throws BusinessException {
+		return utilisateurDAO.selectById(id);
 	}
 
 	public boolean updateUtilisateur(Utilisateur utilisateurCourant, Utilisateur utilisateurModifier)

@@ -11,7 +11,6 @@ import fr.eni.encheresApp.BusinessException;
 import fr.eni.encheresApp.bll.UtilisateurControler;
 import fr.eni.encheresApp.bll.UtilisateurManager;
 import fr.eni.encheresApp.bo.Utilisateur;
-import fr.eni.encheresApp.dal.CryptagePassword;
 
 /**
  * Servlet implementation class ServletInscription
@@ -59,17 +58,15 @@ public class ServletInscription extends HttpServlet {
 						false);
 				manager.ajouterUtilisateur(utilisateur);
 			} catch (BusinessException e) {
-				request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
+				businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 			}
 
 		}
-		if (!businessException.hasErreurs() && request.getAttribute("listeCodesErreur") == null) {
+		if (!businessException.hasErreurs()) {
 			request.getSession().setAttribute("utilisateurCourant", utilisateur.getPseudo());
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
-			if (request.getAttribute("listeCodesErreur") == null) {
-				request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
-			}
+			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 			request.setAttribute("pseudo", request.getParameter("pseudo"));
 			request.setAttribute("prenom", request.getParameter("prenom"));
 			request.setAttribute("nom", request.getParameter("nom"));
