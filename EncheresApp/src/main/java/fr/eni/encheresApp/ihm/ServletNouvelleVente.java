@@ -101,6 +101,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			int categorie = Integer.parseInt(categorieString);
 			int prix = Integer.parseInt(prixString);
 			article = new ArticleVendu(nom, description, dateDebut, dateFin, prix, idUtils, categorie);
+<<<<<<< HEAD
 			managerArticle.insert(article);
 			int no_article = article.getNo_Article();
 			System.out.println("article" + article.getNo_Article());
@@ -108,6 +109,14 @@ public class ServletNouvelleVente extends HttpServlet {
 			managerRetrait.insert(retrait);
 			System.out.println(no_article + "ici no ARTICLE");
 
+=======
+				managerArticle.insert(article);
+				int no_article = article.getNo_Article();
+				System.out.println("article" + article.getNo_Article());
+				retrait = new Retrait(no_article, rue, cPostal, ville);
+				managerRetrait.insert(retrait);
+				System.out.println(no_article + "ici no ARTICLE");
+>>>>>>> branch 'main' of https://github.com/Edward-Nl/projet_eni_enchere.git
 		} catch (BusinessException e) {
 			System.out.println("ICI " + e.getListeCodesErreur());
 			request.setAttribute("listeCodesErreur", e.getListeCodesErreur());
