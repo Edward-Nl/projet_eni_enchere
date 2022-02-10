@@ -65,7 +65,7 @@
 							<a class="mx-2 ahead nav-link" href=""><i
 								class="fas fa-cart-arrow-down"></i> <fmt:message key="aEnch"
 									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead nav-link"
-								href="<%=request.getContextPath()%>/ServletNouvelleVente"><i
+								href="<%=request.getContextPath()%>/article/nouvelleVente"><i
 								class="fas fa-share-square"></i> <fmt:message key="aVend"
 									bundle="${r}"></fmt:message></a> <a class="mx-2 ahead nav-link"
 								href="<%=request.getContextPath()%>/Profil?userPseudo=${sessionScope.utilisateurCourant}"><i
