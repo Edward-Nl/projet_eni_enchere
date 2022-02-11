@@ -211,7 +211,19 @@
 										${article.dateFinEncheres}
 									</label><br> 
 									<label class="ms-2 fw-bold"><fmt:message key="stts" bundle="${r}"></fmt:message></label>
-									<label class="colorGrey"> ${article.etatVente}</label><br>
+									<label class="colorGrey">
+										<c:choose>
+											<c:when test="${article.etatVente == 'EC'}">
+												<fmt:message key="message.ec" bundle="${r}"></fmt:message>
+											</c:when>
+											<c:when test="${article.etatVente == 'NC'}">
+												<fmt:message key="message.nc" bundle="${r}"></fmt:message>
+											</c:when>
+											<c:when test="${article.etatVente == 'TE'}">
+												<fmt:message key="message.te" bundle="${r}"></fmt:message>
+											</c:when>
+										</c:choose>
+									 </label><br>
 									<c:choose>
 										<c:when test="${sessionScope.utilisateurCourant != null}">
 											<label class="ms-2 fw-bold"><fmt:message key="pseudo" bundle="${r}"></fmt:message></label>

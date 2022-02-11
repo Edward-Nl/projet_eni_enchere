@@ -24,9 +24,9 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<a href="<%=request.getContextPath()%>/">
-			<h1>
-				<fmt:message key="titre" bundle="${h}"></fmt:message>
-			</h1>
+				<h1>
+					<fmt:message key="titre" bundle="${h}"></fmt:message>
+				</h1>
 			</a>
 			<div class="my-auto collapse navbar-collapse nav-masthead " id="navbarNavAltMarkup">
 				<c:choose>
@@ -119,7 +119,7 @@
 					
 					<p class="my-0 py-0"><span class="h6"><fmt:message key="pseudo" bundle="${r}"></fmt:message></span><a class="lienColor" href="<%=request.getContextPath()%>/Profil?userPseudo=${article.pseudoUtilisateur}">${article.pseudoUtilisateur}</a></p><br>
 					
-					<c:if test="${article.etatVente == 'En Cours' }">
+					<c:if test="${article.etatVente == 'EC' }">
 						<c:if test="${article.pseudoUtilisateur != sessionScope.utilisateurCourant }">
 							<c:if test="${enchere.no_utilisateur != noUtilCourant }">
 								<form action="<%=request.getContextPath()%>/article?noArticle=${article.no_Article}" method="post">
