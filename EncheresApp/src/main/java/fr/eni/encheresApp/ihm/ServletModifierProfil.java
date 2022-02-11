@@ -58,30 +58,38 @@ public class ServletModifierProfil extends HttpServlet {
 		BusinessException businessException = new BusinessException();
 		HttpSession session = request.getSession();
 		boolean alreadyRedirect = false;
-
+		
 		String pseudo = (String) session.getAttribute("utilisateurCourant");
+		//Récupération de l'utilisateur Courant Complet stocker en BDD
 		Utilisateur utilisateurCourant = null;
 		try {
 			utilisateurCourant = manager.selectByPseudo(pseudo);
 		} catch (BusinessException e1) {
 			businessException.ajouterToutesErreurs(e1.getListeCodesErreur());
 		}
-
+		
+		//Recuperation du mot de passe de confirmation (ancien mot de passe
 		String mdpO = request.getParameter("mdpO").trim();
 		try {
+			//controle que la paire pseudo/mot de passe de confirmation correspond bien a un utilisateur
 			if (manager.selectByPseudoAndPswBoolean(pseudo, mdpO)) {
+				//Switch entre la modification de l'utilisateur et la supression de celui ci
 				if (request.getParameter("update") != null) {
 					String mdp = request.getParameter("mdp").trim();
 					String mdpC = request.getParameter("mdpC").trim();
+					// Si au moins un des deux champs nouveaux mot de passe est n'es pas vide
 					if (!mdp.isEmpty() || !mdpC.isEmpty()) {
 						Utilisateur utilisateurModifier = null;
+						//vérification que les deux champs sont equals
 						if (mdp.equals(mdpC)) {
 							utilisateurModifier = utilisateurParser(request, mdp, utilisateurCourant.getNoUtilisateur(),
 									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
 							utilisateurModifier.setMotDePasse(mdp);
 							if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
+								request.setAttribute("ModificationValider", true);
 								session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
 							}
+						//Sinon on remonte une Erreur
 						} else {
 							businessException.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_NON_IDENTIQUE);
 							utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
@@ -95,10 +103,12 @@ public class ServletModifierProfil extends HttpServlet {
 
 						utilisateurModifier.setMotDePasse(mdpO);
 						if (manager.updateUtilisateur(utilisateurCourant, utilisateurModifier)) {
+							request.setAttribute("ModificationValider", true);
 							session.setAttribute("utilisateurCourant", utilisateurModifier.getPseudo());
 						}
 
 					}
+					//supression du compte et redirection vers la servlet de deconnexion supprimant la session 
 				} else if (request.getParameter("delete") != null) {
 					manager.supprimerUtilisateur(pseudo);
 					alreadyRedirect = true;
@@ -120,7 +130,7 @@ public class ServletModifierProfil extends HttpServlet {
 		}
 
 	}
-
+//Parser servant a creer un utilisateur avec les champ formulaire dans la request
 	private Utilisateur utilisateurParser(HttpServletRequest request, String password, int noUtilisateur, int credit,
 			boolean administrateur) {
 		String motDePasse = CryptagePassword.crypteString(password);

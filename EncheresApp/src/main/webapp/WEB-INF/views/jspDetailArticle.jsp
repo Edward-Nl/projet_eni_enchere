@@ -32,9 +32,8 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div class="my-auto navbar-nav">
-						<!-- Affiche les credit -->
 							<div class="mx-2 ahead nav-link">
-								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>${sessionScope.credit}
 							</div> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
 								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
@@ -125,7 +124,7 @@
 							<c:if test="${enchere.no_utilisateur != noUtilCourant }">
 								<form action="<%=request.getContextPath()%>/article?noArticle=${article.no_Article}" method="post">
 									<label for="enchere"><fmt:message key="prop" bundle="${r}"></fmt:message></label>
-									<input type="number" name="enchere" min="${enchere.montant_enchere != 0 ? enchere.montant_enchere+1:article.miseAPrix}"
+									<input type="number" name="enchere" min="${enchere.montant_enchere != 0 && enchere.montant_enchere != null ? enchere.montant_enchere+1:article.miseAPrix}"
 									placeholder="<fmt:message key="placHol" bundle="${r}"></fmt:message>"/>
 									<button class="btn btn-outline-primary" type="submit"><fmt:message key="btnEnch" bundle="${r}"></fmt:message></button>
 								</form>

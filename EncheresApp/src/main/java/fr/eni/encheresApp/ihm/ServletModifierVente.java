@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.List;
 
+import javax.print.attribute.standard.OrientationRequested;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -70,6 +71,12 @@ public class ServletModifierVente extends HttpServlet {
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
+		if (request.getSession().getAttribute("articlesModifier") != null) {
+			request.getSession().removeAttribute("articlesModifier");
+		}
+		if (request.getSession().getAttribute("retraitModifier") != null) {
+			request.getSession().removeAttribute("retraitModifier");
+		}
 		request.getRequestDispatcher("/WEB-INF/views/jspModifVente.jsp").forward(request, response);
 	}
 
@@ -91,7 +98,6 @@ public class ServletModifierVente extends HttpServlet {
 		/* ---------- */
 		request.setCharacterEncoding("UTF-8");
 		String noArticleString = request.getParameter("noArticle");
-		System.out.println(noArticleString);
 		int noArticle = Integer.parseInt(noArticleString);
 		/* Récuperation des données du form */
 		String nom = request.getParameter("nom");
@@ -126,6 +132,7 @@ public class ServletModifierVente extends HttpServlet {
 				} else {
 					managerRetrait.insert(retrait);
 				}
+				request.setAttribute("ModificationValider", true);
 			}
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
@@ -134,6 +141,8 @@ public class ServletModifierVente extends HttpServlet {
 			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 		}
 		if (!alreadyRedirect) {
+			request.setAttribute("articlesModifier", article);
+			request.setAttribute("retraitModifier", retrait);
 			doGet(request, response);
 		}
 	}

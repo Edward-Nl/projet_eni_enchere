@@ -122,6 +122,7 @@ public class ServletDetailsArticle extends HttpServlet {
 						// Insert de la methode pour deduire les crédit de la cagnotte utilisateur
 						creditDisponible = creditDisponible - montantEnchere;
 						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+						session.setAttribute("credit", creditDisponible);
 					} else if (verifEnchere != null) {
 						// Récup de la precedente enchere pour rembourser l'utilisateur
 						int no_utilARembourser = verifEnchere.getNo_utilisateur();
@@ -133,6 +134,7 @@ public class ServletDetailsArticle extends HttpServlet {
 						managerEnchere.insert(enchere);
 						creditDisponible = creditDisponible - montantEnchere;
 						managerUtils.nouvelleCagnotte(idUtils, creditDisponible);
+						session.setAttribute("credit", creditDisponible);
 					}
 				}
 			}

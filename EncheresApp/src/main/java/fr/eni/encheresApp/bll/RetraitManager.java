@@ -14,11 +14,23 @@ public class RetraitManager {
 	}
 
 	public void insert(Retrait lieu) throws BusinessException {
-		this.RetraitDAO.insert(lieu);
+		BusinessException businessException = new BusinessException();
+		RetraitControler.retraitController(lieu, businessException);
+		if (!businessException.hasErreurs()) {
+			this.RetraitDAO.insert(lieu);
+		} else {
+			throw businessException;
+		}
 	}
 
 	public void update(Retrait lieu) throws BusinessException {
-		this.RetraitDAO.update(lieu);
+		BusinessException businessException = new BusinessException();
+		RetraitControler.retraitController(lieu, businessException);
+		if (!businessException.hasErreurs()) {
+			this.RetraitDAO.update(lieu);
+		} else {
+			throw businessException;
+		}
 	}
 
 	public Retrait selectById(int no_article) throws BusinessException {

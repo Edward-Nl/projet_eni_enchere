@@ -27,7 +27,13 @@ public class ArticlesVenduManager {
 	}
 
 	public void update(ArticleVendu article) throws BusinessException {
-		this.ArticleVenduDAO.updateArticle(article);
+		BusinessException businessException = new BusinessException();
+		ArticleVenduControler.ArticleVenduController(article, businessException);
+		if (!businessException.hasErreurs()) {
+			this.ArticleVenduDAO.updateArticle(article);
+		} else {
+			throw businessException;
+		}
 	}
 
 	public List<ArticleVendu> selectAllArticle() throws BusinessException {

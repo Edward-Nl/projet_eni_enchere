@@ -18,11 +18,12 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 	private static final String SELECT_BY_PSEUDO_AND_PASSW = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo = ? AND mot_de_passe = ?";
 	private static final String SELECT_BY_ID = "SELECT pseudo,nom,prenom,email,telephone,rue,code_postal,ville,credit FROM UTILISATEURS WHERE no_utilisateur = ?";
 	private static final String SELECT_BY_PSEUDO = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur FROM UTILISATEURS WHERE pseudo = ?";
+	private static final String SELECT_CREDIT = "SELECT credit FROM UTILISATEURS WHERE pseudo = ?;";
 	private static final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ? , rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private static final String REMOVE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private static final String SELECT_BY_IDANTIFIANT_AND_PSW = "SELECT pseudo FROM UTILISATEURS WHERE (pseudo = ? OR  email = ?) AND  mot_de_passe = ? ";
 	private static final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE no_utilisateur = ?";
-	
+
 	@Override
 	public void insert(Utilisateur utilisateur) throws BusinessException {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -267,4 +268,23 @@ public class UtilisateurDAOJdbcImpl implements UtilisateurDAO {
 		}
 	}
 
+	@Override
+	public int getUserCredit(String pseudo) throws BusinessException {
+		int credit = 0;
+		try (Connection cnx = ConnectionProvider.getConnection();
+				PreparedStatement pstmt = cnx.prepareStatement(SELECT_CREDIT)) {
+			pstmt.setString(1, pseudo);
+			try (ResultSet resultSet = pstmt.executeQuery()) {
+				if (resultSet.next()) {
+					credit = resultSet.getInt(1);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			BusinessException businessException = new BusinessException();
+			businessException.ajouterErreur(CodeResultatDAL.REGLE_UTILISATEURS_DAL_CAGNOTTE_UPDATE_ERREUR);
+			throw businessException;
+		}
+		return credit;
+	}
 }

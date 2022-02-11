@@ -54,9 +54,8 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div class="my-auto navbar-nav">
-						<!-- Affiche les credit -->
 							<div class="mx-2 ahead nav-link">
-								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>${sessionScope.credit}
 							</div> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
 								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
@@ -96,24 +95,23 @@
 						<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
 					</c:forEach>
 				</c:if>
-	
 				<form action="<%=request.getContextPath()%>/article/nouvelleVente" method="POST">
 					<div>
 						<label for="nom" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="art" bundle="${r}"></fmt:message></label> 
-						<input type="text" name="nom" class="col-12 col-md-6" />
+						<input type="text" name="nom" class="col-12 col-md-6" value="${article != null?article.nomArticle:''}" required="required"/>
 					</div>
 					
 					<div>
 						<label for="description" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="des" bundle="${r}"></fmt:message></label>
-						<textarea name="description" rows="" cols="" class="col-12 col-md-6"></textarea>
+						<textarea name="description" rows="" cols="" class="col-12 col-md-6" maxlength="300" required="required" >${article != null?article.description:''}</textarea>
 					</div>
 					
 					<div>
 						<label for="categorie" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="cat" bundle="${r}"></fmt:message></label> 
-						<select class="col-12 col-md-6" name="categorie">
+						<select class="col-12 col-md-6" name="categorie" required="required">
 							<c:if test="${categories != null}">
 								<c:forEach var="categorie" items="${categories}">
-									<option value="${categorie.no_categorie}" ${catg == categorie.no_categorie?'selected=\"selected\"':'' }>${categorie.libelle }</option>
+									<option value="${categorie.no_categorie}" ${article != null && article.no_Categorie == categorie.no_categorie?'selected=\"selected\"':'' }>${categorie.libelle }</option>
 								</c:forEach>
 							</c:if>
 						</select>
@@ -121,22 +119,22 @@
 					
 					<div>
 						<label for="image" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="pht" bundle="${r}"></fmt:message></label> 
-						<input type="file" name="image" class="col-12 col-md-6" />
+						<input type="file" name="image" class="col-12 col-md-6"  />
 					</div>
 					
 					<div>
 						<label for="prix" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="mise" bundle="${r}"></fmt:message></label> 
-						<input type="number" name="prix" class="col-12 col-md-6" min="1" />
+						<input type="number" name="prix" class="col-12 col-md-6" min="1" value="${article != null?article.miseAPrix:''}" required="required"/>
 					</div>
 					
 					<div>
 						<label for="debut" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="deb" bundle="${r}"></fmt:message></label> 
-						<input type="date" name="debut" class="col-12 col-md-6" min="${LocalDate.now().format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
+						<input type="date" name="debut" class="col-12 col-md-6" min="${LocalDate.now().format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" value="${article != null?article.dateDebutEncheres:''}" required="required"/>
 					</div>
 					
 					<div>
 						<label for="fin" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="fin" bundle="${r}"></fmt:message></label> 
-						<input type="date" name="fin" class="col-12 col-md-6" min="${LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}" />
+						<input type="date" name="fin" class="col-12 col-md-6" min="${LocalDate.now().plusDays(1).format(DateTimeFormatter.ofPattern('yyyy-MM-dd'))}"  value="${article != null?article.dateFinEncheres:''}" required="required"/>
 					</div>
 					
 					<fieldset class="border">
@@ -146,16 +144,16 @@
 	
 						<div>
 							<label for="rue" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="rue" bundle="${r}"></fmt:message></label> 
-							<input type="text" name="rue" class="col-12 col-md-6" value="${sessionScope.utilisateurCourantComplet.rue}" />
+							<input type="text" name="rue" class="col-12 col-md-6" value="${retraitModifier != null?retraintModifier.rue:sessionScope.utilisateurCourantComplet.rue}" required="required"/>
 						</div>
 						
 						<div>
 							<label for="cPostal" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="cp" bundle="${r}"></fmt:message></label> 
-							<input type="text" name="cPostal" class="col-12 col-md-6" value="${sessionScope.utilisateurCourantComplet.codePostal}" />
+							<input type="text" name="cPostal" class="col-12 col-md-6" value="${retraitModifier != null?retraintModifier.codePostal:sessionScope.utilisateurCourantComplet.codePostal}" required="required"/>
 						</div>
 						<div>
 							<label for="ville" class="col-12 col-md-4 my-3 fw-bold"><fmt:message key="vil" bundle="${r}"></fmt:message></label> 
-							<input type="text" name="ville" class="col-12 col-md-6" value="${sessionScope.utilisateurCourantComplet.ville}" />
+							<input type="text" name="ville" class="col-12 col-md-6" value="${retraitModifier != null?retraintModifier.ville:sessionScope.utilisateurCourantComplet.ville}" required="required"/>
 						</div>
 					</fieldset>
 	

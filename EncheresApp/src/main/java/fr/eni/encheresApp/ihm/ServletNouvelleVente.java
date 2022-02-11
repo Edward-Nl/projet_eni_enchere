@@ -74,6 +74,7 @@ public class ServletNouvelleVente extends HttpServlet {
 		ArticleVendu article = null;
 		Retrait retrait = null;
 		List<Categorie> categories = null;
+		boolean ok = false;
 		BusinessException businessException = new BusinessException();
 		/* Appelle des manager */
 		UtilisateurManager managerUtils = new UtilisateurManager();
@@ -109,7 +110,7 @@ public class ServletNouvelleVente extends HttpServlet {
 			int no_article = article.getNo_Article();
 			retrait = new Retrait(no_article, rue, cPostal, ville);
 			managerRetrait.insert(retrait);
-			//TODO: Redirection 
+			ok = true;
 
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
@@ -125,8 +126,15 @@ public class ServletNouvelleVente extends HttpServlet {
 		if (categories != null) {
 			request.setAttribute("categories", categories);
 		}
-		
-		doGet(request, response);
+
+		if (ok) {
+			response.sendRedirect(request.getContextPath() + "/article?noArticle=" + article.getNo_Article());
+		} else {
+			request.setAttribute("article", article);
+			request.setAttribute("retraitModifier", retrait);
+			doGet(request, response);
+		}
+
 	}
 
 }

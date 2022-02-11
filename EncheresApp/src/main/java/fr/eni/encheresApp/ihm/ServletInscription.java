@@ -37,16 +37,20 @@ public class ServletInscription extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		BusinessException businessException = new BusinessException();
 		Utilisateur utilisateur = null;
+
+		// recupération des deux mot de passe
 		String mdp = request.getParameter("mdp");
 		String mdpC = request.getParameter("mdpC");
 
+		// Controle des deux mots de passe Identique et correspond au critère
 		boolean mdpValid = valideMdp(mdp, mdpC, businessException);
 
 		if (mdpValid && !businessException.hasErreurs()) {
 			UtilisateurManager manager = new UtilisateurManager();
-			String pseudo = request.getParameter("pseudo");
-			String email = request.getParameter("email");
 			try {
+				// récupération des champs du formulaire
+				String pseudo = request.getParameter("pseudo");
+				String email = request.getParameter("email");
 				String prenom = request.getParameter("prenom");
 				String nom = request.getParameter("nom");
 				String telephone = request.getParameter("telephone");
@@ -56,6 +60,7 @@ public class ServletInscription extends HttpServlet {
 				// TODO: changer le system cr�dit & amdin
 				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostale, ville, mdp, 500,
 						false);
+				// Ajoue de l'utilisateur créé dans la bdd
 				manager.ajouterUtilisateur(utilisateur);
 			} catch (BusinessException e) {
 				businessException.ajouterToutesErreurs(e.getListeCodesErreur());
@@ -66,6 +71,8 @@ public class ServletInscription extends HttpServlet {
 			request.getSession().setAttribute("utilisateurCourant", utilisateur.getPseudo());
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
+			// Renvoie des donné affin de les reafficher dans le formulaire en cas de
+			// mauvaise input + envois de la liste des erreurs
 			request.setAttribute("listeCodesErreur", businessException.getListeCodesErreur());
 			request.setAttribute("pseudo", request.getParameter("pseudo"));
 			request.setAttribute("prenom", request.getParameter("prenom"));
@@ -75,7 +82,6 @@ public class ServletInscription extends HttpServlet {
 			request.setAttribute("rue", request.getParameter("rue"));
 			request.setAttribute("codePostale", request.getParameter("codePostale"));
 			request.setAttribute("ville", request.getParameter("ville"));
-
 			doGet(request, response);
 		}
 	}

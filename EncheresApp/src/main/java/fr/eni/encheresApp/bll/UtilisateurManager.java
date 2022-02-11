@@ -73,6 +73,7 @@ public class UtilisateurManager {
 	public boolean ajouterUtilisateur(Utilisateur utilisateur) throws BusinessException {
 		BusinessException businessException = new BusinessException();
 
+		// Verification de tous les attributs d'utilisateur
 		UtilisateurControler.controlerUtilisateur(utilisateur, businessException);
 
 		utilisateur.setMotDePasse(CryptagePassword.crypteString(utilisateur.getMotDePasse()));
@@ -110,6 +111,7 @@ public class UtilisateurManager {
 			throws BusinessException {
 		BusinessException businessException = new BusinessException();
 
+		// Verification de tous les attributs d'utilisateur
 		UtilisateurControler.controlerUtilisateur(utilisateurModifier, businessException);
 
 		utilisateurModifier.setMotDePasse(CryptagePassword.crypteString(utilisateurModifier.getMotDePasse()));
@@ -158,5 +160,9 @@ public class UtilisateurManager {
 		}
 
 		return this.utilisateurDAO.selectByIdentifiantAndPsw(idantifiant, CryptagePassword.crypteString(password));
+	}
+
+	public int getCredit(String pseudo) throws BusinessException {
+		return utilisateurDAO.getUserCredit(pseudo);
 	}
 }

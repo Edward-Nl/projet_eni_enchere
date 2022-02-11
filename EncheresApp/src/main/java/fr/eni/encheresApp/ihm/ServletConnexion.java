@@ -42,8 +42,10 @@ public class ServletConnexion extends HttpServlet {
 		String motDePasse = request.getParameter("motDePasse");
 		BusinessException businessException = new BusinessException();
 		String pseudo = null;
+		int credit = 0;
 		try {
 			pseudo = manager.connectionUtilisateur(identifiant, motDePasse);
+			credit = manager.getCredit(pseudo);
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
 		}
@@ -58,6 +60,7 @@ public class ServletConnexion extends HttpServlet {
 			}
 			HttpSession sessionCourrante = request.getSession();
 			sessionCourrante.setAttribute("utilisateurCourant", pseudo);
+			sessionCourrante.setAttribute("credit", credit);
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			businessException.ajouterErreur(CodesResultatIHM.PSEUDO_OU_MOT_DE_PASSE_FAUX);

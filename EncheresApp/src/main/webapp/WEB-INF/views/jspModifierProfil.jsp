@@ -32,9 +32,8 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div class="my-auto navbar-nav">
-						<!-- Affiche les credit -->
 							<div class="mx-2 ahead nav-link">
-								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>${sessionScope.credit}
 							</div> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
 								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
@@ -68,6 +67,9 @@
 			<c:forEach var="erreur" items="${listeCodesErreur}">
 				<p class="text-danger">${LecteurMessage.getMessageErreur(erreur)}</p>
 			</c:forEach>
+		</c:if>
+		<c:if test="${ModificationValider}">
+			<fmt:message key="valider" bundle="${r}"></fmt:message>
 		</c:if>
 		
 		<h2 class="mt-4 mb-5 text-center"><fmt:message key="h2Mod" bundle="${r}"></fmt:message></h2>

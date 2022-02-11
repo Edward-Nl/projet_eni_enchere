@@ -22,4 +22,6 @@ public interface UtilisateurDAO {
 	public boolean deleteUser(String pseudo) throws BusinessException;
 
 	public void nouvelleCagnotte(int no_utilisateur, int nouvelleCagnotte) throws BusinessException;
+
+	public int getUserCredit(String pseudo) throws BusinessException;
 }

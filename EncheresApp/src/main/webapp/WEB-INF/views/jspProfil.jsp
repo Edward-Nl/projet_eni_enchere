@@ -31,9 +31,8 @@
 				<c:choose>
 					<c:when test="${sessionScope.utilisateurCourant != null}">
 						<div class="my-auto navbar-nav">
-						<!-- Affiche les credit -->
 							<div class="mx-2 ahead nav-link">
-								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>
+								<i class="fas fa-coins"></i> <fmt:message key="credit" bundle="${h}"></fmt:message>${sessionScope.credit}
 							</div> 
 							<a class="mx-2 ahead nav-link" href="<%=request.getContextPath()%>/article/nouvelleVente">
 								<i class="fas fa-share-square"></i> <fmt:message key="aVend" bundle="${h}"></fmt:message>
