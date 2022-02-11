@@ -10,7 +10,7 @@
 	<welcome-file-list>
 		<welcome-file>accueil</welcome-file>
 	</welcome-file-list>
-	
+
 	<error-page>
 		<error-code>404</error-code>
 		<location>/WEB-INF/views/Erreur404.jsp</location>
