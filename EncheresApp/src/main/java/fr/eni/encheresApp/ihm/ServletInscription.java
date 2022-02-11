@@ -69,6 +69,7 @@ public class ServletInscription extends HttpServlet {
 		}
 		if (!businessException.hasErreurs()) {
 			request.getSession().setAttribute("utilisateurCourant", utilisateur.getPseudo());
+			request.getSession().setAttribute("credit", utilisateur.getCredit());
 			response.sendRedirect(request.getContextPath() + "/");
 		} else {
 			// Renvoie des donné affin de les reafficher dans le formulaire en cas de
