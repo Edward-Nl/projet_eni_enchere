@@ -8,7 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<fmt:setLocale value="fr" />
 <fmt:setBundle
 	basename="fr.eni.encheresApp.content.contenue_nouvelleVente" var="r" />
 <fmt:setBundle basename="fr.eni.encheresApp.content.contenue_Header"

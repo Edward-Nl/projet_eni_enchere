@@ -139,7 +139,7 @@
 					</c:if>
 					
 					<a href="<%=request.getContextPath()%>/" class="btn btn-outline-warning my-3"><i class="fas fa-home"></i> <fmt:message key="btnRetour" bundle="${r}"></fmt:message></a>
-					<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'Non commencée'}">
+					<c:if test="${article.pseudoUtilisateur == sessionScope.utilisateurCourant &&  article.etatVente == 'NC'}">
 						<a class="btn btn-outline-light" href="<%=request.getContextPath()%>/article/modifierArticle?noArticle=${article.no_Article}"><i class="fas fa-edit"></i> <fmt:message key="btnModif" bundle="${r}"></fmt:message></a>
 					</c:if>
 				</div>
