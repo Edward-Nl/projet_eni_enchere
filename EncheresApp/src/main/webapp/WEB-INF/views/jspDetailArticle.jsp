@@ -104,7 +104,7 @@
 						</div>
 					</c:if>
 					<c:if test="${enchere.montant_enchere == null }">
-						<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> <fmt:message key="aucEnch" bundle="${r}"></fmt:message>e</p><br>
+						<p class="my-0 py-0"><span class="h6"><fmt:message key="offre" bundle="${r}"></fmt:message></span> <fmt:message key="aucEnch" bundle="${r}"></fmt:message></p><br>
 					</c:if>
 					
 					

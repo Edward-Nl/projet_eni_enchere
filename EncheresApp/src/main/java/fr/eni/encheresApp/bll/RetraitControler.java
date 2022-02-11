@@ -55,7 +55,7 @@ public class RetraitControler {
 
 	public static void valideRue(String rue, BusinessException businessException) {
 		rue = rue.trim();
-		boolean rueControle = rue.matches("(?=(^[A-Za-z0-9]*[\s]?[a-zA-Z]+([-\s]?[0-9a-zA-Z]*)+$))^.{5,30}$");
+		boolean rueControle = rue.matches("(?=(^[A-Za-z0-9]*[\\s]?[a-zA-Z]+([-\\s]?[0-9a-zA-Z]*)+$))^.{5,30}$");
 		if (rue.isEmpty()) {
 			rueControle = false;
 		}
