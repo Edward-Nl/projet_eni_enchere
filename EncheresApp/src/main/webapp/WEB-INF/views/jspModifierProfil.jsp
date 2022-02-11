@@ -76,7 +76,7 @@
 		
 		<form method="post" action="<%=request.getContextPath()%>/Profil/Modifier" class="my-3">
 			<div class="d-flex flex-column flex-md-row justify-content-center">
-				<div class="mx-md-3 col-12 col-md-4">
+				<div class="mx-md-3 col-12 col-md-6">
 				
 					<fmt:message key="pattern.pseudo.titre" bundle="${r}" var="patternPseudoTitre" />
 					<fmt:message key="pattern.general.titre" bundle="${r}" var="patternGeneralTitre" />
@@ -103,7 +103,7 @@
 					<input class="col-12 col-md-6" type="password" name="mdp" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" /><br>
 				</div>
 				
-				<div class="mx-md-3 col-12 col-md-4">
+				<div class="mx-md-3 col-12 col-md-5">
 					<label class="my-2 col-4" for="nom"><fmt:message key="champ.deux" bundle="${r}"></fmt:message></label>
 					<input class="col-12 col-md-6" type="text" name="nom" value="${sessionScope.utilisateurModifier != null ? sessionScope.utilisateurModifier.nom:sessionScope.utilisateurCourantComplet.nom}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" title="${patternGeneralTitre}" placeholder="Dupond-Dupond" required /><br>
 					
@@ -116,7 +116,7 @@
 					<label class="my-2 col-4" for="ville"><fmt:message key="champ.huit" bundle="${r}"></fmt:message></label>
 					<input class="col-12 col-md-6" type="text" name="ville" value="${sessionScope.utilisateurModifier != null ? sessionScope.utilisateurModifier.ville:sessionScope.utilisateurCourantComplet.ville}" pattern="(?=^([a-zA-Z]+([-\s][a-zA-Z]+)*)$)^.{1,30}$" placeholder="Paris" required /><br>
 					
-					<div style="height: 40px;"></div>
+					<div style="height: 55px;"></div>
 					
 					<label class="my-2 col-12 col-md-4" for="mdpC"><fmt:message key="champ.dix" bundle="${r}"></fmt:message></label>
 					<input class="col-12 col-md-6" type="password" name="mdpC" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" /> <br>
