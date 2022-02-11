@@ -114,7 +114,7 @@ public class ServletModifierProfil extends HttpServlet {
 			} else {
 				Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
 						utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-				request.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
+				request.setAttribute("utilisateurModifier", utilisateurModifier);
 			}
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
