@@ -40,10 +40,7 @@ public class ServletModifierProfil extends HttpServlet {
 			utilisateurCourantComplet.setCredit(-1);
 			utilisateurCourantComplet.setAdministrateur(false);
 		}
-		request.getSession().setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
-		if (request.getSession().getAttribute("utilisateurModifier") != null) {
-			request.getSession().removeAttribute("utilisateurModifier");
-		}
+		request.setAttribute("utilisateurCourantComplet", utilisateurCourantComplet);
 		request.getRequestDispatcher("/WEB-INF/views/jspModifierProfil.jsp").forward(request, response);
 
 	}
@@ -94,7 +91,7 @@ public class ServletModifierProfil extends HttpServlet {
 							businessException.ajouterErreur(CodesResultatIHM.MOT_DE_PASSE_NON_IDENTIQUE);
 							utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
 									utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-							session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
+							request.setAttribute("utilisateurModifier", utilisateurModifier);
 						}
 					} else {
 						Utilisateur utilisateurModifier = utilisateurParser(request, mdpO,
@@ -117,7 +114,7 @@ public class ServletModifierProfil extends HttpServlet {
 			} else {
 				Utilisateur utilisateurModifier = utilisateurParser(request, "", utilisateurCourant.getNoUtilisateur(),
 						utilisateurCourant.getCredit(), utilisateurCourant.isAdministrateur());
-				session.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
+				request.setAttribute("utilisateurModifier", utilisateurModifier.getPseudo());
 			}
 		} catch (BusinessException e) {
 			businessException.ajouterToutesErreurs(e.getListeCodesErreur());
